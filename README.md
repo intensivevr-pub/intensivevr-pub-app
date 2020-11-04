@@ -1,1 +1,1 @@
-# mobile-app
+# Aplikacja mobilna dla pubu Intensive vr
