@@ -36,6 +36,7 @@ class WelcomeScreen extends StatelessWidget {
                 Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: RaisedButton(
+                    onPressed: () => {},
                     color: Colors.blue,
                     child: Text("Utwórz konto"),
 

@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:intensivevr_pub/welcome.dart';
 
 void main() {
-  runApp(MyApp());
+  runApp(WelcomeScreen());
 }
 
 class MyApp extends StatelessWidget {
@@ -59,7 +60,7 @@ class _MyHomePageState extends State<MyHomePage> {
       // so that the display can reflect the updated values. If we changed
       // _counter without calling setState(), then the build method would not be
       // called again, and so nothing would appear to happen.
-      _counter++;
+      _counter+=10;
     });
   }
 
@@ -104,6 +105,7 @@ class _MyHomePageState extends State<MyHomePage> {
               '$_counter',
               style: Theme.of(context).textTheme.headline4,
             ),
+            hehe(_counter)
           ],
         ),
       ),
@@ -113,5 +115,12 @@ class _MyHomePageState extends State<MyHomePage> {
         child: Icon(Icons.add),
       ), // This trailing comma makes auto-formatting nicer for build methods.
     );
+  }
+
+  hehe(int counter) {
+    if (counter == 69 || counter == 420)
+      return Text("hehe");
+    else
+      return SizedBox();
   }
 }
