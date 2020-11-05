@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:intensivevr_pub/welcome.dart';
+import 'package:intensivevr_pub/login_screen.dart';
 
 void main() {
-  runApp(WelcomeScreen());
+  runApp((MyApp()));
 }
 
 class MyApp extends StatelessWidget {
@@ -27,7 +27,7 @@ class MyApp extends StatelessWidget {
         // closer together (more dense) than on mobile platforms.
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
-      home: MyHomePage(title: 'Flutter Demo Home Page'),
+      home: LoginScreen(),
     );
   }
 }
