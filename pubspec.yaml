@@ -18,8 +18,6 @@ dependencies:
   formz: ^0.3.2
   authentication_repository:
     path: packages/authentication_repository
-  user_repository:
-    path: packages/user_repository
 dev_dependencies:
   flutter_test:
     sdk: flutter

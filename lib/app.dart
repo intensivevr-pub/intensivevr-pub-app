@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intensivevr_pub/features/authentication/authentication.dart';
 import 'package:intensivevr_pub/features/welcome/view/welcome_page.dart';
-import 'package:user_repository/user_repository.dart';
 
 import 'features/home/home.dart';
 import 'features/login/login.dart';
@@ -12,13 +11,10 @@ class App extends StatelessWidget {
   const App({
     Key key,
     @required this.authenticationRepository,
-    @required this.userRepository,
   })  : assert(authenticationRepository != null),
-        assert(userRepository != null),
         super(key: key);
 
   final AuthenticationRepository authenticationRepository;
-  final UserRepository userRepository;
 
   @override
   Widget build(BuildContext context) {
@@ -27,7 +23,6 @@ class App extends StatelessWidget {
       child: BlocProvider(
         create: (_) => AuthenticationBloc(
           authenticationRepository: authenticationRepository,
-          userRepository: userRepository,
         ),
         child: AppView(),
       ),

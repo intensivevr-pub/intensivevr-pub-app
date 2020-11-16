@@ -6,4 +6,8 @@ environment:
   sdk: ">=2.1.0 <3.0.0"
 
 dependencies:
-  meta: ^1.1.8
+  meta: ^1.2.3
+  flutter_secure_storage: ^3.3.5
+  http: ^0.12.2
+  tuple: ^1.0.3
+  equatable: ^1.2.5
