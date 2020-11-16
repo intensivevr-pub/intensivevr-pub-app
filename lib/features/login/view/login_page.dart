@@ -3,10 +3,11 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gradient_text/gradient_text.dart';
-import 'package:intensivevr_pub/login/bloc/login_bloc.dart';
-import 'package:intensivevr_pub/login/view/login_form.dart';
+import 'package:intensivevr_pub/features/login/bloc/login_bloc.dart';
+import 'package:intensivevr_pub/widgets/widgets.dart';
 
-import '../../welcome_button.dart';
+import 'login_form.dart';
+
 
 class LoginPage extends StatelessWidget {
   static Route route() {

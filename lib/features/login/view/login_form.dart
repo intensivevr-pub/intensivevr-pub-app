@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:formz/formz.dart';
-import 'package:intensivevr_pub/login/bloc/login_bloc.dart';
-import 'package:intensivevr_pub/login/view/credential_input.dart';
+import 'package:intensivevr_pub/features/login/bloc/login_bloc.dart';
+import 'package:intensivevr_pub/widgets/widgets.dart';
 
-import '../../welcome_button.dart';
+import 'credential_input.dart';
+
 
 class LoginForm extends StatelessWidget {
   @override
