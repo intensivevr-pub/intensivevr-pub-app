@@ -1,7 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-
 class WelcomeButton extends StatelessWidget {
   final double height;
   final double width;
@@ -15,7 +14,20 @@ class WelcomeButton extends StatelessWidget {
   final TextStyle textStyle;
   final EdgeInsets padding;
 
-  const WelcomeButton({Key key, this.height, this.width, this.borderRadius, this.color, this.gradient, this.text, this.onPress, this.splashColor, this.border, this.textStyle, this.padding}) : super(key: key);
+  const WelcomeButton(
+      {Key key,
+      this.height,
+      this.width,
+      this.borderRadius,
+      this.color,
+      this.gradient,
+      this.text,
+      this.onPress,
+      this.splashColor,
+      this.border,
+      this.textStyle,
+      this.padding})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -47,5 +59,4 @@ class WelcomeButton extends StatelessWidget {
       ),
     );
   }
-
 }
