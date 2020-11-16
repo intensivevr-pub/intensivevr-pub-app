@@ -1,10 +1,14 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:gradient_text/gradient_text.dart';
+import 'package:intensivevr_pub/features/login/login.dart';
 import 'package:intensivevr_pub/widgets/widgets.dart';
 
-
 class WelcomePage extends StatelessWidget {
+  static Route route() {
+    return MaterialPageRoute<void>(builder: (_) => WelcomePage());
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -39,7 +43,9 @@ class WelcomePage extends StatelessWidget {
                       padding: const EdgeInsets.symmetric(
                           vertical: 8, horizontal: 16),
                       child: WelcomeButton(
-                          onPress: () {},
+                          onPress: () {
+                            Navigator.push(context, LoginPage.route());
+                          },
                           border: Border.all(),
                           padding: EdgeInsets.all(16),
                           borderRadius: BorderRadius.all(Radius.circular(10)),

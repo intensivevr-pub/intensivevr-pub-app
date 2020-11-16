@@ -2,6 +2,7 @@ import 'package:authentication_repository/authentication_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intensivevr_pub/features/authentication/authentication.dart';
+import 'package:intensivevr_pub/features/welcome/view/welcome_page.dart';
 import 'package:user_repository/user_repository.dart';
 
 import 'features/home/home.dart';
@@ -60,7 +61,7 @@ class _AppViewState extends State<AppView> {
                 break;
               case AuthenticationStatus.unauthenticated:
                 _navigator.pushAndRemoveUntil<void>(
-                  LoginPage.route(),
+                  WelcomePage.route(),
                       (route) => false,
                 );
                 break;
