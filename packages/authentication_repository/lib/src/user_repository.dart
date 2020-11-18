@@ -34,19 +34,20 @@ class UserRepository {
     var data = json.decode(response.body);
     var refresh = data['refresh'];
     var access = data['access'];
+    print(access);
     return Tuple2(refresh, access);
   }
 
   static Future<bool> register({
     @required String email,
     @required String password,
-    @required bool isLawyer,
+    @required String username,
   }) async {
     final uri = Uri.http(serverUrl, "/auth/users/");
     var body = json.encode({
       'email': email,
       'password': password,
-      'is_lawyer': true,
+      'nick' : username,
     });
 
     print('Body: $body');
@@ -62,7 +63,7 @@ class UserRepository {
       print("Error");
       print(response.statusCode);
       print(response.body);
-      return null;
+      return false;
     }
     print("RESPONS");
     return true;

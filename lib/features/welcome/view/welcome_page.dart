@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:gradient_text/gradient_text.dart';
 import 'package:intensivevr_pub/features/login/login.dart';
+import 'package:intensivevr_pub/features/register/view/register_page.dart';
 import 'package:intensivevr_pub/widgets/widgets.dart';
 
 class WelcomePage extends StatelessWidget {
@@ -59,7 +60,9 @@ class WelcomePage extends StatelessWidget {
                     Padding(
                       padding: const EdgeInsets.fromLTRB(16, 8, 16, 24),
                       child: WelcomeButton(
-                          onPress: () {},
+                          onPress: () {
+                            Navigator.push(context, RegisterPage.route());
+                          },
                           padding: EdgeInsets.all(16),
                           borderRadius: BorderRadius.all(Radius.circular(10)),
                           color: Colors.blue,
