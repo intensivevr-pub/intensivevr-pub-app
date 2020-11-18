@@ -16,7 +16,7 @@ class AuthenticationBloc
         _authenticationRepository = authenticationRepository,
         super(const AuthenticationState.unknown()) {
     _authenticationStatusSubscription = _authenticationRepository.status.listen(
-          (status) => add(AuthenticationStatusChanged(status)),
+      (status) => add(AuthenticationStatusChanged(status)),
     );
   }
 
@@ -25,8 +25,8 @@ class AuthenticationBloc
 
   @override
   Stream<AuthenticationState> mapEventToState(
-      AuthenticationEvent event,
-      ) async* {
+    AuthenticationEvent event,
+  ) async* {
     if (event is AuthenticationStatusChanged) {
       yield await _mapAuthenticationStatusChangedToState(event);
     } else if (event is AuthenticationLogoutRequested) {
@@ -42,8 +42,7 @@ class AuthenticationBloc
   }
 
   Future<AuthenticationState> _mapAuthenticationStatusChangedToState(
-      AuthenticationStatusChanged event,
-      ) async {
+      AuthenticationStatusChanged event,) async {
     switch (event.status) {
       case AuthenticationStatus.unauthenticated:
         return const AuthenticationState.unauthenticated();
@@ -59,7 +58,7 @@ class AuthenticationBloc
 
   Future<User> _tryGetUser() async {
     try {
-      final user =  _authenticationRepository.getUser();
+      final user = _authenticationRepository.getUser();
       return user;
     } on Exception {
       return null;

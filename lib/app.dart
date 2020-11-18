@@ -5,8 +5,8 @@ import 'package:intensivevr_pub/features/authentication/authentication.dart';
 import 'package:intensivevr_pub/features/welcome/view/welcome_page.dart';
 
 import 'features/home/home.dart';
-import 'features/login/login.dart';
 import 'features/splash/splash.dart';
+
 class App extends StatelessWidget {
   const App({
     Key key,
@@ -51,7 +51,7 @@ class _AppViewState extends State<AppView> {
               case AuthenticationStatus.authenticated:
                 _navigator.pushAndRemoveUntil<void>(
                   HomePage.route(),
-                      (route) => false,
+                  (route) => false,
                 );
                 break;
               case AuthenticationStatus.unauthenticated:

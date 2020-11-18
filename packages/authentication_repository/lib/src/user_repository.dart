@@ -1,8 +1,9 @@
 import 'dart:convert';
+
 import 'package:authentication_repository/const.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
-import 'package:meta/meta.dart';
 import 'package:http/http.dart' as http;
+import 'package:meta/meta.dart';
 import 'package:tuple/tuple.dart';
 
 class UserRepository {
@@ -47,7 +48,7 @@ class UserRepository {
     var body = json.encode({
       'email': email,
       'password': password,
-      'nick' : username,
+      'nick': username,
     });
 
     print('Body: $body');
@@ -89,9 +90,11 @@ class UserRepository {
     await storage.write(key: "auth_key", value: token);
     return;
   }
+
   static Future<String> getToken() async {
     return await FlutterSecureStorage().read(key: "auth_key");
   }
+
   static Future<String> getTokenAndVerify() async {
     final storage = new FlutterSecureStorage();
     var auth = await storage.read(key: "auth_key");

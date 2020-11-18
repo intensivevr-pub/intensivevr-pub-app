@@ -8,7 +8,6 @@ import 'package:intensivevr_pub/features/register/models/models.dart';
 import 'package:meta/meta.dart';
 
 part 'register_event.dart';
-
 part 'register_state.dart';
 
 class RegisterBloc extends Bloc<RegisterEvent, RegisterState> {
@@ -67,15 +66,17 @@ class RegisterBloc extends Bloc<RegisterEvent, RegisterState> {
       status: Formz.validate([password, state.username, state.email]),
     );
   }
+
   RegisterState _mapPasswordConfirmationChangedToState(
-      RegisterPasswordConfirmationChanged event,
-      RegisterState state,
-      ) {
+    RegisterPasswordConfirmationChanged event,
+    RegisterState state,
+  ) {
     final passwordConfirmation = Password.dirty(event.passwordConfirmation);
     FormzStatus status;
-    if(passwordConfirmation == state.password){
-      status = Formz.validate([state.password,passwordConfirmation, state.username, state.email]);
-    }else{
+    if (passwordConfirmation == state.password) {
+      status = Formz.validate(
+          [state.password, passwordConfirmation, state.username, state.email]);
+    } else {
       status = FormzStatus.invalid;
     }
     return state.copyWith(
@@ -83,6 +84,7 @@ class RegisterBloc extends Bloc<RegisterEvent, RegisterState> {
       status: status,
     );
   }
+
   Stream<RegisterState> _mapRegisterSubmittedToState(
     RegisterSubmitted event,
     RegisterState state,

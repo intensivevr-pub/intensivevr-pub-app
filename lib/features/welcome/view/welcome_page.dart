@@ -2,7 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:gradient_text/gradient_text.dart';
 import 'package:intensivevr_pub/features/login/login.dart';
-import 'package:intensivevr_pub/features/register/view/register_page.dart';
+import 'package:intensivevr_pub/features/register/register.dart';
 import 'package:intensivevr_pub/widgets/widgets.dart';
 
 class WelcomePage extends StatelessWidget {

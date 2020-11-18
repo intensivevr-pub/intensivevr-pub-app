@@ -6,7 +6,6 @@ import 'package:intensivevr_pub/widgets/widgets.dart';
 
 import '../../../widgets/textfields/credential_input.dart';
 
-
 class LoginForm extends StatelessWidget {
   @override
   Widget build(BuildContext context) {

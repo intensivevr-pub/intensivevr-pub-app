@@ -50,8 +50,8 @@ class AuthenticationRepository {
     assert(username != null);
     assert(password != null);
     assert(email != null);
-    bool isRegisterSuccessful =
-        await UserRepository.register(email: email, password: password,username: username);
+    bool isRegisterSuccessful = await UserRepository.register(
+        email: email, password: password, username: username);
     if (isRegisterSuccessful) {
       Tuple2<String, String> result =
           await UserRepository.login(email: email, password: password);
