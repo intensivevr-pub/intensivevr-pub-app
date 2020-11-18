@@ -4,7 +4,7 @@ import 'package:formz/formz.dart';
 import 'package:intensivevr_pub/features/login/bloc/login_bloc.dart';
 import 'package:intensivevr_pub/widgets/widgets.dart';
 
-import 'credential_input.dart';
+import '../../../widgets/textfields/credential_input.dart';
 
 
 class LoginForm extends StatelessWidget {
