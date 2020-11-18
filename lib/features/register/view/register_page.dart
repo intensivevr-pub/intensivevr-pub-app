@@ -11,7 +11,7 @@ class RegisterPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        resizeToAvoidBottomPadding: true,
+        resizeToAvoidBottomPadding: false,
         backgroundColor: Colors.white,
         body: SafeArea(
           child: Column(

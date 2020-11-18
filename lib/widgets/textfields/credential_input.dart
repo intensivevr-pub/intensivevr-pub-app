@@ -22,13 +22,16 @@ class CredentialInput extends StatelessWidget {
     return Padding(
       padding: EdgeInsets.symmetric(vertical: 5, horizontal: 0),
       child: Container(
-        padding: EdgeInsets.symmetric(vertical: 0, horizontal: 16),
+        padding: EdgeInsets.symmetric(horizontal:16,vertical: 5),
         height: 45,
         child: TextFormField(
           key: fieldKey,
+          maxLines: 1,
           onChanged: onChanged,
+          textAlignVertical: TextAlignVertical.center,
           decoration: InputDecoration(
             hintText: hint,
+            isDense: true,
             contentPadding: EdgeInsets.zero,
             labelText: labelText,
             errorText: errorText,

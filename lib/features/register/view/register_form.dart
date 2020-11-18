@@ -61,30 +61,22 @@ class _DateOfBirth extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Padding(
           padding: const EdgeInsets.symmetric(vertical: 8.0),
           child: Text("Data urodzenia:"),
         ),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Container(
-              width: 70,
-              height: 45,
-              color: Colors.grey,
+        Padding(
+          padding: const EdgeInsets.symmetric(vertical:8.0),
+          child: Container(
+            height: 60,
+            child: CupertinoDatePicker(
+              onDateTimeChanged: (DateTime value) {  },
+              mode: CupertinoDatePickerMode.date,
+              use24hFormat: false,
             ),
-            Container(
-              width: 70,
-              height: 45,
-              color: Colors.grey,
-            ),
-            Container(
-              width: 70,
-              height: 45,
-              color: Colors.grey,
-            ),
-          ],
+          ),
         )
       ],
     );
