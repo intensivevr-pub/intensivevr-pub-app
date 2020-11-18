@@ -41,10 +41,35 @@ class AuthenticationRepository {
       throw AuthenticationException();
     }
   }
-  User getUser(){
-    if(user==null) throw AuthenticationException();
+
+  Future<void> register({
+    @required String username,
+    @required String password,
+  }) async {
+    assert(username != null);
+    assert(password != null);
+    bool isRegisterSuccessful =
+        await UserRepository.register(email: username, password: password);
+    if (isRegisterSuccessful) {
+      Tuple2<String, String> result =
+          await UserRepository.login(email: username, password: password);
+      if (result != null) {
+        UserRepository.persistTokenAndRefresh(result);
+        user = User(result.item2);
+        _controller.add(AuthenticationStatus.authenticated);
+      } else {
+        throw AuthenticationException();
+      }
+    } else {
+      throw AuthenticationException();
+    }
+  }
+
+  User getUser() {
+    if (user == null) throw AuthenticationException();
     return user;
   }
+
   void logOut() {
     user = null;
     UserRepository.deleteToken();
