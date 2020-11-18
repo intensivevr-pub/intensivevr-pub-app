@@ -7,6 +7,7 @@ class CredentialInput extends StatelessWidget {
   final String errorText;
   final Function onChanged;
   final Key fieldKey;
+  final bool obscure;
 
   const CredentialInput(
       {Key key,
@@ -14,6 +15,7 @@ class CredentialInput extends StatelessWidget {
       this.labelText,
       this.errorText,
       this.onChanged,
+      this.obscure = false,
       this.fieldKey})
       : super(key: key);
 
@@ -26,6 +28,7 @@ class CredentialInput extends StatelessWidget {
         height: 45,
         child: TextFormField(
           key: fieldKey,
+          obscureText: obscure,
           onChanged: onChanged,
           decoration: InputDecoration(
             hintText: hint,

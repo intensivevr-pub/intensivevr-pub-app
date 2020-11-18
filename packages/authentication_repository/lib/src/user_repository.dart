@@ -41,11 +41,13 @@ class UserRepository {
   static Future<bool> register({
     @required String email,
     @required String password,
+    @required String username,
   }) async {
     final uri = Uri.http(serverUrl, "/auth/users/");
     var body = json.encode({
       'email': email,
       'password': password,
+      'nick' : username,
     });
 
     print('Body: $body');
