@@ -78,5 +78,17 @@ class AuthenticationRepository {
     _controller.add(AuthenticationStatus.unauthenticated);
   }
 
+  Future<String> refreshToken() async {
+    String auth = await UserRepository.refreshToken();
+    if (auth != null) {
+      user = User(auth);
+      _controller.add(AuthenticationStatus.authenticated);
+      return auth;
+    } else {
+      _controller.add(AuthenticationStatus.unauthenticated);
+      return null;
+    }
+  }
+
   void dispose() => _controller.close();
 }

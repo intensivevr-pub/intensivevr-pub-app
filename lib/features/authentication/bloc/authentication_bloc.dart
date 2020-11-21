@@ -13,14 +13,15 @@ class AuthenticationBloc
   AuthenticationBloc({
     @required AuthenticationRepository authenticationRepository,
   })  : assert(authenticationRepository != null),
-        _authenticationRepository = authenticationRepository,
+        this.authenticationRepository = authenticationRepository,
         super(const AuthenticationState.unknown()) {
-    _authenticationStatusSubscription = _authenticationRepository.status.listen(
-      (status) => add(AuthenticationStatusChanged(status)),
-    );
+    _authenticationStatusSubscription =
+        this.authenticationRepository.status.listen(
+              (status) => add(AuthenticationStatusChanged(status)),
+            );
   }
 
-  final AuthenticationRepository _authenticationRepository;
+  final AuthenticationRepository authenticationRepository;
   StreamSubscription<AuthenticationStatus> _authenticationStatusSubscription;
 
   @override
@@ -30,14 +31,14 @@ class AuthenticationBloc
     if (event is AuthenticationStatusChanged) {
       yield await _mapAuthenticationStatusChangedToState(event);
     } else if (event is AuthenticationLogoutRequested) {
-      _authenticationRepository.logOut();
+      authenticationRepository.logOut();
     }
   }
 
   @override
   Future<void> close() {
     _authenticationStatusSubscription?.cancel();
-    _authenticationRepository.dispose();
+    authenticationRepository.dispose();
     return super.close();
   }
 
@@ -58,7 +59,7 @@ class AuthenticationBloc
 
   Future<User> _tryGetUser() async {
     try {
-      final user = _authenticationRepository.getUser();
+      final user = authenticationRepository.getUser();
       return user;
     } on Exception {
       return null;

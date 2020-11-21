@@ -16,6 +16,8 @@ dependencies:
   bloc: ^6.1.0
   equatable: ^1.2.5
   formz: ^0.3.2
+  jwt_decoder: ^1.0.3
+  dio: ^3.0.10
   authentication_repository:
     path: packages/authentication_repository
 dev_dependencies:
