@@ -26,13 +26,13 @@ class AuthenticationRepository {
   }
 
   Future<void> logIn({
-    @required String username,
+    @required String email,
     @required String password,
   }) async {
-    assert(username != null);
+    assert(email != null);
     assert(password != null);
     Tuple2<String, String> result =
-        await UserRepository.login(email: username, password: password);
+        await UserRepository.login(email: email, password: password);
     if (result != null) {
       UserRepository.persistTokenAndRefresh(result);
       user = User(result.item2);

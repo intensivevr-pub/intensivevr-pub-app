@@ -16,7 +16,7 @@ class WelcomeButton extends StatelessWidget {
 
   const WelcomeButton(
       {Key key,
-      this.height,
+      this.height = 55,
       this.width,
       this.borderRadius,
       this.color,

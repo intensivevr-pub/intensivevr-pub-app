@@ -8,6 +8,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.5.0-nullsafety"
+  auth_buttons:
+    dependency: "direct main"
+    description:
+      name: auth_buttons
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.0.4"
   authentication_repository:
     dependency: "direct main"
     description:

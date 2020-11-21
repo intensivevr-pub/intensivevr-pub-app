@@ -29,6 +29,8 @@ class RegisterBloc extends Bloc<RegisterEvent, RegisterState> {
       yield _mapPasswordChangedToState(event, state);
     } else if (event is RegisterEmailChanged) {
       yield _mapEmailChangedToState(event, state);
+    } else if (event is RegisterPasswordConfirmationChanged) {
+      yield _mapPasswordConfirmationChangedToState(event, state);
     } else if (event is RegisterSubmitted) {
       yield* _mapRegisterSubmittedToState(event, state);
     }
@@ -63,7 +65,8 @@ class RegisterBloc extends Bloc<RegisterEvent, RegisterState> {
     final password = Password.dirty(event.password);
     return state.copyWith(
       password: password,
-      status: Formz.validate([password, state.username, state.email]),
+      status: Formz.validate(
+          [password, state.username, state.email, state.passwordConfirmation]),
     );
   }
 

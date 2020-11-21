@@ -19,17 +19,56 @@ class RegisterForm extends StatelessWidget {
             );
         }
       },
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          _EmailInput(),
-          _LoginInput(),
-          _PasswordInput(),
-          _ConfirmPasswordInput(),
-          _DateOfBirth(),
-          _TermsOfUse(),
-          _RegisterButton(),
-        ],
+      child: BlocBuilder<RegisterBloc, RegisterState>(
+        builder: (BuildContext context, state) {
+          return Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              _EmailInput(),
+              AppearingInput(
+                child: _LoginInput(),
+                visible: !state.email.pure,
+              ),
+              AppearingInput(
+                child: _PasswordInput(),
+                visible: !state.username.pure,
+              ),
+              AppearingInput(
+                  child: _ConfirmPasswordInput(),
+                  visible: !state.password.pure),
+              AppearingInput(
+                  child: _DateOfBirth(),
+                  visible: !state.passwordConfirmation.pure),
+              AppearingInput(
+                  child: _TermsOfUse(),
+                  visible: !state.passwordConfirmation.pure),
+              AppearingInput(
+                  child: _RegisterButton(),
+                  visible: !state.passwordConfirmation.pure),
+            ],
+          );
+        },
+      ),
+    );
+  }
+}
+
+class AppearingInput extends StatelessWidget {
+  final bool visible;
+  final Widget child;
+
+  AppearingInput({this.visible, this.child});
+
+  @override
+  Widget build(BuildContext context) {
+    return Visibility(
+      visible: visible,
+      maintainState: true,
+      maintainAnimation: true,
+      child: AnimatedOpacity(
+        opacity: visible ? 1 : 0,
+        duration: Duration(milliseconds: 500),
+        child: child,
       ),
     );
   }
@@ -41,12 +80,16 @@ class _EmailInput extends StatelessWidget {
     return BlocBuilder<RegisterBloc, RegisterState>(
       buildWhen: (previous, current) => previous.email != current.email,
       builder: (context, state) {
-        return CredentialInput(
-          labelText: "Email",
-          errorText: state.email.invalid ? 'invalid email' : null,
-          onChanged: (email) =>
-              context.read<RegisterBloc>().add(RegisterEmailChanged(email)),
-          fieldKey: const Key('registerForm_emailInput_textField'),
+        return Padding(
+          padding: const EdgeInsets.symmetric(vertical: 10.0),
+          child: CredentialInput(
+            labelText: "Email",
+            errorText:
+                state.email.invalid ? state.email.getErrorMessage() : null,
+            onChanged: (email) =>
+                context.read<RegisterBloc>().add(RegisterEmailChanged(email)),
+            fieldKey: const Key('registerForm_emailInput_textField'),
+          ),
         );
       },
     );
@@ -59,13 +102,19 @@ class _LoginInput extends StatelessWidget {
     return BlocBuilder<RegisterBloc, RegisterState>(
       buildWhen: (previous, current) => previous.username != current.username,
       builder: (context, state) {
-        return CredentialInput(
-          labelText: "Username",
-          errorText: state.username.invalid ? 'invalid username' : null,
-          onChanged: (username) => context
-              .read<RegisterBloc>()
-              .add(RegisterUsernameChanged(username)),
-          fieldKey: const Key('registerForm_usernameInput_textField'),
+        return Padding(
+          padding: const EdgeInsets.symmetric(vertical: 10.0),
+          child: CredentialInput(
+            labelText: "Nick",
+            errorText: state.username.invalid
+                ? 'Nick nie może być pusty'
+                : null,
+            onChanged: (username) =>
+                context
+                    .read<RegisterBloc>()
+                    .add(RegisterUsernameChanged(username)),
+            fieldKey: const Key('registerForm_usernameInput_textField'),
+          ),
         );
       },
     );
@@ -78,14 +127,19 @@ class _PasswordInput extends StatelessWidget {
     return BlocBuilder<RegisterBloc, RegisterState>(
       buildWhen: (previous, current) => previous.password != current.password,
       builder: (context, state) {
-        return CredentialInput(
-          labelText: "password",
-          obscure: true,
-          errorText: state.password.invalid ? 'invalid password' : null,
-          onChanged: (password) => context
-              .read<RegisterBloc>()
-              .add(RegisterPasswordChanged(password)),
-          fieldKey: const Key('registerForm_passwordInput_textField'),
+        return Padding(
+          padding: const EdgeInsets.symmetric(vertical: 10.0),
+          child: CredentialInput(
+            labelText: "Hasło",
+            obscure: true,
+            errorText:
+            state.password.invalid ? state.password.getErrorMessage() : null,
+            onChanged: (password) =>
+                context
+                    .read<RegisterBloc>()
+                    .add(RegisterPasswordChanged(password)),
+            fieldKey: const Key('registerForm_passwordInput_textField'),
+          ),
         );
       },
     );
@@ -99,17 +153,22 @@ class _ConfirmPasswordInput extends StatelessWidget {
       buildWhen: (previous, current) =>
           previous.passwordConfirmation != current.passwordConfirmation,
       builder: (context, state) {
-        return CredentialInput(
-          labelText: "confirm password",
-          obscure: true,
-          errorText: state.passwordConfirmation.invalid
-              ? "passwords don't match"
-              : null,
-          onChanged: (passwordConfirmation) => context
-              .read<RegisterBloc>()
-              .add(RegisterPasswordConfirmationChanged(passwordConfirmation)),
-          fieldKey:
-              const Key('registerForm_passwordConfirmationInput_textField'),
+        return Padding(
+          padding: const EdgeInsets.symmetric(vertical: 10.0),
+          child: CredentialInput(
+            labelText: "Potwierdź hasło",
+            obscure: true,
+            errorText: state.passwordConfirmation.invalid
+                ? "Hasła nie są takie same"
+                : null,
+            onChanged: (passwordConfirmation) =>
+                context
+                    .read<RegisterBloc>()
+                    .add(
+                    RegisterPasswordConfirmationChanged(passwordConfirmation)),
+            fieldKey:
+            const Key('registerForm_passwordConfirmationInput_textField'),
+          ),
         );
       },
     );
@@ -119,33 +178,36 @@ class _ConfirmPasswordInput extends StatelessWidget {
 class _DateOfBirth extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Padding(
-          padding: const EdgeInsets.symmetric(vertical: 8.0),
-          child: Text("Data urodzenia:"),
-        ),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Container(
-              width: 70,
-              height: 45,
-              color: Colors.grey,
-            ),
-            Container(
-              width: 70,
-              height: 45,
-              color: Colors.grey,
-            ),
-            Container(
-              width: 70,
-              height: 45,
-              color: Colors.grey,
-            ),
-          ],
-        )
-      ],
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 10.0),
+      child: Column(
+        children: [
+          Padding(
+            padding: const EdgeInsets.symmetric(vertical: 8.0),
+            child: Text("Data urodzenia:"),
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Container(
+                width: 70,
+                height: 45,
+                color: Colors.grey,
+              ),
+              Container(
+                width: 70,
+                height: 45,
+                color: Colors.grey,
+              ),
+              Container(
+                width: 70,
+                height: 45,
+                color: Colors.grey,
+              ),
+            ],
+          )
+        ],
+      ),
     );
   }
 }
@@ -154,7 +216,7 @@ class _TermsOfUse extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 16.0),
+      padding: const EdgeInsets.symmetric(vertical: 30.0),
       child: Text(
         "Rejestrując się wyrażasz zgodę na warunki zawarte w regulaminie.",
         textAlign: TextAlign.center,
