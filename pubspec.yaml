@@ -16,10 +16,11 @@ dependencies:
   bloc: ^6.1.0
   equatable: ^1.2.5
   formz: ^0.3.2
+  jwt_decoder: ^1.0.3
+  dio: ^3.0.10
+  auth_buttons: ^0.0.4
   authentication_repository:
     path: packages/authentication_repository
-  user_repository:
-    path: packages/user_repository
 dev_dependencies:
   flutter_test:
     sdk: flutter

@@ -21,10 +21,9 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
 
   @override
   Stream<LoginState> mapEventToState(
-      LoginEvent event,
-      ) async* {
-    if (event is LoginUsernameChanged) {
-      yield _mapUsernameChangedToState(event, state);
+    LoginEvent event,) async* {
+    if (event is LoginEmailChanged) {
+      yield _mapEmailChangedToState(event, state);
     } else if (event is LoginPasswordChanged) {
       yield _mapPasswordChangedToState(event, state);
     } else if (event is LoginSubmitted) {
@@ -32,37 +31,35 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
     }
   }
 
-  LoginState _mapUsernameChangedToState(
-      LoginUsernameChanged event,
-      LoginState state,
-      ) {
-    final username = Username.dirty(event.username);
+  LoginState _mapEmailChangedToState(LoginEmailChanged event,
+      LoginState state,) {
+    final email = Email.dirty(event.email);
     return state.copyWith(
-      username: username,
-      status: Formz.validate([state.password, username]),
+      email: email,
+      status: Formz.validate([state.password, email]),
     );
   }
 
   LoginState _mapPasswordChangedToState(
-      LoginPasswordChanged event,
-      LoginState state,
-      ) {
+    LoginPasswordChanged event,
+    LoginState state,
+  ) {
     final password = Password.dirty(event.password);
     return state.copyWith(
       password: password,
-      status: Formz.validate([password, state.username]),
+      status: Formz.validate([password, state.email]),
     );
   }
 
   Stream<LoginState> _mapLoginSubmittedToState(
-      LoginSubmitted event,
-      LoginState state,
-      ) async* {
+    LoginSubmitted event,
+    LoginState state,
+  ) async* {
     if (state.status.isValidated) {
       yield state.copyWith(status: FormzStatus.submissionInProgress);
       try {
         await _authenticationRepository.logIn(
-          username: state.username.value,
+          email: state.email.value.trim(),
           password: state.password.value,
         );
         yield state.copyWith(status: FormzStatus.submissionSuccess);

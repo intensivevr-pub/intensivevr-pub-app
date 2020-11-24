@@ -7,6 +7,7 @@ class CredentialInput extends StatelessWidget {
   final String errorText;
   final Function onChanged;
   final Key fieldKey;
+  final bool obscure;
 
   const CredentialInput(
       {Key key,
@@ -14,6 +15,7 @@ class CredentialInput extends StatelessWidget {
       this.labelText,
       this.errorText,
       this.onChanged,
+      this.obscure = false,
       this.fieldKey})
       : super(key: key);
 
@@ -27,6 +29,7 @@ class CredentialInput extends StatelessWidget {
         child: TextFormField(
           key: fieldKey,
           maxLines: 1,
+          obscureText: obscure,
           onChanged: onChanged,
           textAlignVertical: TextAlignVertical.center,
           decoration: InputDecoration(
@@ -40,7 +43,7 @@ class CredentialInput extends StatelessWidget {
         ),
         decoration: BoxDecoration(
           color: Color.fromRGBO(200, 200, 200, 100),
-          borderRadius: BorderRadius.all(Radius.circular(16)),
+          borderRadius: BorderRadius.all(Radius.circular(10)),
         ),
       ),
     );
