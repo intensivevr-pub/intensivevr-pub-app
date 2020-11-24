@@ -178,36 +178,26 @@ class _ConfirmPasswordInput extends StatelessWidget {
 class _DateOfBirth extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 10.0),
-      child: Column(
-        children: [
-          Padding(
-            padding: const EdgeInsets.symmetric(vertical: 8.0),
-            child: Text("Data urodzenia:"),
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Padding(
+          padding: const EdgeInsets.symmetric(vertical: 8.0),
+          child: Text("Data urodzenia:"),
+        ),
+        Padding(
+          padding: const EdgeInsets.symmetric(vertical:8.0),
+          child: Container(
+            height: 60,
+            child: CupertinoDatePicker(
+              onDateTimeChanged: (DateTime value) {  },
+              mode: CupertinoDatePickerMode.date,
+              use24hFormat: false,
+            ),
           ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Container(
-                width: 70,
-                height: 45,
-                color: Colors.grey,
-              ),
-              Container(
-                width: 70,
-                height: 45,
-                color: Colors.grey,
-              ),
-              Container(
-                width: 70,
-                height: 45,
-                color: Colors.grey,
-              ),
-            ],
-          )
-        ],
-      ),
+        )
+      ],
+
     );
   }
 }
