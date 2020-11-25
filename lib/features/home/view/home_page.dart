@@ -32,7 +32,23 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('Home')),
+      appBar: AppBar(
+        title: const Text('Home'),
+        actions: [
+          IconButton(
+              icon: Icon(Icons.qr_code),
+              onPressed: () {
+                showDialog(
+                  context: context,
+                  builder: (_) => SimpleDialog(
+                    title: Text("ID"),
+                  ),
+                  barrierDismissible: true,
+                );
+              },
+          )
+        ],
+      ),
       body: Center(
         child: Column(
           mainAxisSize: MainAxisSize.min,
