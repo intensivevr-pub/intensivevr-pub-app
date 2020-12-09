@@ -32,11 +32,11 @@ class Discounts extends StatelessWidget {
                 height: 200,
                 child: Row(
                   children: [
-                    DiscountPanel(color: Colors.teal, product: "Perła", discount: "-20%",),
-                    DiscountPanel(color: Colors.teal, product: "Perła", discount: "-20%",),
-                    DiscountPanel(color: Colors.teal, product: "Perła", discount: "-20%",),
-                    DiscountPanel(color: Colors.teal, product: "Perła", discount: "-20%",),
-                    DiscountPanel(color: Colors.teal, product: "Perła", discount: "-20%",),
+                    DiscountPanel(color: Colors.green[600], product: "Perła Export", discount: "-23%",),
+                    DiscountPanel(color: Colors.lightGreen[600], product: "Perła Chmielowa", discount: "-40%",),
+                    DiscountPanel(color: Colors.yellow[600], product: "Perła Miodowa", discount: "+20%",),
+                    DiscountPanel(color: Colors.grey[800], product: "Perła Mocna", discount: "-69%",),
+                    DiscountPanel(color: Colors.teal, product: "Perła Radler", discount: "-100%, i tak nikt nie kupi",),
                   ],
                 ),
               ),
