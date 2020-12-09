@@ -2,6 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intensivevr_pub/core/services/data_repository.dart';
 import 'package:intensivevr_pub/features/authentication/authentication.dart';
+import 'package:intensivevr_pub/features/home/view/point_show.dart';
+
+import 'discounts.dart';
+
+
 
 class HomePage extends StatefulWidget {
   static Route route() {
@@ -49,28 +54,28 @@ class _HomePageState extends State<HomePage> {
           )
         ],
       ),
-      body: Center(
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: <Widget>[
-            Builder(
-              builder: (context) {
-                final userId = context.select(
-                      (AuthenticationBloc bloc) => bloc.state.user.authToken,
-                );
-                return Text(data.toString() ?? "Maslo");
-              },
-            ),
-            RaisedButton(
-              child: const Text('Logout'),
-              onPressed: () {
-                context
-                    .read<AuthenticationBloc>()
-                    .add(AuthenticationLogoutRequested());
-              },
-            ),
-          ],
-        ),
+      body: Column(
+        mainAxisSize: MainAxisSize.min,
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: <Widget>[
+          Builder(
+            builder: (context) {
+              final userId = context.select(
+                    (AuthenticationBloc bloc) => bloc.state.user.authToken,
+              );
+              return PointShow(points: data ?? "Maslo");
+            },
+          ),
+          Discounts(),
+          RaisedButton(
+            child: const Text('Logout'),
+            onPressed: () {
+              context
+                  .read<AuthenticationBloc>()
+                  .add(AuthenticationLogoutRequested());
+            },
+          ),
+        ],
       ),
     );
   }
