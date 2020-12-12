@@ -13,30 +13,74 @@ class DiscountPanel extends StatelessWidget {
     return Container(
       margin: EdgeInsets.all(12.0),
       width: 140.0,
-      padding: EdgeInsets.all(12.0),
       decoration: BoxDecoration(
         color: this.color,
         borderRadius: BorderRadius.circular(16),
       ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            this.product,
-            style: TextStyle(
-              color: Colors.white,
-              fontWeight: FontWeight.bold,
+      child: Material(
+        type: MaterialType.transparency,
+        child: InkWell(
+          onTap: () { bottomSheet(context); },
+          child: Padding(
+            padding: EdgeInsets.all(12.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  this.product,
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                Text(
+                  this.discount,
+                  style: TextStyle(
+                    color: Colors.grey[300],
+                  ),
+                ),
+              ],
             ),
           ),
-          Text(
-            this.discount,
-            style: TextStyle(
-              color: Colors.grey[300],
-            ),
-          ),
-        ],
+        ),
       ),
     );
   }
 
+  void bottomSheet(context) {
+    showModalBottomSheet(
+      context: context,
+      backgroundColor: Colors.transparent,
+      builder: (BuildContext bc) {
+          double h = MediaQuery.of(context).size.height * .8;
+          print(h);
+          return Container(
+          height: h,
+          padding: EdgeInsets.all(20),
+          decoration: BoxDecoration(
+            color: this.color,
+            borderRadius: BorderRadius.vertical(top: Radius.circular(32.0)),
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                this.product,
+                style: TextStyle(
+                  color: Colors.white,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              Text(
+                this.discount,
+                style: TextStyle(
+                  color: Colors.grey[300],
+                ),
+              ),
+            ],
+          )
+      );
+      }
+    );
+  }
 }
