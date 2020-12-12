@@ -52,10 +52,8 @@ class DiscountPanel extends StatelessWidget {
       context: context,
       backgroundColor: Colors.transparent,
       builder: (BuildContext bc) {
-          double h = MediaQuery.of(context).size.height * .8;
-          print(h);
           return Container(
-          height: h,
+          height: 500,  // TODO: make dynamic?
           padding: EdgeInsets.all(20),
           decoration: BoxDecoration(
             color: this.color,
