@@ -7,6 +7,7 @@ class DiscountPanel extends StatelessWidget {
   final String discount;
   final ImageProvider img;
 
+
   const DiscountPanel({Key key, this.color, this.product, this.discount, this.img}) : super(key: key);
 
   @override
@@ -21,7 +22,9 @@ class DiscountPanel extends StatelessWidget {
       child: Material(
         type: MaterialType.transparency,
         child: InkWell(
-          onTap: () { bottomSheet(context); },
+          onTap: () {
+            bottomSheet(context);
+          },
           child: Padding(
             padding: EdgeInsets.all(12.0),
             child: Stack(

@@ -7,8 +7,6 @@ import 'package:intensivevr_pub/features/home/view/point_show.dart';
 import 'discounts.dart';
 import 'home_menu.dart';
 
-
-
 class HomePage extends StatefulWidget {
   static Route route() {
     return MaterialPageRoute<void>(builder: (_) => HomePage());
@@ -43,33 +41,28 @@ class _HomePageState extends State<HomePage> {
         title: const Text('Home'),
         actions: [
           IconButton(
-              icon: Icon(Icons.qr_code),
-              onPressed: () {
-                showDialog(
-                  context: context,
-                  builder: (_) => SimpleDialog(
-                    title: Text("ID"),
-                  ),
-                  barrierDismissible: true,
-                );
-              },
+            icon: Icon(Icons.qr_code),
+            onPressed: () {
+              showDialog(
+                context: context,
+                builder: (_) => SimpleDialog(
+                  title: Text("ID"),
+                ),
+                barrierDismissible: true,
+              );
+            },
           )
         ],
       ),
-      body: Column(
-        mainAxisSize: MainAxisSize.min,
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: <Widget>[
-          Builder(
-            builder: (context) {
-              final userId = context.select(
-                    (AuthenticationBloc bloc) => bloc.state.user.authToken,
-              );
-              return PointShow(points: data ?? -1);
-            },
-          ),
-          Discounts(),
-        ],
+      body: SingleChildScrollView(
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: <Widget>[
+            PointShow(points: data ?? -1),
+            Discounts(),
+          ],
+        ),
       ),
     );
   }
