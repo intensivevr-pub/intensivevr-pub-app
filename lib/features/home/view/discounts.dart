@@ -32,11 +32,11 @@ class Discounts extends StatelessWidget {
                 height: 200,
                 child: Row(
                   children: [
-                    DiscountPanel(color: Colors.green[600], product: "Perła Export", discount: "-23%",),
-                    DiscountPanel(color: Colors.lightGreen[600], product: "Perła Chmielowa", discount: "-40%",),
-                    DiscountPanel(color: Colors.yellow[600], product: "Perła Miodowa", discount: "+20%",),
-                    DiscountPanel(color: Colors.grey[800], product: "Perła Mocna", discount: "-69%",),
-                    DiscountPanel(color: Colors.teal, product: "Perła Radler", discount: "-100%, i tak nikt nie kupi",),
+                    DiscountPanel(color: Colors.green[600], product: "Perła Export", discount: "-23%", img: NetworkImage("https://lh3.googleusercontent.com/proxy/BoiiVeXQSVmfUSxiWU4LPIihfdJg_XaXsT_TX8D4hJUbGTYhf9iZKx1KS9ozF_JkZps3lDUABOn0Ef46pio4B5BpBLke7mbbaUuY-QzENysDqK8pSa7kxg3bDGVf7KEsVg")),
+                    DiscountPanel(color: Colors.lightGreen[600], product: "Perła Chmielowa", discount: "-40%",img: NetworkImage("https://lh3.googleusercontent.com/proxy/BoiiVeXQSVmfUSxiWU4LPIihfdJg_XaXsT_TX8D4hJUbGTYhf9iZKx1KS9ozF_JkZps3lDUABOn0Ef46pio4B5BpBLke7mbbaUuY-QzENysDqK8pSa7kxg3bDGVf7KEsVg")),
+                    DiscountPanel(color: Colors.yellow[800], product: "Perła Miodowa", discount: "+20%",img: NetworkImage("https://lh3.googleusercontent.com/proxy/BoiiVeXQSVmfUSxiWU4LPIihfdJg_XaXsT_TX8D4hJUbGTYhf9iZKx1KS9ozF_JkZps3lDUABOn0Ef46pio4B5BpBLke7mbbaUuY-QzENysDqK8pSa7kxg3bDGVf7KEsVg")),
+                    DiscountPanel(color: Colors.grey[800], product: "Perła Mocna", discount: "-69%",img: NetworkImage("https://lh3.googleusercontent.com/proxy/BoiiVeXQSVmfUSxiWU4LPIihfdJg_XaXsT_TX8D4hJUbGTYhf9iZKx1KS9ozF_JkZps3lDUABOn0Ef46pio4B5BpBLke7mbbaUuY-QzENysDqK8pSa7kxg3bDGVf7KEsVg")),
+                    DiscountPanel(color: Colors.teal, product: "Perła Radler", discount: "-100%, i tak nikt nie kupi",img: NetworkImage("https://lh3.googleusercontent.com/proxy/BoiiVeXQSVmfUSxiWU4LPIihfdJg_XaXsT_TX8D4hJUbGTYhf9iZKx1KS9ozF_JkZps3lDUABOn0Ef46pio4B5BpBLke7mbbaUuY-QzENysDqK8pSa7kxg3bDGVf7KEsVg")),
                   ],
                 ),
               ),

@@ -5,8 +5,9 @@ class DiscountPanel extends StatelessWidget {
   final Color color;
   final String product;
   final String discount;
+  final ImageProvider img;
 
-  const DiscountPanel({Key key, this.color, this.product, this.discount}) : super(key: key);
+  const DiscountPanel({Key key, this.color, this.product, this.discount, this.img}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -23,23 +24,33 @@ class DiscountPanel extends StatelessWidget {
           onTap: () { bottomSheet(context); },
           child: Padding(
             padding: EdgeInsets.all(12.0),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  this.product,
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontWeight: FontWeight.bold,
+            child: Stack(
+              children: [Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    this.product,
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
-                ),
-                Text(
-                  this.discount,
-                  style: TextStyle(
-                    color: Colors.grey[300],
+                  Text(
+                    this.discount,
+                    style: TextStyle(
+                      color: Colors.grey[300],
+                    ),
                   ),
-                ),
-              ],
+                ],
+              ),
+                Positioned(
+                  bottom: 0,
+                  right: 0,
+                  child: Image(
+                    image: img,
+                    height: 110,
+                  ),
+                )]
             ),
           ),
         ),
@@ -48,33 +59,47 @@ class DiscountPanel extends StatelessWidget {
   }
 
   void bottomSheet(context) {
-    showModalBottomSheet(
+    showBottomSheet(
       context: context,
       backgroundColor: Colors.transparent,
+
       builder: (BuildContext bc) {
           return Container(
-          height: 500,  // TODO: make dynamic?
+          height: MediaQuery.of(context).size.height * .85,  // TODO: make dynamic?
+          width: MediaQuery.of(context).size.width,
           padding: EdgeInsets.all(20),
           decoration: BoxDecoration(
             color: this.color,
             borderRadius: BorderRadius.vertical(top: Radius.circular(32.0)),
           ),
           child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
-              Text(
-                this.product,
-                style: TextStyle(
-                  color: Colors.white,
-                  fontWeight: FontWeight.bold,
-                ),
+              Column(
+                children: [
+                  Text(
+                    this.product,
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontWeight: FontWeight.bold,
+                      fontSize: 18
+                    ),
+                  ),
+                  Text(
+                    this.discount,
+                    style: TextStyle(
+                      color: Colors.grey[300],
+                      fontSize: 14
+                    ),
+                  ),
+                ],
               ),
-              Text(
-                this.discount,
-                style: TextStyle(
-                  color: Colors.grey[300],
-                ),
+              Image(
+                image: img,
+                height: 250,
               ),
+              Icon(Icons.qr_code, size: 200,)
             ],
           )
       );

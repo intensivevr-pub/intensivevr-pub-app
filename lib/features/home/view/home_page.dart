@@ -5,6 +5,7 @@ import 'package:intensivevr_pub/features/authentication/authentication.dart';
 import 'package:intensivevr_pub/features/home/view/point_show.dart';
 
 import 'discounts.dart';
+import 'home_menu.dart';
 
 
 
@@ -37,6 +38,7 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      drawer: HomeMenu(),
       appBar: AppBar(
         title: const Text('Home'),
         actions: [
@@ -63,18 +65,10 @@ class _HomePageState extends State<HomePage> {
               final userId = context.select(
                     (AuthenticationBloc bloc) => bloc.state.user.authToken,
               );
-              return PointShow(points: data ?? "Maslo");
+              return PointShow(points: data ?? -1);
             },
           ),
           Discounts(),
-          RaisedButton(
-            child: const Text('Logout'),
-            onPressed: () {
-              context
-                  .read<AuthenticationBloc>()
-                  .add(AuthenticationLogoutRequested());
-            },
-          ),
         ],
       ),
     );
