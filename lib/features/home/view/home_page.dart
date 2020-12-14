@@ -4,7 +4,7 @@ import 'package:intensivevr_pub/core/services/data_repository.dart';
 import 'package:intensivevr_pub/features/authentication/authentication.dart';
 import 'package:intensivevr_pub/features/home/view/point_show.dart';
 
-import 'discounts.dart';
+import 'side_table.dart';
 import 'home_menu.dart';
 
 class HomePage extends StatefulWidget {
@@ -60,7 +60,10 @@ class _HomePageState extends State<HomePage> {
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: <Widget>[
             PointShow(points: data ?? -1),
-            Discounts(),
+            SideTable(title: "Aktualne Promocje", color: Colors.grey[500]),
+            SideTable(title: "Dostępne gry:", color: Colors.purple[900]),
+            SideTable(title: "Wymieniaj punkty:", color: Colors.orange[300]),
+            SideTable(title: "Nadchodzące wydarzenia:", color: Colors.green[900]),
           ],
         ),
       ),

@@ -1,14 +1,13 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:intensivevr_pub/core/models/discount.dart';
 
 class DiscountPanel extends StatelessWidget {
+  final Discount discount;
   final Color color;
-  final String product;
-  final String discount;
-  final ImageProvider img;
 
 
-  const DiscountPanel({Key key, this.color, this.product, this.discount, this.img}) : super(key: key);
+  const DiscountPanel({Key key, this.discount, this.color}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -22,38 +21,40 @@ class DiscountPanel extends StatelessWidget {
       child: Material(
         type: MaterialType.transparency,
         child: InkWell(
+          borderRadius: BorderRadius.circular(16),
           onTap: () {
             bottomSheet(context);
           },
           child: Padding(
             padding: EdgeInsets.all(12.0),
             child: Stack(
-              children: [Column(
+              children: [
+                Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    this.product,
+                    discount.product.name,
                     style: TextStyle(
                       color: Colors.white,
                       fontWeight: FontWeight.bold,
                     ),
                   ),
                   Text(
-                    this.discount,
+                    discount.value.toString(),
                     style: TextStyle(
                       color: Colors.grey[300],
                     ),
                   ),
                 ],
               ),
-                Positioned(
-                  bottom: 0,
-                  right: 0,
-                  child: Image(
-                    image: img,
-                    height: 110,
-                  ),
-                )]
+              Positioned(
+                bottom: 0,
+                right: 0,
+                child: Image(
+                  image: NetworkImage(discount.product.picture),
+                  height: 110,
+                ),
+              )]
             ),
           ),
         ),
@@ -65,10 +66,9 @@ class DiscountPanel extends StatelessWidget {
     showBottomSheet(
       context: context,
       backgroundColor: Colors.transparent,
-
       builder: (BuildContext bc) {
           return Container(
-          height: MediaQuery.of(context).size.height * .85,  // TODO: make dynamic?
+          height: MediaQuery.of(context).size.height * .8,  // TODO: make dynamic?
           width: MediaQuery.of(context).size.width,
           padding: EdgeInsets.all(20),
           decoration: BoxDecoration(
@@ -77,12 +77,13 @@ class DiscountPanel extends StatelessWidget {
           ),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
               Column(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
-                    this.product,
+                    discount.product.name,
                     style: TextStyle(
                       color: Colors.white,
                       fontWeight: FontWeight.bold,
@@ -90,7 +91,7 @@ class DiscountPanel extends StatelessWidget {
                     ),
                   ),
                   Text(
-                    this.discount,
+                    discount.value.toString(),
                     style: TextStyle(
                       color: Colors.grey[300],
                       fontSize: 14
@@ -99,10 +100,9 @@ class DiscountPanel extends StatelessWidget {
                 ],
               ),
               Image(
-                image: img,
+                image: NetworkImage(discount.product.picture),
                 height: 250,
               ),
-              Icon(Icons.qr_code, size: 200,)
             ],
           )
       );
