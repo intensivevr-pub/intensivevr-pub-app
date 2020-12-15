@@ -1,16 +1,16 @@
 class User {
-  final int id;
   final int points;
   final String name;
+  final String hash;
 
   User({
-    this.id,
     this.points,
     this.name,
+    this.hash,
   });
 
   User.fromJson(var json)
-      : id = json['id'],
-        points = json['points'],
-        name = json['name'];
+      : points = json['points'],
+        hash = json['userhash'],
+        name = json['nick'];
 }

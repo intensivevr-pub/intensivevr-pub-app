@@ -5,15 +5,20 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intensivevr_pub/core/services/data_repository.dart';
 import 'package:intensivevr_pub/features/authentication/authentication.dart';
+import 'package:intensivevr_pub/features/home/elements/elements.dart';
 import 'package:intensivevr_pub/features/home/elements/generic_list/bloc/bloc.dart';
 import 'package:intensivevr_pub/features/home/elements/points/points.dart';
+import 'package:intensivevr_pub/features/user_data/user_data.dart';
 
 import 'drawer/home_menu.dart';
-import '../elements/generic_list/view/generic_panel.dart';
 
 class HomePage extends StatefulWidget {
   static Route route() {
-    return MaterialPageRoute<void>(builder: (_) => HomePage());
+    return MaterialPageRoute<void>(
+        builder: (_) => BlocProvider(
+            create: (BuildContext context) =>
+                UserDataBloc(BlocProvider.of<AuthenticationBloc>(context))..add(GetInitialUserData()),
+            child: HomePage()));
   }
 
   @override
@@ -21,21 +26,17 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  var data;
   AuthenticationBloc authBloc;
 
-  void loadPoints() async {
-    var test = await DataRepository.getUserPoints(
-        BlocProvider.of<AuthenticationBloc>(context));
-    setState(() {
-      data = test;
-    });
+  @override
+  void dispose() {
+    authBloc.close();
+    super.dispose();
   }
 
   @override
   void initState() {
     authBloc = BlocProvider.of<AuthenticationBloc>(context);
-    loadPoints();
     super.initState();
   }
 
@@ -50,30 +51,34 @@ class _HomePageState extends State<HomePage> {
           inactiveOverlayOpacity: 0,
           backLayerBackgroundColor: Colors.grey[100],
           drawer: HomeMenu(),
-          headerHeight: height-300,
+          headerHeight: height - 300,
           appBar: AppBar(
             iconTheme: IconTheme.of(context).copyWith(color: Colors.black),
             elevation: 0,
             backgroundColor: Colors.grey[100],
             actions: [
               BackdropToggleButton(
-                icon: AnimatedIcons.list_view,color: Colors.black,
+                icon: AnimatedIcons.list_view,
+                color: Colors.black,
               )
             ],
           ),
           backLayer: Padding(
-            padding:  EdgeInsets.only(top:50.0),
-            child: BarcodeWidget(
-              barcode: Barcode.code128(), // Barcode type and settings
-              data: 'HUJE MUJE', // Content
-              width: width*0.7,
-              height: 130,
+            padding: EdgeInsets.only(top: 50.0),
+            child: BlocBuilder<UserDataBloc, UserDataState>(
+              builder: (BuildContext context, UserDataState state) {
+                return BarcodeWidget(
+                  barcode: Barcode.code128(), // Barcode type and settings
+                  data: state.hash, // Content
+                  width: width * 0.7,
+                  height: 130,
+                );
+              },
             ),
           ),
           frontLayer: Padding(
-            padding: EdgeInsets.only(top:7.0),
+            padding: EdgeInsets.only(top: 7.0),
             child: Container(
-
               decoration: BoxDecoration(
                 color: Colors.white,
                 borderRadius: BorderRadius.vertical(top: Radius.circular(16)),
@@ -92,12 +97,15 @@ class _HomePageState extends State<HomePage> {
                   return false;
                 },
                 child: SingleChildScrollView(
-                  
                   child: Column(
                     mainAxisSize: MainAxisSize.min,
                     crossAxisAlignment: CrossAxisAlignment.stretch,
                     children: <Widget>[
-                      PointsPanel(points: data ?? -1),
+                      BlocBuilder<UserDataBloc, UserDataState>(
+                        builder: (BuildContext context, UserDataState state) {
+                          return PointsPanel(points: state.points);
+                        },
+                      ),
                       BlocProvider<GenericListBloc>(
                           create: (BuildContext context) {
                             return new GenericListBloc(

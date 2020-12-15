@@ -1,7 +1,5 @@
 import 'package:intensivevr_pub/core/services/image_manager.dart';
 
-import '../../const.dart';
-
 class Product {
   final int id;
   final String name;

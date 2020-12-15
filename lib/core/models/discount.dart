@@ -33,8 +33,8 @@ class Discount {
         name = json['discount_name'],
         type = DiscountType.values.firstWhere(
             (e) => e.toString() == 'DiscountType.' + json['discount_type']),
-        dateStart = DateTime.parse(json['discount_from']),
-        dateEnd = DateTime.parse(json['discount_deadline']),
+        dateStart = json['discount_from'] != null ? DateTime.parse(json['discount_from']) : null,
+        dateEnd = json['discount_deadline'] != null ? DateTime.parse(json['discount_deadline']) : null,
         value = json['discount_value'],
         category = json['discount_category'] != null
             ? Category.fromJson(json['discount_category'])

@@ -23,7 +23,7 @@ class DataRepository {
     var response = await ServerConnector.makeRequest(
         apiUrl, authenticationBloc, requestType.GET);
     final data = json.decode(response.body);
-    print(data);
+    //print(data);
     return data.map((rawPrize) {
       return Prize.fromJson(rawPrize);
     }).toList();
@@ -36,6 +36,7 @@ class DataRepository {
     var response = await ServerConnector.makeRequest(
         apiUrl, authenticationBloc, requestType.GET);
     final data = json.decode(response.body);
+    //print(data);
     return data.map((rawDiscount) {
       return Discount.fromJson(rawDiscount);
     }).toList();
@@ -78,5 +79,15 @@ class DataRepository {
     return data.map((rawEvent) {
       return Event.fromJson(rawEvent);
     }).toList();
+  }
+  static Future getUserData(
+      AuthenticationBloc authenticationBloc) async {
+    String apiUrl =
+        "/api/user/";
+    var response = await ServerConnector.makeRequest(
+        apiUrl, authenticationBloc, requestType.GET);
+    final data = json.decode(response.body);
+    //print(data);
+    return User.fromJson(data[0]);
   }
 }
