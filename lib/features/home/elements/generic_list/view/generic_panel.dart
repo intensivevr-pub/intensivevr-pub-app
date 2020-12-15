@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:intensivevr_pub/features/authentication/authentication.dart';
 import 'package:intensivevr_pub/features/home/elements/discounts_list/discounts_list.dart';
 import 'package:intensivevr_pub/features/home/elements/events_list/event_list_tile.dart';
 import 'package:intensivevr_pub/features/home/elements/games_list/game_list_tile.dart';
 import 'package:intensivevr_pub/features/home/elements/generic_list/bloc/bloc.dart';
+import 'package:intensivevr_pub/features/home/elements/prizes_list/bloc/prize_bloc.dart';
 import 'package:intensivevr_pub/features/home/elements/prizes_list/prize_list_tile.dart';
 
 enum PanelType { prize, event, game, discounts }
@@ -96,7 +98,14 @@ class _GenericPanelState extends State<GenericPanel> {
                           var item = state.items[index];
                           switch (widget.type) {
                             case PanelType.prize:
-                              return PrizeListTile(prize: item);
+                              return BlocProvider<PrizeBloc>(
+                                  create: (BuildContext context) {
+                                    return new PrizeBloc(
+                                        BlocProvider.of<AuthenticationBloc>(
+                                            context),
+                                        item);
+                                  },
+                                  child: PrizeListTile(prize: item));
                             case PanelType.event:
                               return EventListTile(event: item);
                             case PanelType.game:
@@ -104,7 +113,9 @@ class _GenericPanelState extends State<GenericPanel> {
                             case PanelType.discounts:
                               return DiscountListTile(discount: item);
                             default:
-                              return Container(color: Colors.red,);
+                              return Container(
+                                color: Colors.red,
+                              );
                           }
                         }
                       },
@@ -126,7 +137,6 @@ class _GenericPanelState extends State<GenericPanel> {
     );
   }
 }
-
 
 class SideLoader extends StatelessWidget {
   @override

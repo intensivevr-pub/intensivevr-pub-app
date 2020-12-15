@@ -80,14 +80,33 @@ class DataRepository {
       return Event.fromJson(rawEvent);
     }).toList();
   }
-  static Future getUserData(
-      AuthenticationBloc authenticationBloc) async {
-    String apiUrl =
-        "/api/user/";
+
+  static Future getUserData(AuthenticationBloc authenticationBloc) async {
+    String apiUrl = "/api/user/";
     var response = await ServerConnector.makeRequest(
         apiUrl, authenticationBloc, requestType.GET);
     final data = json.decode(response.body);
     //print(data);
     return User.fromJson(data[0]);
+  }
+
+  static Future postRewardCollect(
+      AuthenticationBloc authenticationBloc, int prizeID) async {
+    String apiUrl = "/api/redeem/$prizeID/";
+    await ServerConnector.makeRequest(
+        apiUrl, authenticationBloc, requestType.POST);
+    return true;
+  }
+
+  static Future<List<Coupon>> getActiveCoupons(
+      AuthenticationBloc authenticationBloc) async {
+    String apiUrl = "/api/coupons/";
+    var response = await ServerConnector.makeRequest(
+        apiUrl, authenticationBloc, requestType.GET);
+    final data = json.decode(response.body);
+    //print(data);
+    return List<Coupon>.from(data.map((rawPrize) {
+      return Coupon.fromJson(rawPrize);
+    }).toList());
   }
 }
