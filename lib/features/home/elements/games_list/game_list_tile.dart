@@ -39,9 +39,13 @@ class GameListTile extends StatelessWidget {
                   padding: const EdgeInsets.all(8.0),
                   child: Text(
                     game.name,
+                    textAlign: TextAlign.center,
                     style: TextStyle(
+
                       color: Colors.white,
                       fontWeight: FontWeight.bold,
+                      fontSize: 32,
+
                     ),
                   ),
                 ),

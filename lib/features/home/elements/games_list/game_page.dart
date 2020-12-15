@@ -57,7 +57,6 @@ class GamePage extends StatelessWidget {
   List<Image> pictures() {
     List<Image> out = [];
     for (int i = 0; i < game.pictures.length; i++) {
-      print(i);
       out.add(Image(image: NetworkImage(game.pictures[i])));
     }
     print(out);
