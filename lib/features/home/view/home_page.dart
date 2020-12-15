@@ -6,8 +6,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intensivevr_pub/core/services/data_repository.dart';
 import 'package:intensivevr_pub/features/authentication/authentication.dart';
 import 'package:intensivevr_pub/features/home/elements/elements.dart';
-import 'package:intensivevr_pub/features/home/elements/generic_list/bloc/bloc.dart';
-import 'package:intensivevr_pub/features/home/elements/points/points.dart';
 import 'package:intensivevr_pub/features/user_data/user_data.dart';
 
 import 'drawer/home_menu.dart';
@@ -17,7 +15,8 @@ class HomePage extends StatefulWidget {
     return MaterialPageRoute<void>(
         builder: (_) => BlocProvider(
             create: (BuildContext context) =>
-                UserDataBloc(BlocProvider.of<AuthenticationBloc>(context))..add(GetInitialUserData()),
+                UserDataBloc(BlocProvider.of<AuthenticationBloc>(context))
+                  ..add(GetInitialUserData()),
             child: HomePage()));
   }
 
@@ -104,6 +103,60 @@ class _HomePageState extends State<HomePage> {
                       BlocBuilder<UserDataBloc, UserDataState>(
                         builder: (BuildContext context, UserDataState state) {
                           return PointsPanel(points: state.points);
+                        },
+                      ),
+                      BlocBuilder<UserDataBloc, UserDataState>(
+                        builder: (BuildContext context, UserDataState state) {
+                          if (state.activeCoupons.length > 0) {
+                            return Padding(
+                              padding:
+                              const EdgeInsets.symmetric(vertical: 12.0),
+                              child: Container(
+                                decoration: BoxDecoration(
+                                    gradient: LinearGradient(
+                                      begin: Alignment.topCenter,
+                                      end: Alignment.bottomCenter,
+                                      colors: [
+                                        Colors.green,
+                                        Colors.green.withAlpha(0)
+                                      ],
+                                      stops: [.35, 1],
+                                    )),
+                                height: 250,
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Padding(
+                                      padding: const EdgeInsets.all(12.0),
+                                      child: Text(
+                                        "Aktywowane kupony:",
+                                        style: TextStyle(
+                                          color: Colors.white,
+                                          fontSize: 16,
+                                        ),
+                                      ),
+                                    ),
+                                    Container(
+                                      height: 200,
+                                      child: ListView.builder(
+                                        scrollDirection: Axis.horizontal,
+                                        shrinkWrap: true,
+                                        itemBuilder:
+                                            (BuildContext context, int index) {
+                                          return CouponListTile(
+                                              coupon:
+                                              state.activeCoupons[index]);
+                                        },
+                                        itemCount: state.activeCoupons.length,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            );
+                          } else {
+                            return SizedBox();
+                          }
                         },
                       ),
                       BlocProvider<GenericListBloc>(

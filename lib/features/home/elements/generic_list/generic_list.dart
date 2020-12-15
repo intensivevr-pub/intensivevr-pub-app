@@ -1,2 +1,2 @@
 export 'view/view.dart';
-export 'package:bloc/bloc.dart';
+export 'bloc/bloc.dart';

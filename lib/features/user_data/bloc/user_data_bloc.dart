@@ -7,8 +7,6 @@ import 'package:intensivevr_pub/features/authentication/authentication.dart';
 
 import 'bloc.dart';
 
-
-
 class UserDataBloc extends Bloc<UserDataEvent, UserDataState> {
   final AuthenticationBloc authBloc;
 
@@ -18,11 +16,19 @@ class UserDataBloc extends Bloc<UserDataEvent, UserDataState> {
   Stream<UserDataState> mapEventToState(UserDataEvent event) async* {
     if (event is GetInitialUserData) {
       User user = await DataRepository.getUserData(authBloc);
+      List<Coupon> activeCoupons =
+          await DataRepository.getActiveCoupons(authBloc);
       yield UserDataState(
-          username: user.name, points: user.points, hash: user.hash);
-    }else{
+        username: user.name,
+        points: user.points,
+        hash: user.hash,
+        activeCoupons: activeCoupons,
+      );
+    } else if (event is AddActiveReward) {
       int points = await DataRepository.getUserPoints(authBloc);
-      yield state.copyWith(points: points);
+      List<Coupon> activeCoupons =
+          await DataRepository.getActiveCoupons(authBloc);
+      yield state.copyWith(points: points, activeRewards: activeCoupons);
     }
   }
 }
