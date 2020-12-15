@@ -3,22 +3,22 @@ import 'dart:async';
 import 'package:bloc/bloc.dart';
 import 'package:flutter/foundation.dart';
 import 'package:intensivevr_pub/features/authentication/authentication.dart';
-import 'package:intensivevr_pub/features/home/elements/elements_list/elements_list_event.dart';
-import 'package:intensivevr_pub/features/home/elements/elements_list/elements_list_state.dart';
+import 'package:intensivevr_pub/features/home/elements/generic_list/bloc/generic_list_event.dart';
+import 'package:intensivevr_pub/features/home/elements/generic_list/bloc/generic_list_state.dart';
 
-class ElementsListBloc extends Bloc<ElementsListEvent, ElementsListState> {
+class GenericListBloc extends Bloc<GenericListEvent, GenericListState> {
   final AuthenticationBloc authBloc;
   final Function method;
   final int portion;
 
-  ElementsListBloc({
+  GenericListBloc({
     @required this.authBloc,
     @required this.method,
     @required this.portion,
   }) : super(InitialListState());
 
   @override
-  Stream<ElementsListState> mapEventToState(ElementsListEvent event) async* {
+  Stream<GenericListState> mapEventToState(GenericListEvent event) async* {
     final currentState = state;
     if (event is ReachedBottomOfList && !_hasReachedMax(currentState)) {
       try {
@@ -44,6 +44,6 @@ class ElementsListBloc extends Bloc<ElementsListEvent, ElementsListState> {
     }
   }
 
-  bool _hasReachedMax(ElementsListState state) =>
+  bool _hasReachedMax(GenericListState state) =>
       state is ListLoaded && state.hasReachedMax;
 }

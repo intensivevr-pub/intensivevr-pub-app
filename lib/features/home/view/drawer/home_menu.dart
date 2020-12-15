@@ -2,8 +2,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intensivevr_pub/features/authentication/bloc/authentication_bloc.dart';
-import 'package:intensivevr_pub/features/home/view/home_menu_option.dart';
-import 'package:intensivevr_pub/features/home/view/user_info.dart';
+import 'package:intensivevr_pub/features/home/view/drawer/home_menu_option.dart';
+import 'package:intensivevr_pub/features/home/view/drawer/user_info.dart';
 
 class HomeMenu extends StatelessWidget {
   @override

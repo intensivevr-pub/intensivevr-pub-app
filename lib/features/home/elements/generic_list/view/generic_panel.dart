@@ -1,28 +1,32 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:intensivevr_pub/features/home/elements/elements_list/elements_list.dart';
+import 'package:intensivevr_pub/features/home/elements/discounts_list/discounts_list.dart';
+import 'package:intensivevr_pub/features/home/elements/events_list/event_list_tile.dart';
+import 'package:intensivevr_pub/features/home/elements/games_list/game_list_tile.dart';
+import 'package:intensivevr_pub/features/home/elements/generic_list/bloc/bloc.dart';
+import 'package:intensivevr_pub/features/home/elements/prizes_list/prize_list_tile.dart';
 
-import 'discount_panel.dart';
+enum PanelType { prize, event, game, discounts }
 
-enum PanelType { prize, product, event, game, discounts }
-
-class SideTable extends StatefulWidget {
+class GenericPanel extends StatefulWidget {
   final String title;
   final Color color;
   final PanelType type;
-  const SideTable({Key key, this.title, this.color, this.type}) : super(key: key);
+
+  const GenericPanel({Key key, this.title, this.color, this.type})
+      : super(key: key);
 
   @override
-  _SideTableState createState() => _SideTableState();
+  _GenericPanelState createState() => _GenericPanelState();
 }
 
-class _SideTableState extends State<SideTable> {
-  ElementsListBloc _elementsListBloc;
+class _GenericPanelState extends State<GenericPanel> {
+  GenericListBloc _elementsListBloc;
   final _mainScrollController = ScrollController();
 
   @override
   void initState() {
-    _elementsListBloc = BlocProvider.of<ElementsListBloc>(context);
+    _elementsListBloc = BlocProvider.of<GenericListBloc>(context);
 
     _mainScrollController.addListener(_onMainScroll);
     super.initState();
@@ -30,9 +34,8 @@ class _SideTableState extends State<SideTable> {
 
   void _onMainScroll() {
     if (_mainScrollController.offset >=
-        _mainScrollController.position.maxScrollExtent &&
+            _mainScrollController.position.maxScrollExtent &&
         !_mainScrollController.position.outOfRange) {
-      print("loaduje more");
       _elementsListBloc.add(ReachedBottomOfList());
     }
   }
@@ -43,13 +46,12 @@ class _SideTableState extends State<SideTable> {
       padding: const EdgeInsets.symmetric(vertical: 12.0),
       child: Container(
         decoration: BoxDecoration(
-          gradient: LinearGradient(
-            begin: Alignment.topCenter,
-            end: Alignment.bottomCenter,
-            colors: [widget.color, widget.color.withAlpha(0)],
-            stops: [.35, 1],
-          )
-        ),
+            gradient: LinearGradient(
+          begin: Alignment.topCenter,
+          end: Alignment.bottomCenter,
+          colors: [widget.color, widget.color.withAlpha(0)],
+          stops: [.35, 1],
+        )),
         height: 250,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -66,8 +68,8 @@ class _SideTableState extends State<SideTable> {
             ),
             Container(
               height: 200,
-              child:  BlocBuilder<ElementsListBloc, ElementsListState>(
-                builder: (BuildContext context, ElementsListState state) {
+              child: BlocBuilder<GenericListBloc, GenericListState>(
+                builder: (BuildContext context, GenericListState state) {
                   if (state is InitialListState) {
                     return Center(
                       child: CircularProgressIndicator(),
@@ -91,24 +93,24 @@ class _SideTableState extends State<SideTable> {
                         if (index >= state.items.length) {
                           return SideLoader();
                         } else {
+                          var item = state.items[index];
                           switch (widget.type) {
                             case PanelType.prize:
-                              return ItemWidget();
-                            case PanelType.product:
-                              return ItemWidget();
+                              return PrizeListTile(prize: item);
                             case PanelType.event:
-                              return ItemWidget();
+                              return EventListTile(event: item);
                             case PanelType.game:
-                              return ItemWidget();
+                              return GameListTile(game: item);
                             case PanelType.discounts:
-                              return DiscountPanel(
-                                  discount: state.items[index]);
+                              return DiscountListTile(discount: item);
                             default:
-                              return Container();
+                              return Container(color: Colors.red,);
                           }
                         }
                       },
-                      itemCount: state.hasReachedMax ? state.items.length: state.items.length + 1,
+                      itemCount: state.hasReachedMax
+                          ? state.items.length
+                          : state.items.length + 1,
                       controller: _mainScrollController,
                     );
                   }
@@ -124,16 +126,7 @@ class _SideTableState extends State<SideTable> {
     );
   }
 }
-class ItemWidget extends StatelessWidget { //TODO placeholder do wyrzucenia
-  ItemWidget({Key key}) : super(key: key);
 
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      child: Text("KURWA CHUJ"),
-    );
-  }
-}
 
 class SideLoader extends StatelessWidget {
   @override

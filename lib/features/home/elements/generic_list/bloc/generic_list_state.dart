@@ -1,17 +1,17 @@
 import 'package:equatable/equatable.dart';
 
-abstract class ElementsListState extends Equatable {
+abstract class GenericListState extends Equatable {
   @override
   List<Object> get props => [];
 
-  const ElementsListState();
+  const GenericListState();
 }
 
-class InitialListState extends ElementsListState {}
+class InitialListState extends GenericListState {}
 
-class LoadingItems extends ElementsListState {}
+class LoadingItems extends GenericListState {}
 
-class ListLoaded extends ElementsListState {
+class ListLoaded extends GenericListState {
   final List<dynamic> items;
   final bool hasReachedMax;
 
@@ -31,4 +31,4 @@ class ListLoaded extends ElementsListState {
   List<Object> get props => [items, hasReachedMax];
 }
 
-class ListError extends ElementsListState {}
+class ListError extends GenericListState {}

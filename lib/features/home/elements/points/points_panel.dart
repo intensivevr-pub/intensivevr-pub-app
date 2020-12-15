@@ -3,10 +3,10 @@ import 'dart:ui';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-class PointShow extends StatelessWidget {
+class PointsPanel extends StatelessWidget {
   final int points;
 
-  const PointShow({Key key, this.points}) : super(key: key);
+  const PointsPanel({Key key, this.points}) : super(key: key);
 
   String determineForm() {
     if(this.points == 1)

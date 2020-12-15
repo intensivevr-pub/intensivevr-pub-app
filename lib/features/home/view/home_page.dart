@@ -5,11 +5,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intensivevr_pub/core/services/data_repository.dart';
 import 'package:intensivevr_pub/features/authentication/authentication.dart';
-import 'package:intensivevr_pub/features/home/elements/elements_list/elements_list.dart';
-import 'package:intensivevr_pub/features/home/view/point_show.dart';
+import 'package:intensivevr_pub/features/home/elements/generic_list/bloc/bloc.dart';
+import 'package:intensivevr_pub/features/home/elements/points/points.dart';
 
-import 'home_menu.dart';
-import 'side_table.dart';
+import 'drawer/home_menu.dart';
+import '../elements/generic_list/view/generic_panel.dart';
 
 class HomePage extends StatefulWidget {
   static Route route() {
@@ -97,52 +97,52 @@ class _HomePageState extends State<HomePage> {
                     mainAxisSize: MainAxisSize.min,
                     crossAxisAlignment: CrossAxisAlignment.stretch,
                     children: <Widget>[
-                      PointShow(points: data ?? -1),
-                      BlocProvider<ElementsListBloc>(
+                      PointsPanel(points: data ?? -1),
+                      BlocProvider<GenericListBloc>(
                           create: (BuildContext context) {
-                            return new ElementsListBloc(
+                            return new GenericListBloc(
                               authBloc: authBloc,
                               method: DataRepository.getPrizes,
                               portion: 5,
                             )..add(ReachedBottomOfList());
                           },
-                          child: SideTable(
+                          child: GenericPanel(
                               title: "Wymieniaj punkty:",
                               type: PanelType.prize,
                               color: Colors.orange[300])),
-                      BlocProvider<ElementsListBloc>(
+                      BlocProvider<GenericListBloc>(
                           create: (BuildContext context) {
-                            return new ElementsListBloc(
+                            return new GenericListBloc(
                               authBloc: authBloc,
                               method: DataRepository.getDiscounts,
                               portion: 5,
                             )..add(ReachedBottomOfList());
                           },
-                          child: SideTable(
+                          child: GenericPanel(
                               title: "Aktualne Promocje",
                               type: PanelType.discounts,
                               color: Colors.grey[500])),
-                      BlocProvider<ElementsListBloc>(
+                      BlocProvider<GenericListBloc>(
                           create: (BuildContext context) {
-                            return new ElementsListBloc(
+                            return new GenericListBloc(
                               authBloc: authBloc,
                               method: DataRepository.getGames,
                               portion: 5,
                             )..add(ReachedBottomOfList());
                           },
-                          child: SideTable(
+                          child: GenericPanel(
                               title: "Dostępne gry:",
                               type: PanelType.game,
                               color: Colors.purple[900])),
-                      BlocProvider<ElementsListBloc>(
+                      BlocProvider<GenericListBloc>(
                           create: (BuildContext context) {
-                            return new ElementsListBloc(
+                            return new GenericListBloc(
                               authBloc: authBloc,
                               method: DataRepository.getEvents,
                               portion: 5,
                             )..add(ReachedBottomOfList());
                           },
-                          child: SideTable(
+                          child: GenericPanel(
                               title: "Nadchodzące wydarzenia:",
                               type: PanelType.event,
                               color: Colors.green[900])),

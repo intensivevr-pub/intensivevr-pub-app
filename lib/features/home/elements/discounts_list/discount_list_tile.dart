@@ -2,10 +2,10 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:intensivevr_pub/core/models/discount.dart';
 
-class DiscountPanel extends StatelessWidget {
+class DiscountListTile extends StatelessWidget {
   final Discount discount;
 
-  const DiscountPanel({Key key, this.discount}) : super(key: key);
+  const DiscountListTile({Key key, this.discount}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
