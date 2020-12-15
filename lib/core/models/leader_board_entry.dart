@@ -15,4 +15,10 @@ class LeaderBoardEntry {
     this.game,
     this.user,
   });
+  LeaderBoardEntry.fromJson(var json)
+  :id = json['id'],
+        points = json['points'],
+        date = json['date'],
+        game = Game.fromJson(json['game']),
+        user = User.fromJson(json['user']);
 }

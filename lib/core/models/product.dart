@@ -1,4 +1,6 @@
-import 'category.dart';
+import 'package:intensivevr_pub/core/services/image_manager.dart';
+
+import '../../const.dart';
 
 class Product {
   final int id;
@@ -6,7 +8,7 @@ class Product {
   final String description;
   final String picture;
   final double price;
-  final Category category;
+  final String category;
 
   Product({
     this.id,
@@ -16,4 +18,12 @@ class Product {
     this.price,
     this.category,
   });
+
+  Product.fromJson(json)
+      : id = json['id'],
+        name = json['product_name'],
+        description = json['description'],
+        picture = ImageManager.getImageUrl(json['picture']),
+        price = json['regular_price'],
+        category = json['category'];
 }

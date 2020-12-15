@@ -54,6 +54,8 @@ class ServerConnector {
     var response = await request(uri, headers: headers);
     if (response.statusCode == 200) {
       return response;
+    } else if (response.statusCode == 401) {
+      authBloc.add(AuthenticationLogoutRequested());
     } else {
       print(json.decode(response.body));
       throw ServerConnectionException();

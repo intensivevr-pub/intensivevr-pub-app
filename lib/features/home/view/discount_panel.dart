@@ -4,10 +4,8 @@ import 'package:intensivevr_pub/core/models/discount.dart';
 
 class DiscountPanel extends StatelessWidget {
   final Discount discount;
-  final Color color;
 
-
-  const DiscountPanel({Key key, this.discount, this.color}) : super(key: key);
+  const DiscountPanel({Key key, this.discount}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -15,7 +13,7 @@ class DiscountPanel extends StatelessWidget {
       margin: EdgeInsets.all(12.0),
       width: 140.0,
       decoration: BoxDecoration(
-        color: this.color,
+        color: Colors.red, //TODO odjebać magię żeby to działało
         borderRadius: BorderRadius.circular(16),
       ),
       child: Material(
@@ -33,7 +31,7 @@ class DiscountPanel extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    discount.product.name,
+                    discount.name ?? "maselko",
                     style: TextStyle(
                       color: Colors.white,
                       fontWeight: FontWeight.bold,
@@ -51,7 +49,7 @@ class DiscountPanel extends StatelessWidget {
                 bottom: 0,
                 right: 0,
                 child: Image(
-                  image: NetworkImage(discount.product.picture),
+                  image: NetworkImage(discount.picture),
                   height: 110,
                 ),
               )]
@@ -72,7 +70,7 @@ class DiscountPanel extends StatelessWidget {
           width: MediaQuery.of(context).size.width,
           padding: EdgeInsets.all(20),
           decoration: BoxDecoration(
-            color: this.color,
+            color: Colors.white,
             borderRadius: BorderRadius.vertical(top: Radius.circular(32.0)),
           ),
           child: Column(
@@ -83,7 +81,7 @@ class DiscountPanel extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
-                    discount.product.name,
+                    discount.name,
                     style: TextStyle(
                       color: Colors.white,
                       fontWeight: FontWeight.bold,

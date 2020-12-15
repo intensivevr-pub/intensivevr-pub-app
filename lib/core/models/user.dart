@@ -8,4 +8,9 @@ class User {
     this.points,
     this.name,
   });
+
+  User.fromJson(var json)
+      : id = json['id'],
+        points = json['points'],
+        name = json['name'];
 }

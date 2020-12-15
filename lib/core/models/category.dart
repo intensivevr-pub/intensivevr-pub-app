@@ -12,4 +12,10 @@ class Category {
     this.picture,
     this.id,
   });
+
+  Category.fromJson(var json)
+      : name = json['name'],
+        type = json['type'],
+        picture = json['picture'],
+        id = json['id'];
 }

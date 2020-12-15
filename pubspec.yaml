@@ -17,6 +17,9 @@ dependencies:
   equatable: ^1.2.5
   formz: ^0.3.2
   jwt_decoder: ^1.0.3
+  backdrop: ^0.4.7
+  barcode_widget: ^1.5.0
+
   dio: ^3.0.10
   auth_buttons: ^0.0.4
   authentication_repository:
