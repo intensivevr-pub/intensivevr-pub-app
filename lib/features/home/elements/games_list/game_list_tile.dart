@@ -9,7 +9,24 @@ class GameListTile extends GenericListTile {
 
   @override
   Widget setMainContent() {
-    return Container();
+    return Stack(
+      children: [
+        Text(
+          game.name ?? "maselko",
+          style: TextStyle(
+            color: Colors.white,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+        Positioned(
+            bottom: 0,
+            right: 0,
+            child: Image(
+                image: NetworkImage(game.pictures[0]),
+              height: 110,
+            ))
+      ],
+    );
   }
 
   @override
