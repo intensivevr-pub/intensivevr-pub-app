@@ -1,36 +1,56 @@
 import 'package:flutter/material.dart';
-import 'package:intensivevr_pub/core/models/models.dart';
-import 'package:intensivevr_pub/features/home/elements/generic_list/view/generic_tile.dart';
+import 'package:intensivevr_pub/core/models/game.dart';
 
-class GameListTile extends GenericListTile {
+import 'game_page.dart';
+
+class GameListTile extends StatelessWidget {
   final Game game;
+  static Color color = Colors.blue[700];
 
   const GameListTile({Key key, this.game}) : super(key: key);
 
   @override
-  Widget setMainContent() {
-    return Stack(
-      children: [
-        Text(
-          game.name ?? "maselko",
-          style: TextStyle(
-            color: Colors.white,
-            fontWeight: FontWeight.bold,
+  Widget build(BuildContext context) {
+    return Container(
+      margin: EdgeInsets.all(12.0),
+      width: 290.0,
+      decoration: BoxDecoration(
+        image: DecorationImage(
+          image: NetworkImage(game.pictures[0]),
+          alignment: Alignment.center,
+          fit: BoxFit.cover,
+        ),
+        //TODO odjebać magię żeby to działało
+        borderRadius: BorderRadius.circular(16),
+      ),
+      child: Material(
+        type: MaterialType.transparency,
+        child: InkWell(
+          borderRadius: BorderRadius.circular(16),
+          onTap: () {
+            Navigator.push(context, GamePage.route(game));
+          },
+          child: Padding(
+            padding: EdgeInsets.all(12.0),
+            child: Center(
+              child: Container(
+                color: Colors.grey[900].withAlpha(100),
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Text(
+                    game.name,
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ),
+              ),
+
+            )
           ),
         ),
-        Positioned(
-            bottom: 0,
-            right: 0,
-            child: Image(
-                image: NetworkImage(game.pictures[0]),
-              height: 110,
-            ))
-      ],
+      ),
     );
-  }
-
-  @override
-  List<Widget> setSheetContent() {
-    return [Container()];
   }
 }
