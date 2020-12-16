@@ -6,7 +6,6 @@ class User extends Equatable {
   const User(this.authToken);
 
   @override
-  // TODO: implement props
-  List<Object> get props => throw UnimplementedError();
+  List<Object> get props => [authToken];
   static const empty = User('-');
 }
