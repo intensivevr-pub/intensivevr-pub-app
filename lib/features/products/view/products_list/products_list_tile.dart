@@ -1,16 +1,90 @@
 import 'package:flutter/material.dart';
 import 'package:intensivevr_pub/core/models/models.dart';
+import 'package:palette_generator/palette_generator.dart';
 
-class ProductsListTile extends StatelessWidget {
+class ProductsListTile extends StatefulWidget {
   final Product product;
 
   const ProductsListTile({Key key, this.product}) : super(key: key);
 
   @override
+  _ProductsListTileState createState() => _ProductsListTileState();
+}
+
+class _ProductsListTileState extends State<ProductsListTile> {
+  bool loaded = false;
+  Color backgroundColor;
+  Color textColor;
+  PaletteGenerator paletteGenerator;
+  @override
+  void initState() {
+    getColors();
+    super.initState();
+  }
+  void getColors() async {
+    paletteGenerator = await PaletteGenerator.fromImageProvider(
+      NetworkImage(widget.product.thumbnail),
+    );
+    if (paletteGenerator.lightMutedColor != null) {
+      backgroundColor = paletteGenerator.lightMutedColor.color;
+      textColor = paletteGenerator.lightMutedColor.bodyTextColor;
+    } else {
+      backgroundColor = Colors.grey[200];
+      textColor = Colors.black;
+    }
+    setState(() {
+      loaded = true;
+    });
+  }
+  @override
   Widget build(BuildContext context) {
-    return Container(
-      height: 50,
-      child: Text(product.name),
+    return Padding(
+      padding: const EdgeInsets.all(12.0),
+      child: Container(
+        padding: EdgeInsets.all(20),
+        height: 300,
+        width: 200,
+        decoration: BoxDecoration(
+          color: loaded ? backgroundColor : Colors.white,
+          borderRadius: BorderRadius.circular(16.0)
+        ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Padding(
+              padding: const EdgeInsets.all(10.0),
+              child: Text(
+                widget.product.name,
+                style: TextStyle(
+                  color: loaded ? textColor : Colors.black,
+                  fontSize: 18,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+            ),
+            Image(image: NetworkImage(widget.product.picture)),
+            Text(
+              widget.product.description,
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                color: loaded ? textColor : Colors.black,
+              )
+            ),
+            Positioned(
+              bottom: 0,
+              child: Padding(
+                padding: const EdgeInsets.all(10.0),
+                child: Text(
+                  widget.product.price.toStringAsFixed(2) + " zł",
+                  style: TextStyle(
+                    color: loaded ? textColor : Colors.black,
+                ),),
+              ),
+            )
+          ],
+        ),
+      ),
     ); //TODO wykorzystać dane z product
   }
 }
