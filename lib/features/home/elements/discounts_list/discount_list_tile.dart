@@ -1,12 +1,43 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:intensivevr_pub/core/models/discount.dart';
+import 'package:palette_generator/palette_generator.dart';
 
-class DiscountListTile extends StatelessWidget {
+class DiscountListTile extends StatefulWidget {
   final Discount discount;
   static Color color = Colors.green[600];
 
   const DiscountListTile({Key key, this.discount}) : super(key: key);
+
+  @override
+  _DiscountListTileState createState() => _DiscountListTileState();
+}
+
+class _DiscountListTileState extends State<DiscountListTile> {
+  bool loaded = false;
+  Color backgroundColor;
+  Color textColor;
+  PaletteGenerator paletteGenerator;
+  @override
+  void initState() {
+    getColors();
+    super.initState();
+  }
+  void getColors() async {
+    paletteGenerator = await PaletteGenerator.fromImageProvider(
+      NetworkImage(widget.discount.thumbnail),
+    );
+    if (paletteGenerator.lightMutedColor != null) {
+      backgroundColor = paletteGenerator.lightMutedColor.color;
+      textColor = paletteGenerator.lightMutedColor.bodyTextColor;
+    } else {
+      backgroundColor = Colors.grey[200];
+      textColor = Colors.black;
+    }
+    setState(() {
+      loaded = true;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -29,9 +60,9 @@ class DiscountListTile extends StatelessWidget {
               child: Stack(
                   children: [
                     Text(
-                      discount.name ?? "maselko",
+                      widget.discount.name,
                       style: TextStyle(
-                        color: loaded ? textColor: Colors.white,
+                        color:loaded ? textColor: Colors.white,
                         fontWeight: FontWeight.bold,
                       ),
                     ),
@@ -50,7 +81,6 @@ class DiscountListTile extends StatelessWidget {
     );
   }
 
-    //TODO: more details
   void bottomSheet(context) {
     showBottomSheet(
         context: context,
@@ -61,7 +91,7 @@ class DiscountListTile extends StatelessWidget {
               width: MediaQuery.of(context).size.width,
               padding: EdgeInsets.all(20),
               decoration: BoxDecoration(
-                color: DiscountListTile.color,
+                color: loaded ? backgroundColor : DiscountListTile.color,
                 borderRadius: BorderRadius.vertical(top: Radius.circular(32.0)),
               ),
               child: Column(
@@ -71,9 +101,9 @@ class DiscountListTile extends StatelessWidget {
                   Padding(
                     padding: const EdgeInsets.only(bottom: 8.0),
                     child: Text(
-                      discount.name,
+                      widget.discount.name,
                       style: TextStyle(
-                          color: Colors.white,
+                          color: loaded ? textColor: Colors.white,
                           fontWeight: FontWeight.bold,
                           fontSize: 18
                       ),
@@ -82,7 +112,7 @@ class DiscountListTile extends StatelessWidget {
                   Padding(
                     padding: const EdgeInsets.only(bottom: 8.0),
                     child: Image(
-                      image: NetworkImage(discount.picture),
+                      image: NetworkImage(widget.discount.picture),
                       height: 250,
                     ),
                   ),
@@ -91,7 +121,7 @@ class DiscountListTile extends StatelessWidget {
                     child: Text(
                       formatDescription(),
                       style: TextStyle(
-                          color: Colors.white,
+                          color: loaded ? textColor: Colors.white,
                           fontSize: 18
                       ),
                     ),
@@ -100,7 +130,7 @@ class DiscountListTile extends StatelessWidget {
                     "Promocja aktywna w dniach:\n" + formatDate(),
                     textAlign: TextAlign.center,
                     style: TextStyle(
-                      color: Colors.white,
+                      color: loaded ? textColor: Colors.white,
                       fontSize: 16,
                     ),
                   )
@@ -112,24 +142,25 @@ class DiscountListTile extends StatelessWidget {
   }
 
   String formatDescription() {
-    switch(discount.type){
+    switch(widget.discount.type){
       case DiscountType.gl:
         return "global, ale bedzie";
       case DiscountType.pf:
-        return discount.product.description;
+        return widget.discount.product.description;
       case DiscountType.pp:
-        return discount.product.description;
+        return widget.discount.product.description;
       case DiscountType.cp:
         return "kategoria, ale bedzie";
       default:
         return "Oj, tego nie wiem";
     }
   }
+
   String formatDate() {
-    return discount.dateStart.day.toString() + '.'
-        + discount.dateStart.month.toString() + ' - '
-        + discount.dateEnd.day.toString() + '.'
-        + discount.dateEnd.month.toString();
+    return widget.discount.dateStart.day.toString() + '.'
+        + widget.discount.dateStart.month.toString() + ' - '
+        + widget.discount.dateEnd.day.toString() + '.'
+        + widget.discount.dateEnd.month.toString();
 
   }
 }

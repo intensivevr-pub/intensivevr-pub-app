@@ -1,3 +1,4 @@
+import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:intensivevr_pub/core/models/game.dart';
@@ -25,12 +26,13 @@ class GamePage extends StatelessWidget {
               padding: const EdgeInsets.all(8.0),
               child: Text(game.name),
             ),
-            Container(
-              height: 400,
-              child: ListView(
-                scrollDirection: Axis.horizontal,
-                children: pictures(),
-              ),
+            CarouselSlider(
+              options: CarouselOptions(
+                height: 200,
+                autoPlayInterval: Duration(seconds: 12),
+                autoPlay: true,
+              ) ,
+              items: pictures(),
             ),
             Padding(
               padding: const EdgeInsets.all(8.0),
