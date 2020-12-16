@@ -7,6 +7,7 @@ class Game {
   final String name;
   final GameType type;
   final String description;
+  final List<String> thumbnails;
   final List<String> pictures;
   final String category;
 
@@ -15,6 +16,7 @@ class Game {
     this.name,
     this.type,
     this.description,
+    this.thumbnails,
     this.pictures,
     this.category,
   });
@@ -25,6 +27,7 @@ class Game {
         type = GameType.values
             .firstWhere((e) => e.toString() == 'GameType.' + json['g_type']),
         description = json['description'],
+        thumbnails = ImageManager.getCompressedImageUrlList(json['pics'] as List),
         pictures = ImageManager.getImageUrlList(json['pics'] as List),
         category = json['game_category'];
 }

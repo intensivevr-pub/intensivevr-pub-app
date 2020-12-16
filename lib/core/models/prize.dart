@@ -13,11 +13,13 @@ class Prize {
   final int cost;
   final DateTime deadline;
   final Product product;
+  final String thumbnail;
   final String picture;
 
   Prize({
     this.id,
     this.name,
+    this.thumbnail,
     this.picture,
     this.type,
     this.percentage,
@@ -43,5 +45,6 @@ class Prize {
         product = json['prize_product'] != null
             ? Product.fromJson(json['prize_product'])
             : null,
+        thumbnail = ImageManager.getCompressedImageUrl(json['prize_picture']),
         picture = ImageManager.getImageUrl(json['prize_picture']);
 }

@@ -16,7 +16,7 @@ class EventListTile extends StatelessWidget {
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(16),
         image: DecorationImage(
-          image: NetworkImage(event.pictures[0]),
+          image: NetworkImage(event.thumbnails[0]),
           fit: BoxFit.cover,
         ) ,
       ),

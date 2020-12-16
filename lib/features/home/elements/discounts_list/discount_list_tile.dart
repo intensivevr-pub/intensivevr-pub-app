@@ -50,7 +50,7 @@ class DiscountListTile extends StatelessWidget {
                       bottom: 0,
                       right: 0,
                       child: Image(
-                        image: NetworkImage(discount.picture),
+                        image: NetworkImage(discount.thumbnail),
                         height: 110,
                       ),
                     )]

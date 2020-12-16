@@ -63,7 +63,7 @@ class _PrizeListTileState extends State<PrizeListTile> {
                   bottom: 0,
                   right: 0,
                   child: Image(
-                    image: NetworkImage(widget.prize.picture),
+                    image: NetworkImage(widget.prize.thumbnail),
                     height: 100,
                   ),
                 )

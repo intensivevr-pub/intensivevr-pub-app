@@ -91,8 +91,8 @@ class EventPage extends StatelessWidget {
 
   List<Image> pictures() {
     List<Image> out = [];
-    for (int i = 1; i < event.pictures.length; i++) {
-      out.add(Image(image: NetworkImage(event.pictures[i])));
+    for (int i = 1; i < event.thumbnails.length; i++) {
+      out.add(Image(image: NetworkImage(event.thumbnails[i])));
     }
     return out;
   }

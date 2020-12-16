@@ -30,7 +30,7 @@ class CouponListTile extends StatelessWidget {
                   bottom: 0,
                   right: 0,
                   child: Image(
-                    image: NetworkImage(coupon.prize.picture),
+                    image: NetworkImage(coupon.prize.thumbnail),
                     height: 100,
                   ),
                 )

@@ -16,7 +16,7 @@ class GameListTile extends StatelessWidget {
       width: 290.0,
       decoration: BoxDecoration(
         image: DecorationImage(
-          image: NetworkImage(game.pictures[0]),
+          image: NetworkImage(game.thumbnails[0]),
           alignment: Alignment.center,
           fit: BoxFit.cover,
         ),

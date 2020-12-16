@@ -10,6 +10,7 @@ class Discount {
   final String name;
   final DiscountType type;
   final DateTime dateStart;
+  final String thumbnail;
   final String picture;
   final DateTime dateEnd;
   final double value;
@@ -20,6 +21,7 @@ class Discount {
     this.id,
     this.name,
     this.type,
+    this.thumbnail,
     this.picture,
     this.dateStart,
     this.dateEnd,
@@ -42,5 +44,6 @@ class Discount {
         product = json['discount_product'] != null
             ? Product.fromJson(json['discount_product'])
             : null,
+        thumbnail = ImageManager.getCompressedImageUrl(json['discount_picture']),
         picture = ImageManager.getImageUrl(json['discount_picture']);
 }
