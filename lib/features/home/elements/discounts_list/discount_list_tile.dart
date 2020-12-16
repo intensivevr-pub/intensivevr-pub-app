@@ -28,23 +28,12 @@ class DiscountListTile extends StatelessWidget {
               padding: EdgeInsets.all(12.0),
               child: Stack(
                   children: [
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          discount.name ?? "maselko",
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                        Text(
-                          discount.value.toString(),
-                          style: TextStyle(
-                            color: Colors.grey[300],
-                          ),
-                        ),
-                      ],
+                    Text(
+                      discount.name ?? "maselko",
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontWeight: FontWeight.bold,
+                      ),
                     ),
                     Positioned(
                       bottom: 0,
@@ -68,7 +57,7 @@ class DiscountListTile extends StatelessWidget {
         backgroundColor: Colors.transparent,
         builder: (BuildContext bc) {
           return Container(
-              height: MediaQuery.of(context).size.height * .8,
+              height: MediaQuery.of(context).size.height * .75,
               width: MediaQuery.of(context).size.width,
               padding: EdgeInsets.all(20),
               decoration: BoxDecoration(
@@ -79,34 +68,68 @@ class DiscountListTile extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
-                  Column(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(
-                        discount.name,
-                        style: TextStyle(
-                            color: Colors.white,
-                            fontWeight: FontWeight.bold,
-                            fontSize: 18
-                        ),
+                  Padding(
+                    padding: const EdgeInsets.only(bottom: 8.0),
+                    child: Text(
+                      discount.name,
+                      style: TextStyle(
+                          color: Colors.white,
+                          fontWeight: FontWeight.bold,
+                          fontSize: 18
                       ),
-                      Text(
-                        discount.value.toString(),
-                        style: TextStyle(
-                            color: Colors.grey[300],
-                            fontSize: 14
-                        ),
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(bottom: 8.0),
+                    child: Image(
+                      image: NetworkImage(discount.picture),
+                      height: 250,
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(bottom: 8.0),
+                    child: Text(
+                      formatDescription(),
+                      style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 18
                       ),
-                    ],
+                    ),
                   ),
-                  Image(
-                    image: NetworkImage(discount.picture),
-                    height: 250,
-                  ),
+                  Text(
+                    "Promocja aktywna w dniach:\n" + formatDate(),
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 16,
+                    ),
+                  )
                 ],
               )
           );
         }
     );
+  }
+
+  String formatDescription() {
+    switch(discount.type){
+      case DiscountType.gl:
+        return "global, ale bedzie";
+      case DiscountType.pf:
+        return discount.product.description;
+      case DiscountType.pp:
+        return discount.product.description;
+      case DiscountType.cp:
+        return "kategoria, ale bedzie";
+      default:
+        return "Oj, tego nie wiem";
+    }
+  }
+  String formatDate() {
+    return discount.dateStart.day.toString() + '.'
+        + discount.dateStart.month.toString() + ' - '
+        + discount.dateEnd.day.toString() + '.'
+        + discount.dateEnd.month.toString();
+
   }
 }
