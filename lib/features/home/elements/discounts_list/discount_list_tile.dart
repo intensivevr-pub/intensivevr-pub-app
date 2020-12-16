@@ -14,7 +14,7 @@ class DiscountListTile extends StatelessWidget {
       margin: EdgeInsets.all(12.0),
       width: 140.0,
       decoration: BoxDecoration(
-        color: color, //TODO odjebać magię żeby to działało
+        color: loaded ? backgroundColor :DiscountListTile.color,
         borderRadius: BorderRadius.circular(16),
       ),
       child: Material(
@@ -31,7 +31,7 @@ class DiscountListTile extends StatelessWidget {
                     Text(
                       discount.name ?? "maselko",
                       style: TextStyle(
-                        color: Colors.white,
+                        color: loaded ? textColor: Colors.white,
                         fontWeight: FontWeight.bold,
                       ),
                     ),
@@ -39,7 +39,7 @@ class DiscountListTile extends StatelessWidget {
                       bottom: 0,
                       right: 0,
                       child: Image(
-                        image: NetworkImage(discount.thumbnail),
+                        image: NetworkImage(widget.discount.thumbnail),
                         height: 110,
                       ),
                     )]
@@ -61,7 +61,7 @@ class DiscountListTile extends StatelessWidget {
               width: MediaQuery.of(context).size.width,
               padding: EdgeInsets.all(20),
               decoration: BoxDecoration(
-                color: color,
+                color: DiscountListTile.color,
                 borderRadius: BorderRadius.vertical(top: Radius.circular(32.0)),
               ),
               child: Column(

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intensivevr_pub/core/models/prize.dart';
 import 'package:intensivevr_pub/features/user_data/bloc/bloc.dart';
+import 'package:palette_generator/palette_generator.dart';
 
 import 'bloc/prize_bloc.dart';
 
@@ -21,12 +22,33 @@ class PrizeListTile extends StatefulWidget {
 
 class _PrizeListTileState extends State<PrizeListTile> {
   bool active = false;
+  bool loaded = false;
+  Color backgroundColor;
+  Color textColor;
+  PaletteGenerator paletteGenerator;
   PrizeBloc prizeBloc;
 
   @override
   void initState() {
     prizeBloc = BlocProvider.of<PrizeBloc>(context);
+    getColors();
     super.initState();
+  }
+
+  void getColors() async {
+    paletteGenerator = await PaletteGenerator.fromImageProvider(
+      NetworkImage(widget.prize.thumbnail),
+    );
+    if (paletteGenerator.lightMutedColor != null) {
+      backgroundColor = paletteGenerator.lightMutedColor.color;
+      textColor = paletteGenerator.lightMutedColor.bodyTextColor;
+    } else {
+      backgroundColor = Colors.grey[200];
+      textColor = Colors.black;
+    }
+    setState(() {
+      loaded = true;
+    });
   }
 
   @override
@@ -41,10 +63,11 @@ class _PrizeListTileState extends State<PrizeListTile> {
       margin: EdgeInsets.all(12.0),
       width: 140.0,
       decoration: BoxDecoration(
-        color: active
-            ? PrizeListTile.activeColorBackground
-            : PrizeListTile
-                .inactiveColorBackground, //TODO odjebać magię żeby to działało
+        color: loaded
+            ? backgroundColor
+            : active
+                ? PrizeListTile.activeColorBackground
+                : PrizeListTile.inactiveColorBackground,
         borderRadius: BorderRadius.circular(16),
       ),
       child: Material(
@@ -58,7 +81,10 @@ class _PrizeListTileState extends State<PrizeListTile> {
             padding: EdgeInsets.all(12.0),
             child: Stack(
               children: [
-                Text(widget.prize.name),
+                Text(
+                  widget.prize.name,
+                  style: TextStyle(color: loaded ? textColor : Colors.black),
+                ),
                 Positioned(
                   bottom: 0,
                   right: 0,
@@ -102,8 +128,9 @@ class _PrizeListTileState extends State<PrizeListTile> {
                   Text("koszt: " + widget.prize.cost.toString() + " punktów"),
                   BlocConsumer<PrizeBloc, PrizeState>(
                     listener: (context, state) {
-                      if(state is PrizeCollected){
-                        BlocProvider.of<UserDataBloc>(context).add(AddActiveReward());
+                      if (state is PrizeCollected) {
+                        BlocProvider.of<UserDataBloc>(context)
+                            .add(AddActiveReward());
                       }
                     },
                     cubit: prizeBloc,
