@@ -11,7 +11,7 @@ class DataRepository {
     String apiUrl = "/api/points/";
     var response = await ServerConnector.makeRequest(
         apiUrl, authenticationBloc, requestType.GET);
-    final data = json.decode(response.body);
+    final data = json.decode(utf8.decode(response.bodyBytes));
     var points = data[0]['points'];
     return points;
   }
@@ -22,7 +22,7 @@ class DataRepository {
         "/api/prizes/sort/1/category/all/portion/${portion ?? -1}/threshold/$threshold/";
     var response = await ServerConnector.makeRequest(
         apiUrl, authenticationBloc, requestType.GET);
-    final data = json.decode(response.body);
+    final data = json.decode(utf8.decode(response.bodyBytes));
     //print(data);
     return data.map((rawPrize) {
       return Prize.fromJson(rawPrize);
@@ -35,7 +35,7 @@ class DataRepository {
         "/api/discounts/type/all/portion/${portion ?? -1}/threshold/$threshold/";
     var response = await ServerConnector.makeRequest(
         apiUrl, authenticationBloc, requestType.GET);
-    final data = json.decode(response.body);
+    final data = json.decode(utf8.decode(response.bodyBytes));
     //print(data);
     return data.map((rawDiscount) {
       return Discount.fromJson(rawDiscount);
@@ -48,7 +48,7 @@ class DataRepository {
         "/api/games/type/all/category/all/portion/${portion ?? -1}/threshold/$threshold/";
     var response = await ServerConnector.makeRequest(
         apiUrl, authenticationBloc, requestType.GET);
-    final data = json.decode(response.body);
+    final data = json.decode(utf8.decode(response.bodyBytes));
     //print(data);
     return data.map((rawGame) {
       return Game.fromJson(rawGame);
@@ -61,7 +61,7 @@ class DataRepository {
         "/api/products/sort/1/category/all/portion/${portion ?? -1}/threshold/$threshold/";
     var response = await ServerConnector.makeRequest(
         apiUrl, authenticationBloc, requestType.GET);
-    final data = json.decode(response.body);
+    final data = json.decode(utf8.decode(response.bodyBytes));
     //print(data);
     return data.map((rawProduct) {
       return Product.fromJson(rawProduct);
@@ -74,7 +74,7 @@ class DataRepository {
         "/api/events/status/2/category/all/portion/${portion ?? -1}/threshold/$threshold/";
     var response = await ServerConnector.makeRequest(
         apiUrl, authenticationBloc, requestType.GET);
-    final data = json.decode(response.body);
+    final data = json.decode(utf8.decode(response.bodyBytes));
     //print(data);
     return data.map((rawEvent) {
       return Event.fromJson(rawEvent);
@@ -85,7 +85,7 @@ class DataRepository {
     String apiUrl = "/api/user/";
     var response = await ServerConnector.makeRequest(
         apiUrl, authenticationBloc, requestType.GET);
-    final data = json.decode(response.body);
+    final data = json.decode(utf8.decode(response.bodyBytes));
     //print(data);
     return User.fromJson(data[0]);
   }
@@ -103,7 +103,7 @@ class DataRepository {
     String apiUrl = "/api/coupons/";
     var response = await ServerConnector.makeRequest(
         apiUrl, authenticationBloc, requestType.GET);
-    final data = json.decode(response.body);
+    final data = json.decode(utf8.decode(response.bodyBytes));
     //print(data);
     return List<Coupon>.from(data.map((rawPrize) {
       return Coupon.fromJson(rawPrize);
