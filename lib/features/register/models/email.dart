@@ -13,6 +13,7 @@ class Email extends FormzInput<String, EmailValidationError> {
     if (!RegExp(
       r'^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$',
     ).hasMatch(value.trim())) return EmailValidationError.bad;
+    return null;
   }
 
   String getErrorMessage() {
