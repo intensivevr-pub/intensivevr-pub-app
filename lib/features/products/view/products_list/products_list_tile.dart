@@ -71,17 +71,6 @@ class _ProductsListTileState extends State<ProductsListTile> {
                 color: loaded ? textColor : Colors.black,
               )
             ),
-            Positioned(
-              bottom: 0,
-              child: Padding(
-                padding: const EdgeInsets.all(10.0),
-                child: Text(
-                  widget.product.price.toStringAsFixed(2) + " zł",
-                  style: TextStyle(
-                    color: loaded ? textColor : Colors.black,
-                ),),
-              ),
-            )
           ],
         ),
       ),
