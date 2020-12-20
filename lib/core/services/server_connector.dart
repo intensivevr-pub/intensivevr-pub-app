@@ -57,6 +57,7 @@ class ServerConnector {
     } else if (response.statusCode == 401) {
       authBloc.add(AuthenticationLogoutRequested());
     } else {
+      print("ERROR code: ${response.statusCode}");
       print(json.decode(response.body));
       throw ServerConnectionException();
     }

@@ -23,6 +23,8 @@ class UserDataBloc extends Bloc<UserDataEvent, UserDataState> {
         points: user.points,
         hash: user.hash,
         activeCoupons: activeCoupons,
+        isDemoUser: user.isDemoUser,
+        loaded: true,
       );
     } else if (event is AddActiveReward) {
       int points = await DataRepository.getUserPoints(authBloc);
