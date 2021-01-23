@@ -20,7 +20,6 @@ class GameListTile extends StatelessWidget {
           alignment: Alignment.center,
           fit: BoxFit.cover,
         ),
-        //TODO odjebać magię żeby to działało
         borderRadius: BorderRadius.circular(16),
       ),
       child: Material(
