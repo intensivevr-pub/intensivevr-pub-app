@@ -5,37 +5,38 @@ import 'package:intensivevr_pub/features/authentication/bloc/authentication_bloc
 import 'package:intensivevr_pub/features/home/view/drawer/home_menu_option.dart';
 import 'package:intensivevr_pub/features/home/view/drawer/user_info.dart';
 import 'package:intensivevr_pub/features/products/view/products_page.dart';
+import 'package:intensivevr_pub/widgets/complex/complex.dart';
 
 class HomeMenu extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    print(Theme.of(context).brightness.toString());
     return Drawer(
-      child: ListView(
-        children: [
-          UserInfo(),
-          HomeMenuOption(
-              title: "Option 1",
+      child: Container(
+        color: Theme.of(context).accentColor,
+        child: ListView(
+          children: [
+            UserInfo(),
+            ThemeSwitcher(),
+            HomeMenuOption(
+                title: "Option 2",
+                onPress: () {
+                  Navigator.pop(context);
+                }),
+            HomeMenuOption(
+                title: "Oferta Baru (produkty)",
+                onPress: () {
+                  Navigator.push(context, ProductsPage.route());
+                }),
+            HomeMenuOption(
+              title: "Logout",
               onPress: () {
-                Navigator.pop(context);
-              }),
-          HomeMenuOption(
-              title: "Option 2",
-              onPress: () {
-                Navigator.pop(context);
-              }),
-          HomeMenuOption(
-              title: "Oferta Baru (produkty)",
-              onPress: () {
-                Navigator.push(context, ProductsPage.route());
-              }),
-          HomeMenuOption(
-            title: "Logout",
-            onPress: () {
-              BlocProvider.of<AuthenticationBloc>(context)
-                  .add(AuthenticationLogoutRequested());
-            },
-          )
-        ],
+                BlocProvider.of<AuthenticationBloc>(context)
+                    .add(AuthenticationLogoutRequested());
+              },
+            )
+          ],
+        ),
       ),
     );
   }

@@ -22,9 +22,9 @@ class ImageManager {
   }
   static String getImageUrl(String localPath) {
     if (kUseHTTPS) {
-      return "https://" + kServerUrl + "/static/compressed/" + localPath;
+      return "https://" + kServerUrl + "/static/full/" + localPath;
     } else {
-      return "http://" + kServerUrl + "/static/compressed/" + localPath;
+      return "http://" + kServerUrl + "/static/full/" + localPath;
     }
   }
 
@@ -32,9 +32,9 @@ class ImageManager {
     List<String> paths = List<String>();
     for (String localPath in localPaths) {
       if (kUseHTTPS) {
-        paths.add("https://" + kServerUrl + "/static/compressed/" + localPath);
+        paths.add("https://" + kServerUrl + "/static/full/" + localPath);
       } else {
-        paths.add("http://" + kServerUrl + "/static/compressed/" + localPath);
+        paths.add("http://" + kServerUrl + "/static/full/" + localPath);
       }
     }
     return paths;

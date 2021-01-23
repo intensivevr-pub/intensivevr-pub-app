@@ -6,6 +6,7 @@ import 'package:intensivevr_pub/features/welcome/view/welcome_page.dart';
 
 import 'features/home/home.dart';
 import 'features/splash/splash.dart';
+import 'features/theme/theme.dart';
 
 class App extends StatelessWidget {
   const App({
@@ -42,32 +43,37 @@ class _AppViewState extends State<AppView> {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      navigatorKey: _navigatorKey,
-      builder: (context, child) {
-        return BlocListener<AuthenticationBloc, AuthenticationState>(
-          listener: (context, state) {
-            switch (state.status) {
-              case AuthenticationStatus.authenticated:
-                _navigator.pushAndRemoveUntil<void>(
-                  HomePage.route(),
-                  (route) => false,
-                );
-                break;
-              case AuthenticationStatus.unauthenticated:
-                _navigator.pushAndRemoveUntil<void>(
-                  WelcomePage.route(),
-                      (route) => false,
-                );
-                break;
-              default:
-                break;
-            }
-          },
-          child: child,
-        );
-      },
-      onGenerateRoute: (_) => SplashPage.route(),
-    );
+    return BlocBuilder<ThemeBloc, ThemeState>(builder: (context, themeState) {
+      return MaterialApp(
+        navigatorKey: _navigatorKey,
+        themeMode: themeState.themeMode,
+        theme: lightTheme,
+        darkTheme: darkTheme,
+        builder: (context, child) {
+          return BlocListener<AuthenticationBloc, AuthenticationState>(
+            listener: (context, state) {
+              switch (state.status) {
+                case AuthenticationStatus.authenticated:
+                  _navigator.pushAndRemoveUntil<void>(
+                    HomePage.route(),
+                    (route) => false,
+                  );
+                  break;
+                case AuthenticationStatus.unauthenticated:
+                  _navigator.pushAndRemoveUntil<void>(
+                    WelcomePage.route(),
+                    (route) => false,
+                  );
+                  break;
+                default:
+                  break;
+              }
+            },
+            child: child,
+          );
+        },
+        onGenerateRoute: (_) => SplashPage.route(),
+      );
+    });
   }
 }

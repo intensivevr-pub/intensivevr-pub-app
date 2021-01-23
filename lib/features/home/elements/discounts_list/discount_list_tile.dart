@@ -126,14 +126,6 @@ class _DiscountListTileState extends State<DiscountListTile> {
                       ),
                     ),
                   ),
-                  Text(
-                    "Promocja aktywna w dniach:\n" + formatDate(),
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                      color: loaded ? textColor: Colors.white,
-                      fontSize: 16,
-                    ),
-                  )
                 ],
               )
           );
