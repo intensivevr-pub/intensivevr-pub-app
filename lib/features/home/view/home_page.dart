@@ -43,17 +43,17 @@ class _HomePageState extends State<HomePage> {
     double width = MediaQuery.of(context).size.width;
     double height = MediaQuery.of(context).size.height;
     return Container(
-      color: Color(0xFF6A11CB),
+      color: Theme.of(context).bottomNavigationBarTheme.backgroundColor,
       child: SafeArea(
         child: BackdropScaffold(
           inactiveOverlayOpacity: 0,
-          backLayerBackgroundColor: Colors.grey[100],
+          backLayerBackgroundColor: Theme.of(context).bottomNavigationBarTheme.backgroundColor,
           drawer: HomeMenu(),
           headerHeight: height - 300,
           appBar: AppBar(
             iconTheme: IconTheme.of(context).copyWith(color: Colors.black),
             elevation: 0,
-            backgroundColor: Colors.grey[100],
+            backgroundColor: Theme.of(context).bottomNavigationBarTheme.backgroundColor,
             actions: [
               BackdropToggleButton(
                 icon: AnimatedIcons.list_view,
@@ -77,12 +77,13 @@ class _HomePageState extends State<HomePage> {
           frontLayer: Padding(
             padding: EdgeInsets.only(top: 7.0),
             child: Container(
+              clipBehavior: Clip.hardEdge,
               decoration: BoxDecoration(
-                color: Colors.white,
+                color: Theme.of(context).cardColor,
                 borderRadius: BorderRadius.vertical(top: Radius.circular(16)),
                 boxShadow: [
                   BoxShadow(
-                    color: Colors.grey.withOpacity(0.2),
+                    color: Theme.of(context).cardColor.withOpacity(0.1),
                     spreadRadius: 5,
                     blurRadius: 7,
                     offset: Offset(0, 0), // changes position of shadow

@@ -4,7 +4,7 @@ ThemeData darkTheme = ThemeData(
     brightness: Brightness.dark,
     bottomNavigationBarTheme: BottomNavigationBarThemeData(
         selectedItemColor: Colors.tealAccent,
-        backgroundColor: Colors.black,
+        backgroundColor: Colors.black12,
         unselectedItemColor: Colors.grey),
     cardColor: Colors.grey.shade800);
 //TODO change colors

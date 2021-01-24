@@ -13,7 +13,7 @@ class HomeMenu extends StatelessWidget {
     print(Theme.of(context).brightness.toString());
     return Drawer(
       child: Container(
-        color: Theme.of(context).accentColor,
+        color: Theme.of(context).cardColor,
         child: ListView(
           children: [
             UserInfo(),
