@@ -41,6 +41,13 @@ class GenericListBloc extends Bloc<GenericListEvent, GenericListState> {
         print("$e,$s");
         yield ListError();
       }
+    } else if (event is ReloadItems) {
+      try {
+        final items = await method(authBloc, 0, portion);
+        yield ListLoaded(items: items, hasReachedMax: items.length < portion);
+      }catch(e){
+        yield ListError();
+      }
     }
   }
 

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intensivevr_pub/features/authentication/authentication.dart';
+import 'package:intensivevr_pub/features/home/bloc/home_screen_bloc.dart';
 import 'package:intensivevr_pub/features/home/elements/discounts_list/discounts_list.dart';
 import 'package:intensivevr_pub/features/home/elements/events_list/event_list_tile.dart';
 import 'package:intensivevr_pub/features/home/elements/games_list/game_list_tile.dart';
@@ -44,94 +45,102 @@ class _GenericPanelState extends State<GenericPanel> {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 12.0),
-      child: Container(
-        decoration: BoxDecoration(
-            gradient: LinearGradient(
-          begin: Alignment.topCenter,
-          end: Alignment.bottomCenter,
-          colors: [widget.color, widget.color.withAlpha(0)],
-          stops: [.35, 1],
-        )),
-        height: 250,
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Padding(
-              padding: const EdgeInsets.all(12.0),
-              child: Text(
-                widget.title,
-                style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 16,
+    return BlocListener<HomeScreenBloc, HomeScreenState>(
+      listener: (BuildContext context, state) {
+        if (state.refreshing) {
+          _elementsListBloc.add(ReloadItems());
+        }
+      },
+      child: Padding(
+        padding: const EdgeInsets.symmetric(vertical: 12.0),
+        child: Container(
+          decoration: BoxDecoration(
+              gradient: LinearGradient(
+            begin: Alignment.topCenter,
+            end: Alignment.bottomCenter,
+            colors: [widget.color, widget.color.withAlpha(0)],
+            stops: [.35, 1],
+          )),
+          height: 250,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Padding(
+                padding: const EdgeInsets.all(12.0),
+                child: Text(
+                  widget.title,
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 16,
+                  ),
                 ),
               ),
-            ),
-            Container(
-              height: 200,
-              child: BlocBuilder<GenericListBloc, GenericListState>(
-                builder: (BuildContext context, GenericListState state) {
-                  if (state is InitialListState) {
-                    return Center(
-                      child: CircularProgressIndicator(),
-                    );
-                  }
-                  if (state is ListError) {
-                    return Center(
-                      child: Text("Nie można wczytać czegoś"),
-                    );
-                  }
-                  if (state is ListLoaded) {
-                    if (state.items.isEmpty) {
+              Container(
+                height: 200,
+                child: BlocBuilder<GenericListBloc, GenericListState>(
+                  builder: (BuildContext context, GenericListState state) {
+                    if (state is InitialListState) {
                       return Center(
-                        child: Text('Brak czegoś'),
+                        child: CircularProgressIndicator(),
                       );
                     }
-                    return ListView.builder(
-                      scrollDirection: Axis.horizontal,
-                      shrinkWrap: true,
-                      itemBuilder: (BuildContext context, int index) {
-                        if (index >= state.items.length) {
-                          return SideLoader();
-                        } else {
-                          var item = state.items[index];
-                          switch (widget.type) {
-                            case PanelType.prize:
-                              return BlocProvider<PrizeBloc>(
-                                  create: (BuildContext context) {
-                                    return new PrizeBloc(
-                                        BlocProvider.of<AuthenticationBloc>(
-                                            context),
-                                        item);
-                                  },
-                                  child: PrizeListTile(prize: item));
-                            case PanelType.event:
-                              return EventListTile(event: item);
-                            case PanelType.game:
-                              return GameListTile(game: item);
-                            case PanelType.discounts:
-                              return DiscountListTile(discount: item);
-                            default:
-                              return Container(
-                                color: Colors.red,
-                              );
+                    if (state is ListError) {
+                      return Center(
+                        child: Text("Nie można wczytać czegoś"),
+                      );
+                    }
+                    if (state is ListLoaded) {
+                      if (state.items.isEmpty) {
+                        return Center(
+                          child: Text('Brak czegoś'),
+                        );
+                      }
+                      return ListView.builder(
+                        scrollDirection: Axis.horizontal,
+                        shrinkWrap: true,
+                        itemBuilder: (BuildContext context, int index) {
+                          if (index >= state.items.length) {
+                            return SideLoader();
+                          } else {
+                            var item = state.items[index];
+                            switch (widget.type) {
+                              case PanelType.prize:
+                                return BlocProvider<PrizeBloc>(
+                                    create: (BuildContext context) {
+                                      return new PrizeBloc(
+                                          BlocProvider.of<AuthenticationBloc>(
+                                              context),
+                                          item);
+                                    },
+                                    child: PrizeListTile(prize: item));
+                              case PanelType.event:
+                                return EventListTile(event: item);
+                              case PanelType.game:
+                                return GameListTile(game: item);
+                              case PanelType.discounts:
+                                return DiscountListTile(discount: item);
+                              default:
+                                return Container(
+                                  color: Colors.red,
+                                );
+                            }
                           }
-                        }
-                      },
-                      itemCount: state.hasReachedMax
-                          ? state.items.length
-                          : state.items.length + 1,
-                      controller: _mainScrollController,
-                    );
-                  }
-                  return Center(
-                    child: CircularProgressIndicator(),
-                  );
-                },
+                        },
+                        itemCount: state.hasReachedMax
+                            ? state.items.length
+                            : state.items.length + 1,
+                        controller: _mainScrollController,
+                      );
+                    } else {
+                      return Center(
+                        child: CircularProgressIndicator(),
+                      );
+                    }
+                  },
+                ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

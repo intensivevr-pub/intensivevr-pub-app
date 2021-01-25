@@ -14,6 +14,6 @@ class User {
   User.fromJson(var json)
       : points = json['points'],
         hash = json['userhash'],
-        isDemoUser = false, //TODO solve with backend
+        isDemoUser = false,
         name = json['nick'];
 }

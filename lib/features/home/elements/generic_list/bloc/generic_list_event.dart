@@ -18,3 +18,8 @@ class LoadingMoreItems extends GenericListEvent {
   @override
   List<Object> get props => [];
 }
+class ReloadItems extends GenericListEvent{
+  @override
+  List<Object> get props => [];
+
+}
