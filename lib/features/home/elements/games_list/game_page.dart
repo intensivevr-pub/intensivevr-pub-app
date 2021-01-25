@@ -2,6 +2,7 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:intensivevr_pub/core/models/game.dart';
+import 'package:intensivevr_pub/features/leaderboard/leaderboard.dart';
 
 class GamePage extends StatelessWidget {
   final Game game;
@@ -17,42 +18,73 @@ class GamePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: SafeArea(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Text(game.name),
+    return Container(
+      color: Color(0xFF6A11CB),
+      child: SafeArea(
+        child: Scaffold(
+          appBar: AppBar(
+            iconTheme: IconThemeData(color: Colors.black),
+            backgroundColor: Colors.white,
+            shadowColor: Colors.white,
+            title: Text(
+              game.name,
+              style: TextStyle(color: Colors.black),
             ),
-            CarouselSlider(
-              options: CarouselOptions(
-                height: 200,
-                autoPlayInterval: Duration(seconds: 12),
-                autoPlay: true,
-              ) ,
-              items: pictures(),
-            ),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Text(formatType()),
-            ),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Text(game.description),
-            ),
-            Center(
-              child: Padding(
-                padding: const EdgeInsets.all(10.0),
-                child: RaisedButton(
-                  onPressed: () {},   //TODO: link leader boards
-                  child: Text("Leaderboards"),
+          ),
+          body: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Hero(
+                tag: game.id,
+                child: CarouselSlider(
+                  options: CarouselOptions(
+                    height: 200,
+                    autoPlayInterval: Duration(seconds: 12),
+                    autoPlay: true,
+                  ),
+                  items: pictures(),
                 ),
               ),
-            )
-          ],
-      )),
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Text(formatType()),
+              ),
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Text(game.description),
+              ),
+              Center(
+                child: Padding(
+                  padding: const EdgeInsets.all(10.0),
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(45),
+                    child: Material(
+                      color: Colors.black,
+                      child: InkWell(
+                        customBorder: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(45)
+                        ),
+                        onTap: () {
+                          Navigator.push(context, LeaderboardPage.route(game));
+                        },
+                        child: Container(
+                          decoration: BoxDecoration(
+                            border: Border.fromBorderSide(BorderSide(width: 0.6)),
+                            borderRadius: BorderRadius.circular(45)
+                          ),
+                          width: 200,
+                          height: 60,
+                          child: Center(child: Text("Tablica wyników",style: TextStyle(color: Colors.white),)),
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+              )
+            ],
+          ),
+        ),
+      ),
     );
   }
 
@@ -65,8 +97,8 @@ class GamePage extends StatelessWidget {
     return out;
   }
 
-  String formatType(){
-    switch(game.type) {
+  String formatType() {
+    switch (game.type) {
       case GameType.vr:
         return "Gra VR";
       case GameType.console:

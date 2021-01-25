@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intensivevr_pub/features/authentication/bloc/authentication_bloc.dart';
 import 'package:intensivevr_pub/features/home/view/drawer/home_menu_option.dart';
 import 'package:intensivevr_pub/features/home/view/drawer/user_info.dart';
+import 'package:intensivevr_pub/features/leaderboard/view/game_list_page.dart';
 import 'package:intensivevr_pub/features/products/view/products_page.dart';
 import 'package:intensivevr_pub/widgets/complex/complex.dart';
 
@@ -17,11 +18,14 @@ class HomeMenu extends StatelessWidget {
         child: ListView(
           children: [
             UserInfo(),
-            ThemeSwitcher(),
+            ListTile(
+              title: Text("Zmień tryb: "),
+              trailing: ThemeSwitcher(),
+            ),
             HomeMenuOption(
-                title: "Option 2",
+                title: "Tablice wyników",
                 onPress: () {
-                  Navigator.pop(context);
+                  Navigator.push(context, GameListPage.route());
                 }),
             HomeMenuOption(
                 title: "Oferta Baru (produkty)",

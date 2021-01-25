@@ -39,16 +39,16 @@ class DataRepository {
     }).toList();
   }
 
-  static Future getGames(int threshold, int portion) async {
+  static Future<List<Game>> getGames(int threshold, int portion) async {
     String apiUrl =
-        "/api/games/type/all/category/all/portion/${portion ?? -1}/threshold/$threshold/";
+        "/api/games/type/all/category/all/portion/${portion ?? -1}/threshold/${threshold ?? 0}/";
     var response =
         await ServerConnector.makeRequestWithoutToken(apiUrl, requestType.GET);
     final data = json.decode(utf8.decode(response.bodyBytes));
     //print(data);
-    return data.map((rawGame) {
+    return List<Game>.from(data.map((rawGame) {
       return Game.fromJson(rawGame);
-    }).toList();
+    }).toList());
   }
 
   static Future getProducts(int threshold, int portion) async {
@@ -101,6 +101,18 @@ class DataRepository {
     //print(data);
     return List<Coupon>.from(data.map((rawPrize) {
       return Coupon.fromJson(rawPrize);
+    }).toList());
+  }
+
+  static Future<List<LeaderBoardEntry>> getLeaderboard(
+      Game game, int count) async {
+    String apiUrl = "/api/rank/game/${game.id}/count/$count/";
+    var response =
+        await ServerConnector.makeRequestWithoutToken(apiUrl, requestType.GET);
+    final data = json.decode(utf8.decode(response.bodyBytes));
+    print(data);
+    return List<LeaderBoardEntry>.from(data.map((rawLeaderBoardEntry) {
+      return LeaderBoardEntry.fromJson(rawLeaderBoardEntry);
     }).toList());
   }
 }
