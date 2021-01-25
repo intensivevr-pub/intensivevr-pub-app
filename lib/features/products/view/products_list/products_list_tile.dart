@@ -16,11 +16,13 @@ class _ProductsListTileState extends State<ProductsListTile> {
   Color backgroundColor;
   Color textColor;
   PaletteGenerator paletteGenerator;
+
   @override
   void initState() {
     getColors();
     super.initState();
   }
+
   void getColors() async {
     paletteGenerator = await PaletteGenerator.fromImageProvider(
       NetworkImage(widget.product.thumbnail),
@@ -36,6 +38,7 @@ class _ProductsListTileState extends State<ProductsListTile> {
       loaded = true;
     });
   }
+
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -45,9 +48,8 @@ class _ProductsListTileState extends State<ProductsListTile> {
         height: 300,
         width: 200,
         decoration: BoxDecoration(
-          color: loaded ? backgroundColor : Colors.white,
-          borderRadius: BorderRadius.circular(16.0)
-        ),
+            color: loaded ? backgroundColor : Colors.white,
+            borderRadius: BorderRadius.circular(16.0)),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -63,14 +65,22 @@ class _ProductsListTileState extends State<ProductsListTile> {
                 ),
               ),
             ),
-            Image(image: NetworkImage(widget.product.picture)),
-            Text(
-              widget.product.description,
-              textAlign: TextAlign.center,
-              style: TextStyle(
-                color: loaded ? textColor : Colors.black,
-              )
+            Expanded(
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Container(
+                  decoration: BoxDecoration(
+                      image: DecorationImage(
+                        fit: BoxFit.fitHeight,
+                          image: NetworkImage(widget.product.picture))),
+                ),
+              ),
             ),
+            Text(widget.product.description,
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  color: loaded ? textColor : Colors.black,
+                )),
           ],
         ),
       ),
