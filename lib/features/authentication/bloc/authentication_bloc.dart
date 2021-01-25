@@ -3,9 +3,11 @@ import 'dart:async';
 import 'package:authentication_repository/authentication_repository.dart';
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
+import 'package:intensivevr_pub/core/services/shared_preferences.dart';
 import 'package:meta/meta.dart';
 
 part 'authentication_event.dart';
+
 part 'authentication_state.dart';
 
 class AuthenticationBloc
@@ -31,6 +33,8 @@ class AuthenticationBloc
     if (event is AuthenticationStatusChanged) {
       yield await _mapAuthenticationStatusChangedToState(event);
     } else if (event is AuthenticationLogoutRequested) {
+      final sharedPrefService = await SharedPreferencesService.instance;
+      await sharedPrefService.deleteUserInfo();
       authenticationRepository.logOut();
     }
   }
@@ -43,7 +47,8 @@ class AuthenticationBloc
   }
 
   Future<AuthenticationState> _mapAuthenticationStatusChangedToState(
-      AuthenticationStatusChanged event,) async {
+    AuthenticationStatusChanged event,
+  ) async {
     switch (event.status) {
       case AuthenticationStatus.unauthenticated:
         return const AuthenticationState.unauthenticated();

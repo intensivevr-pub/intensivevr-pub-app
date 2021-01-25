@@ -6,4 +6,5 @@ abstract class UserDataEvent {}
 
 class GetInitialUserData extends UserDataEvent {}
 
-class AddActiveReward extends  UserDataEvent{}
+class RefreshPointsAndRewards extends  UserDataEvent{}
+

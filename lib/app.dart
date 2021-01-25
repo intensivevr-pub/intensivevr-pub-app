@@ -2,6 +2,7 @@ import 'package:authentication_repository/authentication_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intensivevr_pub/features/authentication/authentication.dart';
+import 'package:intensivevr_pub/features/network_connection/bloc/network_connection_bloc.dart';
 import 'package:intensivevr_pub/features/welcome/view/welcome_page.dart';
 
 import 'features/home/home.dart';
@@ -44,36 +45,43 @@ class _AppViewState extends State<AppView> {
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<ThemeBloc, ThemeState>(builder: (context, themeState) {
-      return MaterialApp(
-        navigatorKey: _navigatorKey,
-        themeMode: themeState.themeMode,
-        theme: lightTheme,
-        darkTheme: darkTheme,
-        builder: (context, child) {
-          return BlocListener<AuthenticationBloc, AuthenticationState>(
-            listener: (context, state) {
-              switch (state.status) {
-                case AuthenticationStatus.authenticated:
-                  _navigator.pushAndRemoveUntil<void>(
-                    HomePage.route(),
-                    (route) => false,
-                  );
-                  break;
-                case AuthenticationStatus.unauthenticated:
-                  _navigator.pushAndRemoveUntil<void>(
-                    WelcomePage.route(),
-                    (route) => false,
-                  );
-                  break;
-                default:
-                  break;
-              }
-            },
-            child: child,
-          );
-        },
-        onGenerateRoute: (_) => SplashPage.route(),
-      );
+      return BlocBuilder<NetworkConnectionBloc, NetworkConnectionState>(
+          builder: (context, networkState) {
+        return MaterialApp(
+          navigatorKey: _navigatorKey,
+          themeMode: themeState.themeMode,
+          theme: lightTheme,
+          darkTheme: darkTheme,
+          builder: (context, child) {
+            return BlocListener<AuthenticationBloc, AuthenticationState>(
+              listener: (context, state) {
+                switch (state.status) {
+                  case AuthenticationStatus.authenticated:
+                    _navigator.pushAndRemoveUntil<void>(
+                      HomePage.route(
+                          online:
+                              networkState.status == NetworkStatus.connected),
+                      (route) => false,
+                    );
+                    break;
+                  case AuthenticationStatus.unauthenticated:
+                    _navigator.pushAndRemoveUntil<void>(
+                      WelcomePage.route(),
+                      (route) => false,
+                    );
+                    break;
+                  default:
+                    break;
+                }
+              },
+              child: child,
+            );
+          },
+          onGenerateRoute: (_) {
+            return SplashPage.route();
+          },
+        );
+      });
     });
   }
 }

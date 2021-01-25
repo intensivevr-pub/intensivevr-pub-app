@@ -130,7 +130,7 @@ class _PrizeListTileState extends State<PrizeListTile> {
                     listener: (context, state) {
                       if (state is PrizeCollected) {
                         BlocProvider.of<UserDataBloc>(context)
-                            .add(AddActiveReward());
+                            .add(RefreshPointsAndRewards());
                       }
                     },
                     cubit: prizeBloc,

@@ -1,9 +1,13 @@
+import 'package:intensivevr_pub/core/models/models.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class SharedPrefKeys {
   SharedPrefKeys._();
 
   static const String darkModeEnabled = 'darkModeEnabled';
+  static const String userStored = 'userStored';
+  static const String userName = 'userName';
+  static const String userHash = 'userHash';
 }
 
 class SharedPreferencesService {
@@ -30,4 +34,20 @@ class SharedPreferencesService {
 
   bool get isDarkModeEnabled =>
       _preferences.getBool(SharedPrefKeys.darkModeEnabled);
+
+  Future<void> setUserInfo(User user) async {
+    await _preferences.setBool(SharedPrefKeys.userStored, true);
+    await _preferences.setString(SharedPrefKeys.userName, user.name);
+    await _preferences.setString(SharedPrefKeys.userHash, user.hash);
+  }
+
+  bool get isUserStored => _preferences.getBool(SharedPrefKeys.userStored);
+
+  String get userName => _preferences.getString(SharedPrefKeys.userName);
+
+  String get userHash => _preferences.getString(SharedPrefKeys.userHash);
+
+  Future<void> deleteUserInfo() async {
+    await _preferences.setBool(SharedPrefKeys.userStored, false);
+  }
 }

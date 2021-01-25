@@ -50,3 +50,4 @@ class UserDataState extends Equatable {
   List<Object> get props =>
       [username, points, hash, activeCoupons, isDemoUser, loaded];
 }
+class UserDataError extends UserDataState{}
