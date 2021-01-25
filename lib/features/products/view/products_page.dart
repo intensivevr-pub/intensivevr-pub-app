@@ -10,7 +10,6 @@ class ProductsPage extends StatefulWidget {
     return MaterialPageRoute<void>(
         builder: (_) => BlocProvider(
             create: (BuildContext context) => GenericListBloc(
-                  authBloc: BlocProvider.of<AuthenticationBloc>(context),
                   method: DataRepository.getProducts,
                   portion: 20,
                 )..add(ReachedBottomOfList()),

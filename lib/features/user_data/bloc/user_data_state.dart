@@ -20,13 +20,13 @@ class UserDataState extends Equatable {
     @required this.loaded,
   });
 
-  factory UserDataState.initial() {
+  factory UserDataState.initial(bool demo) {
     return UserDataState(
         username: "User",
         points: -1,
         hash: "hash",
         activeCoupons: [],
-        isDemoUser: true,
+        isDemoUser: demo,
         loaded: false);
   }
 

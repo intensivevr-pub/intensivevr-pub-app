@@ -14,7 +14,7 @@ class UserDataBloc extends Bloc<UserDataEvent, UserDataState> {
   final bool demo;
 
   UserDataBloc(this.authBloc, this.online, this.demo)
-      : super(UserDataState.initial());
+      : super(UserDataState.initial(demo));
 
   @override
   Stream<UserDataState> mapEventToState(UserDataEvent event) async* {

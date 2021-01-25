@@ -10,7 +10,11 @@ class UserInfo extends StatelessWidget {
       child: Center(
         child: BlocBuilder<UserDataBloc, UserDataState>(
           builder: (BuildContext context, UserDataState state) {
-            return Text("Witaj, ${state.username}");
+            if(state.isDemoUser){
+             return Text("Witaj nieznajomy");
+            }else {
+              return Text("Witaj, ${state.username}");
+            }
           },
         ),
       ),

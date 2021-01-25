@@ -7,12 +7,10 @@ import 'package:intensivevr_pub/features/home/elements/generic_list/bloc/generic
 import 'package:intensivevr_pub/features/home/elements/generic_list/bloc/generic_list_state.dart';
 
 class GenericListBloc extends Bloc<GenericListEvent, GenericListState> {
-  final AuthenticationBloc authBloc;
   final Function method;
   final int portion;
 
   GenericListBloc({
-    @required this.authBloc,
     @required this.method,
     @required this.portion,
   }) : super(InitialListState());
@@ -23,13 +21,13 @@ class GenericListBloc extends Bloc<GenericListEvent, GenericListState> {
     if (event is ReachedBottomOfList && !_hasReachedMax(currentState)) {
       try {
         if (currentState is InitialListState) {
-          final items = await method(authBloc, 0, portion);
+          final items = await method(0, portion);
           yield ListLoaded(items: items, hasReachedMax: items.length < portion);
           return;
         }
         if (currentState is ListLoaded) {
           final items =
-              await method(authBloc, currentState.items.length, portion);
+              await method(currentState.items.length, portion);
           yield items.isEmpty
               ? currentState.copyWith(hasReachedMax: true)
               : ListLoaded(
@@ -43,7 +41,7 @@ class GenericListBloc extends Bloc<GenericListEvent, GenericListState> {
       }
     } else if (event is ReloadItems) {
       try {
-        final items = await method(authBloc, 0, portion);
+        final items = await method( 0, portion);
         yield ListLoaded(items: items, hasReachedMax: items.length < portion);
       }catch(e){
         yield ListError();

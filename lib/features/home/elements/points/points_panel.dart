@@ -5,8 +5,8 @@ import 'package:flutter/material.dart';
 
 class PointsPanel extends StatelessWidget {
   final int points;
-
-  const PointsPanel({Key key, this.points}) : super(key: key);
+  final bool demo;
+  const PointsPanel({Key key, this.points,this.demo}) : super(key: key);
 
   String determineForm() {
     if(this.points == 1)
@@ -28,7 +28,7 @@ class PointsPanel extends StatelessWidget {
             end: Alignment.bottomCenter,
             colors: [Colors.green, Colors.blue]),
       ),
-      child: Column(
+      child: !demo? Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Text(
@@ -43,6 +43,17 @@ class PointsPanel extends StatelessWidget {
             style: TextStyle(
               color: Colors.white,
               fontSize: 32,
+            ),
+          ),
+        ],
+      ):Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Text(
+            "Tutaj będziesz widzieć liczbę punktów",
+            style: TextStyle(
+              color: Colors.white,
+              fontSize: 20,
             ),
           ),
         ],

@@ -62,4 +62,38 @@ class ServerConnector {
       throw ServerConnectionException();
     }
   }
+
+  static makeRequestWithoutToken(String apiUrl,requestType type) async{
+    var uri;
+    if (kUseHTTPS) {
+      uri = Uri.https(kServerUrl, apiUrl);
+    } else {
+      uri = Uri.http(kServerUrl, apiUrl);
+    }
+    Map<String, String> headers = {
+      'Content-Type': 'application/json',
+    };
+    var request;
+    switch (type) {
+      case requestType.GET:
+        request = http.get;
+        break;
+      case requestType.POST:
+        request = http.post;
+        break;
+      case requestType.PUT:
+        request = http.put;
+        break;
+    }
+    var response = await request(uri, headers: headers);
+    if (response.statusCode == 200) {
+      return response;
+    } else if (response.statusCode == 401) {
+      throw ServerConnectionException();
+    } else {
+      print("ERROR code: ${response.statusCode}");
+      print(json.decode(response.body));
+      throw ServerConnectionException();
+    }
+  }
 }

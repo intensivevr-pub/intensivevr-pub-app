@@ -111,7 +111,7 @@ class _PrizeListTileState extends State<PrizeListTile> {
               width: MediaQuery.of(context).size.width,
               padding: EdgeInsets.all(20),
               decoration: BoxDecoration(
-                color: active
+                color: loaded? backgroundColor: active
                     ? PrizeListTile.activeColorBackground
                     : PrizeListTile.inactiveColorBackground,
                 borderRadius: BorderRadius.vertical(top: Radius.circular(32.0)),
@@ -135,27 +135,47 @@ class _PrizeListTileState extends State<PrizeListTile> {
                     },
                     cubit: prizeBloc,
                     builder: (BuildContext context, state) {
-                      return RaisedButton(
-                        onPressed: () =>
-                            prizeBloc.add(CollectPrizeButtonPressed()),
-                        child: state is InitialPrizeState
-                            ? Text(
+                      return BlocBuilder<UserDataBloc, UserDataState>(
+                        builder: (context, state) {
+                          if(!state.isDemoUser) {
+                            return RaisedButton(
+                              onPressed: () =>
+                                  prizeBloc.add(CollectPrizeButtonPressed()),
+                              child: state is InitialPrizeState
+                                  ? Text(
                                 "Wybierz nagrodę",
                                 style: TextStyle(color: Colors.black),
                               )
-                            : state is LoadingPrizeRealization
-                                ? Center(
-                                    child: CircularProgressIndicator(),
-                                  )
-                                : state is PrizeCollectionError
-                                    ? Text(
-                                        "Error",
-                                        style: TextStyle(color: Colors.black),
-                                      )
-                                    : Text(
-                                        "Odbierz ponownie",
-                                        style: TextStyle(color: Colors.black),
-                                      ),
+                                  : state is LoadingPrizeRealization
+                                  ? Center(
+                                child: CircularProgressIndicator(),
+                              )
+                                  : state is PrizeCollectionError
+                                  ? Text(
+                                "Error",
+                                style:
+                                TextStyle(color: Colors.black),
+                              )
+                                  : Text(
+                                "Odbierz ponownie",
+                                style:
+                                TextStyle(color: Colors.black),
+                              ),
+                            );
+                          }else{
+                            return Container(
+                              width: 250,
+                              height: 40,
+                              decoration: BoxDecoration(borderRadius: BorderRadius.circular(30),color: Colors.green),
+                              child: Center(
+                                child: Text(
+                                  "Tutaj będziesz mógł odebrać nagrodę",
+                                  style: TextStyle(color: Colors.black),
+                                ),
+                              ),
+                            );
+                          }
+                        },
                       );
                     },
                   ),

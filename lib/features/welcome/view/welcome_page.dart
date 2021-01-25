@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:gradient_text/gradient_text.dart';
+import 'package:intensivevr_pub/features/home/home.dart';
 import 'package:intensivevr_pub/features/login/login.dart';
 import 'package:intensivevr_pub/features/register/register.dart';
 import 'package:intensivevr_pub/widgets/widgets.dart';
@@ -69,6 +70,20 @@ class WelcomePage extends StatelessWidget {
                           splashColor: Colors.purple,
                           text: Text(
                             "Utwórz konto",
+                            style: TextStyle(color: Colors.white),
+                          )),
+                    ),Padding(
+                      padding: const EdgeInsets.fromLTRB(16, 8, 16, 24),
+                      child: WelcomeButton(
+                          onPress: () {
+                            Navigator.push(context, HomePage.route(demo: true));
+                          },
+                          padding: EdgeInsets.all(16),
+                          borderRadius: BorderRadius.all(Radius.circular(10)),
+                          color: Colors.blue,
+                          splashColor: Colors.purple,
+                          text: Text(
+                            "Tryb demo",
                             style: TextStyle(color: Colors.white),
                           )),
                     )

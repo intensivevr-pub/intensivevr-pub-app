@@ -16,12 +16,11 @@ class DataRepository {
     return points;
   }
 
-  static Future getPrizes(
-      AuthenticationBloc authenticationBloc, int threshold, int portion) async {
+  static Future getPrizes(int threshold, int portion) async {
     String apiUrl =
         "/api/prizes/sort/1/category/all/portion/${portion ?? -1}/threshold/$threshold/";
-    var response = await ServerConnector.makeRequest(
-        apiUrl, authenticationBloc, requestType.GET);
+    var response =
+        await ServerConnector.makeRequestWithoutToken(apiUrl, requestType.GET);
     final data = json.decode(utf8.decode(response.bodyBytes));
     //print(data);
     return data.map((rawPrize) {
@@ -29,25 +28,22 @@ class DataRepository {
     }).toList();
   }
 
-  static Future getDiscounts(
-      AuthenticationBloc authenticationBloc, int threshold, int portion) async {
+  static Future getDiscounts(int threshold, int portion) async {
     String apiUrl =
         "/api/discounts/type/all/portion/${portion ?? -1}/threshold/$threshold/";
-    var response = await ServerConnector.makeRequest(
-        apiUrl, authenticationBloc, requestType.GET);
+    var response =
+        await ServerConnector.makeRequestWithoutToken(apiUrl, requestType.GET);
     final data = json.decode(utf8.decode(response.bodyBytes));
-    //print(data);
     return data.map((rawDiscount) {
       return Discount.fromJson(rawDiscount);
     }).toList();
   }
 
-  static Future getGames(
-      AuthenticationBloc authenticationBloc, int threshold, int portion) async {
+  static Future getGames(int threshold, int portion) async {
     String apiUrl =
         "/api/games/type/all/category/all/portion/${portion ?? -1}/threshold/$threshold/";
-    var response = await ServerConnector.makeRequest(
-        apiUrl, authenticationBloc, requestType.GET);
+    var response =
+        await ServerConnector.makeRequestWithoutToken(apiUrl, requestType.GET);
     final data = json.decode(utf8.decode(response.bodyBytes));
     //print(data);
     return data.map((rawGame) {
@@ -55,12 +51,11 @@ class DataRepository {
     }).toList();
   }
 
-  static Future getProducts(
-      AuthenticationBloc authenticationBloc, int threshold, int portion) async {
+  static Future getProducts(int threshold, int portion) async {
     String apiUrl =
         "/api/products/sort/1/category/all/portion/${portion ?? -1}/threshold/$threshold/";
-    var response = await ServerConnector.makeRequest(
-        apiUrl, authenticationBloc, requestType.GET);
+    var response =
+        await ServerConnector.makeRequestWithoutToken(apiUrl, requestType.GET);
     final data = json.decode(utf8.decode(response.bodyBytes));
     //print(data);
     return data.map((rawProduct) {
@@ -68,12 +63,11 @@ class DataRepository {
     }).toList();
   }
 
-  static Future getEvents(
-      AuthenticationBloc authenticationBloc, int threshold, int portion) async {
+  static Future getEvents(int threshold, int portion) async {
     String apiUrl =
         "/api/events/status/2/category/all/portion/${portion ?? -1}/threshold/$threshold/";
-    var response = await ServerConnector.makeRequest(
-        apiUrl, authenticationBloc, requestType.GET);
+    var response =
+        await ServerConnector.makeRequestWithoutToken(apiUrl, requestType.GET);
     final data = json.decode(utf8.decode(response.bodyBytes));
     //print(data);
     return data.map((rawEvent) {
