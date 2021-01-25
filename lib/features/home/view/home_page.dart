@@ -4,6 +4,7 @@ import 'package:intensivevr_pub/features/authentication/authentication.dart';
 import 'package:intensivevr_pub/features/home/bloc/home_screen_bloc.dart';
 import 'package:intensivevr_pub/features/home/view/online_home_page.dart';
 import 'package:intensivevr_pub/features/user_data/user_data.dart';
+
 import 'offline_home_page.dart';
 
 class HomePage extends StatefulWidget {
@@ -29,20 +30,30 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  UserDataBloc userBloc;
+  HomeScreenBloc homeScreenBloc;
 
   @override
   void dispose() {
-    BlocProvider.of<UserDataBloc>(context).close();
+    homeScreenBloc.close();
+    userBloc.close();
     super.dispose();
+  }
+
+  @override
+  void initState() {
+    userBloc = BlocProvider.of<UserDataBloc>(context);
+    homeScreenBloc = BlocProvider.of<HomeScreenBloc>(context);
+    super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<HomeScreenBloc, HomeScreenState>(
       builder: (BuildContext context, state) {
-        if(state.online){
+        if (state.online) {
           return OnlineHomePage();
-        }else{
+        } else {
           return OfflineHomePage();
         }
       },
