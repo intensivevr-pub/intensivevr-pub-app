@@ -34,8 +34,12 @@ class _OfflineHomePageState extends State<OfflineHomePage> {
           },
           child: Scaffold(
             //TODO poprawić design
-            body: BlocBuilder<NetworkConnectionBloc, NetworkConnectionState>(
-                builder: (context, state) {
+            body: BlocConsumer<NetworkConnectionBloc, NetworkConnectionState>(
+                listener: (context, state) {
+              if (state.status == NetworkStatus.connected) {
+                onRefresh(true);
+              }
+            }, builder: (context, state) {
               return SmartRefresher(
                 controller: _refreshController,
                 onRefresh: () =>
@@ -51,7 +55,7 @@ class _OfflineHomePageState extends State<OfflineHomePage> {
                             return BarcodeWidget(
                               barcode: Barcode.code128(),
                               // Barcode type and settings
-                              data: state.hash,
+                              data: "Tutaj bedzie Twoj kod",
                               // Content
                               width: width * 0.7,
                               height: 130,
