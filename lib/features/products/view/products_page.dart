@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intensivevr_pub/core/services/data_repository.dart';
-import 'package:intensivevr_pub/features/authentication/authentication.dart';
 import 'package:intensivevr_pub/features/home/elements/generic_list/bloc/bloc.dart';
 import 'package:intensivevr_pub/features/products/view/products_list/products_list.dart';
 

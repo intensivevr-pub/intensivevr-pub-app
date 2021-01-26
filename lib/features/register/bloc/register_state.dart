@@ -1,11 +1,12 @@
 part of 'register_bloc.dart';
 
 class RegisterState extends Equatable {
-  const RegisterState({
+  const RegisterState(
+    this.username,
+    this.password,
+    this.email, {
     this.status = FormzStatus.pure,
-    this.username = const Username.pure(),
-    this.email = const Email.pure(),
-    this.password = const Password.pure(),
+    this.error,
     this.passwordConfirmation = const Password.pure(),
   });
 
@@ -14,6 +15,7 @@ class RegisterState extends Equatable {
   final Password password;
   final Password passwordConfirmation;
   final Email email;
+  final RegisterError error;
 
   RegisterState copyWith({
     FormzStatus status,
@@ -21,17 +23,19 @@ class RegisterState extends Equatable {
     Password password,
     Password passwordConfirmation,
     Email email,
+    RegisterError error,
   }) {
     return RegisterState(
+      username ?? this.username,
+      password ?? this.password,
+      email ?? this.email,
       status: status ?? this.status,
-      username: username ?? this.username,
-      password: password ?? this.password,
       passwordConfirmation: passwordConfirmation ?? this.passwordConfirmation,
-      email: email ?? this.email,
+      error: error ?? this.error,
     );
   }
 
   @override
   List<Object> get props =>
-      [status, username, password, email, passwordConfirmation];
+      [status, username, password, email, passwordConfirmation, error];
 }

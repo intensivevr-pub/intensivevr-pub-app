@@ -1,3 +1,4 @@
+import 'package:authentication_repository/authentication_repository.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -12,11 +13,23 @@ class RegisterForm extends StatelessWidget {
     return BlocListener<RegisterBloc, RegisterState>(
       listener: (context, state) {
         if (state.status.isSubmissionFailure) {
-          Scaffold.of(context)
-            ..hideCurrentSnackBar()
-            ..showSnackBar(
-              const SnackBar(content: Text('Register Failure')),
-            );
+          if (state.error != null) {
+            if (state.error.runtimeType == EmailAlreadyExistsError) {
+              ScaffoldMessenger.of(context)
+                ..hideCurrentSnackBar()
+                ..showSnackBar(const SnackBar(
+                    content: Text("Konto z tym adresem email już istnieje")));
+            } else if (state.error.runtimeType == UsernameTakenError) {
+              ScaffoldMessenger.of(context)
+                ..hideCurrentSnackBar()
+                ..showSnackBar(const SnackBar(content: Text("Nick zajęty")));
+            }
+          }else{
+            ScaffoldMessenger.of(context)
+              ..hideCurrentSnackBar()
+              ..showSnackBar(const SnackBar(content: Text("Nieznany błąd")));
+          }
+
         }
       },
       child: BlocBuilder<RegisterBloc, RegisterState>(
@@ -106,13 +119,11 @@ class _LoginInput extends StatelessWidget {
           padding: const EdgeInsets.symmetric(vertical: 10.0),
           child: CredentialInput(
             labelText: "Nick",
-            errorText: state.username.invalid
-                ? 'Nick nie może być pusty'
-                : null,
-            onChanged: (username) =>
-                context
-                    .read<RegisterBloc>()
-                    .add(RegisterUsernameChanged(username)),
+            errorText:
+                state.username.invalid ? 'Nick nie może być pusty' : null,
+            onChanged: (username) => context
+                .read<RegisterBloc>()
+                .add(RegisterUsernameChanged(username)),
             fieldKey: const Key('registerForm_usernameInput_textField'),
           ),
         );
@@ -132,12 +143,12 @@ class _PasswordInput extends StatelessWidget {
           child: CredentialInput(
             labelText: "Hasło",
             obscure: true,
-            errorText:
-            state.password.invalid ? state.password.getErrorMessage() : null,
-            onChanged: (password) =>
-                context
-                    .read<RegisterBloc>()
-                    .add(RegisterPasswordChanged(password)),
+            errorText: state.password.invalid
+                ? state.password.getErrorMessage()
+                : null,
+            onChanged: (password) => context
+                .read<RegisterBloc>()
+                .add(RegisterPasswordChanged(password)),
             fieldKey: const Key('registerForm_passwordInput_textField'),
           ),
         );
@@ -161,13 +172,11 @@ class _ConfirmPasswordInput extends StatelessWidget {
             errorText: state.passwordConfirmation.invalid
                 ? "Hasła nie są takie same"
                 : null,
-            onChanged: (passwordConfirmation) =>
-                context
-                    .read<RegisterBloc>()
-                    .add(
-                    RegisterPasswordConfirmationChanged(passwordConfirmation)),
+            onChanged: (passwordConfirmation) => context
+                .read<RegisterBloc>()
+                .add(RegisterPasswordConfirmationChanged(passwordConfirmation)),
             fieldKey:
-            const Key('registerForm_passwordConfirmationInput_textField'),
+                const Key('registerForm_passwordConfirmationInput_textField'),
           ),
         );
       },
@@ -186,18 +195,17 @@ class _DateOfBirth extends StatelessWidget {
           child: Text("Data urodzenia:"),
         ),
         Padding(
-          padding: const EdgeInsets.symmetric(vertical:8.0),
+          padding: const EdgeInsets.symmetric(vertical: 8.0),
           child: Container(
             height: 60,
             child: CupertinoDatePicker(
-              onDateTimeChanged: (DateTime value) {  },
+              onDateTimeChanged: (DateTime value) {},
               mode: CupertinoDatePickerMode.date,
               use24hFormat: false,
             ),
           ),
         )
       ],
-
     );
   }
 }

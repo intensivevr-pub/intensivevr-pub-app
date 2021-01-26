@@ -1,11 +1,14 @@
 import 'package:formz/formz.dart';
 
-enum EmailValidationError { empty, bad }
+enum EmailValidationError { empty, bad, duplicate }
 
 class Email extends FormzInput<String, EmailValidationError> {
-  const Email.pure() : super.pure('');
+  Email.pure() : super.pure('');
 
-  const Email.dirty([String value = '']) : super.dirty(value);
+  Email.dirty([String value = ''])
+      : isDuplicate = false,
+        super.dirty(value);
+  bool isDuplicate = false;
 
   @override
   EmailValidationError validator(String value) {
@@ -13,6 +16,9 @@ class Email extends FormzInput<String, EmailValidationError> {
     if (!RegExp(
       r'^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$',
     ).hasMatch(value.trim())) return EmailValidationError.bad;
+    if (isDuplicate) {
+      return EmailValidationError.duplicate;
+    }
     return null;
   }
 
@@ -23,6 +29,9 @@ class Email extends FormzInput<String, EmailValidationError> {
         break;
       case EmailValidationError.bad:
         return "To nie jest poprawny email";
+        break;
+      case EmailValidationError.duplicate:
+        return "Ten email już jest w systemie";
         break;
     }
     return null;

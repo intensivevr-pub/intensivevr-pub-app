@@ -1,8 +1,9 @@
 import 'dart:async';
 
+import 'package:authentication_repository/src/models/errors.dart';
 import 'package:authentication_repository/src/user_repository.dart';
+import 'package:dartz/dartz.dart';
 import 'package:meta/meta.dart';
-import 'package:tuple/tuple.dart';
 
 import 'models/user.dart';
 
@@ -35,14 +36,14 @@ class AuthenticationRepository {
         await UserRepository.login(email: email, password: password);
     if (result != null) {
       UserRepository.persistTokenAndRefresh(result);
-      user = User(result.item2);
+      user = User(result.value2);
       _controller.add(AuthenticationStatus.authenticated);
     } else {
       throw AuthenticationException();
     }
   }
 
-  Future<void> register({
+  Future<Either<bool, RegisterError>> register({
     @required String username,
     @required String password,
     @required String email,
@@ -50,21 +51,8 @@ class AuthenticationRepository {
     assert(username != null);
     assert(password != null);
     assert(email != null);
-    bool isRegisterSuccessful = await UserRepository.register(
+    return await UserRepository.register(
         email: email, password: password, username: username);
-    if (isRegisterSuccessful) {
-      Tuple2<String, String> result =
-          await UserRepository.login(email: email, password: password);
-      if (result != null) {
-        UserRepository.persistTokenAndRefresh(result);
-        user = User(result.item2);
-        _controller.add(AuthenticationStatus.authenticated);
-      } else {
-        throw AuthenticationException();
-      }
-    } else {
-      throw AuthenticationException();
-    }
   }
 
   User getUser() {

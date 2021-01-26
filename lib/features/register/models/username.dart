@@ -1,14 +1,20 @@
 import 'package:formz/formz.dart';
 
-enum UsernameValidationError { empty }
+enum UsernameValidationError { empty,duplicate}
 
 class Username extends FormzInput<String, UsernameValidationError> {
-  const Username.pure() : super.pure('');
-
-  const Username.dirty([String value = '']) : super.dirty(value);
+  Username.pure() : super.pure('');
+  Username.dirty([String value = '']) :isDuplicate = false, super.dirty(value);
+  bool isDuplicate = false;
 
   @override
   UsernameValidationError validator(String value) {
-    return value?.isNotEmpty == true ? null : UsernameValidationError.empty;
+    if(value.isEmpty){
+      return UsernameValidationError.empty;
+    }
+    if(isDuplicate){
+      return UsernameValidationError.duplicate;
+    }
+    return null;
   }
 }

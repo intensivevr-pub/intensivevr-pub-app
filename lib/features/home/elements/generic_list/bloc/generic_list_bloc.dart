@@ -2,7 +2,6 @@ import 'dart:async';
 
 import 'package:bloc/bloc.dart';
 import 'package:flutter/foundation.dart';
-import 'package:intensivevr_pub/features/authentication/authentication.dart';
 import 'package:intensivevr_pub/features/home/elements/generic_list/bloc/generic_list_event.dart';
 import 'package:intensivevr_pub/features/home/elements/generic_list/bloc/generic_list_state.dart';
 

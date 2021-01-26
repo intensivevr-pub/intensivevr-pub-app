@@ -1,11 +1,12 @@
 import 'dart:convert';
 
 import 'package:authentication_repository/const.dart';
+import 'package:authentication_repository/src/models/errors.dart';
+import 'package:dartz/dartz.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:http/http.dart' as http;
 import 'package:jwt_decoder/jwt_decoder.dart';
 import 'package:meta/meta.dart';
-import 'package:tuple/tuple.dart';
 
 class UserRepository {
   static Future<Tuple2<String, String>> login({
@@ -40,20 +41,22 @@ class UserRepository {
     return Tuple2(refresh, access);
   }
 
-  static Future<bool> register({
+  static Future<Either<bool, RegisterError>> register({
     @required String email,
     @required String password,
     @required String username,
   }) async {
-    final uri = Uri.http(kServerUrl, "/auth/users/");
+    var uri;
+    if(kUseHTTPS){
+      uri = Uri.https(kServerUrl, "/auth/users/");
+    }else{
+      uri = Uri.http(kServerUrl, "/auth/users/");
+    }
     var body = json.encode({
       'email': email,
       'password': password,
       'nick': username,
     });
-
-    print('Body: $body');
-    print("Rejestruje");
     var response = await http.post(
       uri,
       headers: {
@@ -62,13 +65,24 @@ class UserRepository {
       body: body,
     );
     if (response.statusCode != 201) {
-      print("Error");
-      print(response.statusCode);
-      print(response.body);
-      return false;
+      var reason = json.decode(utf8.decode(response.bodyBytes));
+      if(reason['email']!=null){
+        if(reason['email']=="Istnieje już użytkownik z tą wartością pola adres email."){
+          return Right(EmailAlreadyExistsError());
+        }else{
+          return Right(EmailIncorrectError());
+        }
+      }else if(reason['nick']!=null){
+        if(reason['nick']=="Istnieje już użytkownik z tą wartością pola nazwa."){
+          return Right(UsernameTakenError());
+        }else{
+          return Right(UsernameIncorrectError());
+        }
+      }
+      print(reason);
+      return Right(UnknownError());
     }
-    print("RESPONS");
-    return true;
+    return Left(true);
   }
 
   static Future<void> deleteToken() async {
@@ -81,8 +95,8 @@ class UserRepository {
   static Future<void> persistTokenAndRefresh(
       Tuple2<String, String> data) async {
     final storage = new FlutterSecureStorage();
-    await storage.write(key: "refresh", value: data.item1);
-    await storage.write(key: "auth_key", value: data.item2);
+    await storage.write(key: "refresh", value: data.value1);
+    await storage.write(key: "auth_key", value: data.value2);
     return;
   }
 
@@ -122,7 +136,7 @@ class UserRepository {
       } else {
         return null;
       }
-    }catch(e){
+    } catch (e) {
       return null;
     }
   }
@@ -132,10 +146,10 @@ class UserRepository {
   }
 
   static Future<String> getTokenAndVerify() async {
-      final storage = new FlutterSecureStorage();
-      var auth = await storage.read(key: "auth_key");
-      try {
-        if (auth != null) {
+    final storage = new FlutterSecureStorage();
+    var auth = await storage.read(key: "auth_key");
+    try {
+      if (auth != null) {
         if (!isTokenExpired(auth)) {
         } else {
           return refreshToken();

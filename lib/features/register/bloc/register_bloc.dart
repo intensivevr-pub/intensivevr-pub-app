@@ -2,12 +2,14 @@ import 'dart:async';
 
 import 'package:authentication_repository/authentication_repository.dart';
 import 'package:bloc/bloc.dart';
+import 'package:dartz/dartz.dart';
 import 'package:equatable/equatable.dart';
 import 'package:formz/formz.dart';
 import 'package:intensivevr_pub/features/register/models/models.dart';
 import 'package:meta/meta.dart';
 
 part 'register_event.dart';
+
 part 'register_state.dart';
 
 class RegisterBloc extends Bloc<RegisterEvent, RegisterState> {
@@ -15,7 +17,11 @@ class RegisterBloc extends Bloc<RegisterEvent, RegisterState> {
     @required AuthenticationRepository authenticationRepository,
   })  : assert(authenticationRepository != null),
         _authenticationRepository = authenticationRepository,
-        super(const RegisterState());
+        super(RegisterState(
+          Username.pure(),
+          Password.pure(),
+          Email.pure(),
+        ));
 
   final AuthenticationRepository _authenticationRepository;
 
@@ -95,12 +101,35 @@ class RegisterBloc extends Bloc<RegisterEvent, RegisterState> {
     if (state.status.isValidated) {
       yield state.copyWith(status: FormzStatus.submissionInProgress);
       try {
-        await _authenticationRepository.register(
+        Either<bool, RegisterError> result =
+            await _authenticationRepository.register(
           username: state.username.value,
           password: state.password.value,
           email: state.email.value,
         );
-        yield state.copyWith(status: FormzStatus.submissionSuccess);
+        if (result.isLeft()) {
+          yield state.copyWith(status: FormzStatus.submissionSuccess);
+        } else {
+          RegisterError error = result.getOrElse(() => null);
+          if (error.runtimeType == EmailAlreadyExistsError) {
+            Email email = state.email;
+            email.isDuplicate = true;
+            yield state.copyWith(
+                status: FormzStatus.submissionFailure,
+                error: error,
+                email: email);
+          }else if(error.runtimeType == UsernameTakenError){
+            Username username = state.username;
+            username.isDuplicate = true;
+            yield state.copyWith(
+                status: FormzStatus.submissionFailure,
+                error: error,
+                username: username);
+          } else {
+            yield state.copyWith(
+                status: FormzStatus.submissionFailure, error: error);
+          }
+        }
       } on Exception catch (_) {
         yield state.copyWith(status: FormzStatus.submissionFailure);
       }

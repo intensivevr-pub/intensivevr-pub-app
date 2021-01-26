@@ -10,7 +10,7 @@ class ImageManager {
   }
 
   static List<String> getCompressedImageUrlList(List<dynamic> localPaths) {
-    List<String> paths = List<String>();
+    List<String> paths = [];
     for (String localPath in localPaths) {
       if (kUseHTTPS) {
         paths.add("https://" + kServerUrl + "/static/compressed/" + localPath);
@@ -29,7 +29,7 @@ class ImageManager {
   }
 
   static List<String> getImageUrlList(List<dynamic> localPaths) {
-    List<String> paths = List<String>();
+    List<String> paths = [];
     for (String localPath in localPaths) {
       if (kUseHTTPS) {
         paths.add("https://" + kServerUrl + "/static/full/" + localPath);

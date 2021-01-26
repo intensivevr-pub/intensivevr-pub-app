@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:intensivevr_pub/app.dart';
 import 'package:intensivevr_pub/core/models/models.dart';
 import 'package:intensivevr_pub/core/services/data_repository.dart';
-import 'package:intensivevr_pub/features/home/elements/games_list/game_list_tile.dart';
 import 'package:intensivevr_pub/features/leaderboard/view/leaderboard_game_list_tile.dart';
 
 class GameListPage extends StatefulWidget {

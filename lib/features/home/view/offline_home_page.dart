@@ -22,7 +22,6 @@ class _OfflineHomePageState extends State<OfflineHomePage> {
   @override
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
-    double height = MediaQuery.of(context).size.height;
     return Container(
       color: Color(0xFF6A11CB),
       child: SafeArea(

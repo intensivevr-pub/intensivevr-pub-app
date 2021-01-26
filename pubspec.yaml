@@ -15,6 +15,7 @@ dependencies:
   flutter_bloc: ^6.1.1
   bloc: ^6.1.1
   equatable: ^1.2.5
+  dartz: ^0.9.2
   formz: ^0.3.2
   jwt_decoder: ^1.0.3
   backdrop: ^0.4.7
