@@ -15,7 +15,7 @@ class Category {
 
   Category.fromJson(var json)
       : name = json['category_name'],
-        type = json['type'],
+        type = json['ctype'],
         picture = json['picture'],
         id = json['id'];
 }
