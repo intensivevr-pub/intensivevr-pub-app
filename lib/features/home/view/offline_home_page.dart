@@ -51,14 +51,23 @@ class _OfflineHomePageState extends State<OfflineHomePage> {
                         Text("Nie masz połączenia z internetem"),
                         BlocBuilder<UserDataBloc, UserDataState>(
                           builder: (context, state) {
-                            return BarcodeWidget(
-                              barcode: Barcode.code128(),
-                              // Barcode type and settings
-                              data: "Tutaj bedzie Twoj kod",
-                              // Content
-                              width: width * 0.7,
-                              height: 130,
-                            );
+                            if(state.isDemoUser) {
+                              return BarcodeWidget(
+                                barcode: Barcode.code128(),
+                                data: "Tutaj bedzie Twoj kod",
+                                // Content
+                                width: width * 0.7,
+                                height: 130,
+                              );
+                            }else{
+                              return BarcodeWidget(
+                                barcode: Barcode.code128(),
+                                data: state.hash,
+                                // Content
+                                width: width * 0.7,
+                                height: 130,
+                              );
+                            }
                           },
                         ),
                         RaisedButton(
