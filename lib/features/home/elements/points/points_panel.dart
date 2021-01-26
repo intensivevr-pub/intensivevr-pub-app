@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 class PointsPanel extends StatelessWidget {
   final int points;
   final bool demo;
-  const PointsPanel({Key key, this.points,this.demo}) : super(key: key);
+  const PointsPanel({Key key, this.points,this.demo=false}) : super(key: key);
 
   String determineForm() {
     if(this.points == 1)
