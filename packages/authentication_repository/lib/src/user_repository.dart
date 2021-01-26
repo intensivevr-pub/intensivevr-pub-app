@@ -13,7 +13,12 @@ class UserRepository {
     @required String email,
     @required String password,
   }) async {
-    final uri = Uri.http(kServerUrl, "/auth/jwt/create/");
+    var uri;
+    if(kUseHTTPS){
+      uri = Uri.https(kServerUrl, "/auth/jwt/create/");
+    }else {
+      uri = Uri.http(kServerUrl, "/auth/jwt/create/");
+    }
     var body = json.encode({
       'email': email,
       'password': password,
@@ -115,7 +120,13 @@ class UserRepository {
       final storage = new FlutterSecureStorage();
       var refresh = await storage.read(key: "refresh");
       if (refresh != null) {
-        final uri = Uri.http(kServerUrl, "/auth/jwt/refresh/");
+        var uri;
+        if(kUseHTTPS){
+          uri = Uri.https(kServerUrl, "/auth/jwt/refresh/");
+
+        }else {
+          uri = Uri.http(kServerUrl, "/auth/jwt/refresh/");
+        }
         var body = json.encode({
           'refresh': refresh,
         });
@@ -154,7 +165,12 @@ class UserRepository {
         } else {
           return refreshToken();
         }
-        final uri = Uri.http(kServerUrl, "/auth/jwt/verify/");
+        var uri;
+        if(kUseHTTPS){
+          uri = Uri.https(kServerUrl, "/auth/jwt/verify/");
+        }else {
+          uri = Uri.http(kServerUrl, "/auth/jwt/verify/");
+        }
         var body = json.encode({
           'token': auth,
         });
