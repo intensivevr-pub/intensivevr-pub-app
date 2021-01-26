@@ -136,13 +136,13 @@ class _DiscountListTileState extends State<DiscountListTile> {
   String formatDescription() {
     switch(widget.discount.type){
       case DiscountType.gl:
-        return "global, ale bedzie";
+        return '';
       case DiscountType.pf:
         return widget.discount.product.description;
       case DiscountType.pp:
         return widget.discount.product.description;
       case DiscountType.cp:
-        return "kategoria, ale bedzie";
+        return "Kategoria: " + widget.discount.category.name;
       default:
         return "Oj, tego nie wiem";
     }

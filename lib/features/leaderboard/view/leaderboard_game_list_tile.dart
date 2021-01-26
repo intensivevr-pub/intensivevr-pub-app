@@ -33,11 +33,14 @@ class LeaderboardGameListTile extends StatelessWidget {
                       borderRadius: BorderRadius.circular(10)),
                 ),
               ),
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Text(
-                  game.name,
-                  style: TextStyle(fontWeight: FontWeight.w500, fontSize: 16),
+              Flexible(
+                child: Center(
+                  child: Text(
+                    game.name,
+                    softWrap: true,
+                    textAlign: TextAlign.center,
+                    style: TextStyle(fontWeight: FontWeight.w500, fontSize: 16, ),
+                  ),
                 ),
               ),
             ],

@@ -23,12 +23,9 @@ class GamePage extends StatelessWidget {
       child: SafeArea(
         child: Scaffold(
           appBar: AppBar(
-            iconTheme: IconThemeData(color: Colors.black),
-            backgroundColor: Colors.white,
-            shadowColor: Colors.white,
+            iconTheme: Theme.of(context).iconTheme,
             title: Text(
               game.name,
-              style: TextStyle(color: Colors.black),
             ),
           ),
           body: Column(
@@ -59,7 +56,7 @@ class GamePage extends StatelessWidget {
                   child: ClipRRect(
                     borderRadius: BorderRadius.circular(45),
                     child: Material(
-                      color: Colors.black,
+                      color: Theme.of(context).toggleButtonsTheme.color,
                       child: InkWell(
                         customBorder: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(45)

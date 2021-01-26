@@ -35,10 +35,8 @@ class _GameListPageState extends State<GameListPage> {
       child: SafeArea(
         child: Scaffold(
           appBar: AppBar(
-            backgroundColor: Colors.white,
-            shadowColor: Colors.white,
-            iconTheme: IconThemeData(color: Colors.black),
-            title: Text("Wybierz grę",style: TextStyle(color: Colors.black),),
+            iconTheme: Theme.of(context).iconTheme,
+            title: Text("Wybierz grę"),
           ),
             body: loaded
                 ? listOfGames.length != 0

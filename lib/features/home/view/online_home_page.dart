@@ -59,17 +59,16 @@ class _OnlineHomePageState extends State<OnlineHomePage> {
                     )
                   : null,
               inactiveOverlayOpacity: 0,
-              backLayerBackgroundColor: Colors.grey[100],
+              backLayerBackgroundColor: Theme.of(context).backgroundColor,
               drawer: HomeMenu(),
               headerHeight: height - 300,
               appBar: AppBar(
-                iconTheme: IconTheme.of(context).copyWith(color: Colors.black),
+                backgroundColor: Theme.of(context).backgroundColor,
                 elevation: 0,
-                backgroundColor: Colors.grey[100],
+                iconTheme: Theme.of(context).iconTheme,
                 actions: [
                   BackdropToggleButton(
                     icon: AnimatedIcons.list_view,
-                    color: Colors.black,
                   )
                 ],
               ),
@@ -83,6 +82,7 @@ class _OnlineHomePageState extends State<OnlineHomePage> {
                         data: "Tutaj bedzie Twoj kod",
                         width: width * 0.7,
                         height: 130,
+                        color: Theme.of(context).iconTheme.color,
                       );
                     }else {
                       if (state != null && state.hash != null) {
@@ -91,6 +91,7 @@ class _OnlineHomePageState extends State<OnlineHomePage> {
                           data: state.hash,
                           width: width * 0.7,
                           height: 130,
+                          color: Theme.of(context).iconTheme.color,
                         );
                       } else {
                         return SizedBox();
@@ -102,13 +103,14 @@ class _OnlineHomePageState extends State<OnlineHomePage> {
               frontLayer: Padding(
                 padding: EdgeInsets.only(top: 7.0),
                 child: Container(
+                  clipBehavior: Clip.hardEdge,
                   decoration: BoxDecoration(
-                    color: Colors.white,
+                    color: Theme.of(context).backgroundColor,
                     borderRadius:
                         BorderRadius.vertical(top: Radius.circular(16)),
                     boxShadow: [
                       BoxShadow(
-                        color: Colors.grey.withOpacity(0.2),
+                        color: Theme.of(context).backgroundColor.withOpacity(0.2),
                         spreadRadius: 5,
                         blurRadius: 7,
                         offset: Offset(0, 0), // changes position of shadow
