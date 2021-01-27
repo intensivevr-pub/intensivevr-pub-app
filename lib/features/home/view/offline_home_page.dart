@@ -13,7 +13,7 @@ class OfflineHomePage extends StatefulWidget {
 
 class _OfflineHomePageState extends State<OfflineHomePage> {
   final RefreshController _refreshController =
-      RefreshController(initialRefresh: false);
+  RefreshController(initialRefresh: false);
 
   void onRefresh(bool isOnline) {
     BlocProvider.of<HomeScreenBloc>(context).add(RefreshRequested(isOnline));
@@ -21,7 +21,10 @@ class _OfflineHomePageState extends State<OfflineHomePage> {
 
   @override
   Widget build(BuildContext context) {
-    double width = MediaQuery.of(context).size.width;
+    double width = MediaQuery
+        .of(context)
+        .size
+        .width;
     return Container(
       color: Color(0xFF6A11CB),
       child: SafeArea(
@@ -35,10 +38,10 @@ class _OfflineHomePageState extends State<OfflineHomePage> {
             //TODO poprawić design
             body: BlocConsumer<NetworkConnectionBloc, NetworkConnectionState>(
                 listener: (context, state) {
-              if (state.status == NetworkStatus.connected) {
-                onRefresh(true);
-              }
-            }, builder: (context, state) {
+                  if (state.status == NetworkStatus.connected) {
+                    onRefresh(true);
+                  }
+                }, builder: (context, state) {
               return SmartRefresher(
                 controller: _refreshController,
                 onRefresh: () =>
@@ -51,28 +54,38 @@ class _OfflineHomePageState extends State<OfflineHomePage> {
                         Text("Nie masz połączenia z internetem"),
                         BlocBuilder<UserDataBloc, UserDataState>(
                           builder: (context, state) {
-                            if(state.isDemoUser) {
-                              return BarcodeWidget(
-                                barcode: Barcode.code128(),
-                                data: "Tutaj bedzie Twoj kod",
-                                // Content
-                                width: width * 0.7,
-                                height: 130,
-                              );
+                            if (state.isDemoUser) {
+                              return Container(
+                                  padding: const EdgeInsets.all(12.0),
+                                  color: Colors.white,
+                                  child: BarcodeWidget(
+                                    barcode: Barcode.code128(),
+                                    data: "tutaj bedzie Twoj kod",
+                                    width: width * 0.7,
+                                    height: 130,
+                                    color: Colors.black,
+                                    style: TextStyle(color: Colors.black),
+                            ));
                             }else{
-                              return BarcodeWidget(
-                                barcode: Barcode.code128(),
-                                data: state.hash,
-                                // Content
-                                width: width * 0.7,
-                                height: 130,
-                              );
+                            return Container(
+                                  padding: const EdgeInsets.all(12.0),
+                                  color: Colors.white,
+                                  child: BarcodeWidget(
+                                    barcode: Barcode.code128(),
+                                    data: state.hash,
+                                    width: width * 0.7,
+                                    height: 130,
+                                    color: Colors.black,
+                                    style: TextStyle(color: Colors.black),
+                                  )
+                            );
                             }
                           },
                         ),
                         RaisedButton(
-                          onPressed: () => onRefresh(
-                              state.status == NetworkStatus.connected),
+                          onPressed: () =>
+                              onRefresh(
+                                  state.status == NetworkStatus.connected),
                           child: Text("Odśwież"),
                         )
                       ],

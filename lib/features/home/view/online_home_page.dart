@@ -78,21 +78,31 @@ class _OnlineHomePageState extends State<OnlineHomePage> {
                 child: BlocBuilder<UserDataBloc, UserDataState>(
                   builder: (BuildContext context, UserDataState state) {
                     if(state.isDemoUser){
-                      return BarcodeWidget(
-                        barcode: Barcode.code128(),
-                        data: "Tutaj bedzie Twoj kod",
-                        width: width * 0.7,
-                        height: 130,
-                        color: Theme.of(context).iconTheme.color,
+                      return Container(
+                        padding: const EdgeInsets.all(12.0),
+                        color: Colors.white,
+                        child: BarcodeWidget(
+                          barcode: Barcode.code128(),
+                          data: "Tutaj bedzie Twoj kod",
+                          width: width * 0.7,
+                          height: 130,
+                          color: Colors.black,
+                          style: TextStyle(color: Colors.black),
+                        ),
                       );
                     }else {
                       if (state != null && state.hash != null) {
-                        return BarcodeWidget(
-                          barcode: Barcode.code128(),
-                          data: state.hash,
-                          width: width * 0.7,
-                          height: 130,
-                          color: Theme.of(context).iconTheme.color,
+                        return Container(
+                          padding: const EdgeInsets.all(12.0),
+                          color: Colors.white,
+                          child: BarcodeWidget(
+                            barcode: Barcode.code128(),
+                            data: state.hash,
+                            width: width * 0.7,
+                            height: 130,
+                            color: Colors.black,
+                            style: TextStyle(color: Colors.black),
+                          ),
                         );
                       } else {
                         return SizedBox();
@@ -101,17 +111,17 @@ class _OnlineHomePageState extends State<OnlineHomePage> {
                   },
                 ),
               ),
-              frontLayer: Padding(
+              frontLayer: Container(
                 padding: EdgeInsets.only(top: 7.0),
                 child: Container(
                   clipBehavior: Clip.hardEdge,
                   decoration: BoxDecoration(
-                    color: Theme.of(context).backgroundColor,
+                    color: Theme.of(context).appBarTheme.color,
                     borderRadius:
                         BorderRadius.vertical(top: Radius.circular(16)),
                     boxShadow: [
                       BoxShadow(
-                        color: Theme.of(context).backgroundColor.withOpacity(0.4),
+                        color: Theme.of(context).backgroundColor,
                         spreadRadius: 5,
                         blurRadius: 7,
                         offset: Offset(0, 0), // changes position of shadow
