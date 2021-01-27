@@ -13,12 +13,11 @@ part 'authentication_state.dart';
 class AuthenticationBloc
     extends Bloc<AuthenticationEvent, AuthenticationState> {
   AuthenticationBloc({
-    @required AuthenticationRepository authenticationRepository,
+    @required this.authenticationRepository,
   })  : assert(authenticationRepository != null),
-        this.authenticationRepository = authenticationRepository,
         super(const AuthenticationState.unknown()) {
     _authenticationStatusSubscription =
-        this.authenticationRepository.status.listen(
+        authenticationRepository.status.listen(
               (status) => add(AuthenticationStatusChanged(status)),
             );
   }

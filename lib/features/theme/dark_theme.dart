@@ -4,16 +4,13 @@ ThemeData darkTheme = ThemeData(
     brightness: Brightness.dark,
     primaryColor: Colors.white,
     backgroundColor: Colors.black12,
-    hintColor: Colors.black,
-    accentColor: Colors.black,
-    shadowColor: Colors.black,
-    toggleButtonsTheme: ToggleButtonsThemeData(
+    toggleButtonsTheme: const ToggleButtonsThemeData(
         color: Colors.white70
     ),
-    iconTheme: IconThemeData(
+    iconTheme: const IconThemeData(
       color: Colors.white70
     ),
-    appBarTheme: AppBarTheme(
+    appBarTheme: const AppBarTheme(
       color:  Colors.black54,
     ));
 //TODO change colors

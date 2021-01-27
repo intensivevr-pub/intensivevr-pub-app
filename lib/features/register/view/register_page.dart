@@ -6,7 +6,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:formz/formz.dart';
 import 'package:gradient_text/gradient_text.dart';
 import 'package:intensivevr_pub/color_consts.dart';
-import 'package:intensivevr_pub/features/login/login.dart';
 import 'package:intensivevr_pub/features/register/bloc/register_bloc.dart';
 import 'package:intensivevr_pub/features/register/view/register_form.dart';
 import 'package:intensivevr_pub/features/register/view/register_success_page.dart';
@@ -71,19 +70,19 @@ class _RegisterPageState extends State<RegisterPage> {
                                   AnimatedPadding(
                                     padding: EdgeInsets.symmetric(
                                         vertical: state.email.pure ? 30.0 : 0),
-                                    duration: Duration(milliseconds: 200),
+                                    duration: const Duration(milliseconds: 200),
                                     child: Row(
                                       children: [
                                         Expanded(
                                           child: Padding(
-                                            padding: EdgeInsets.all(16),
+                                            padding: const EdgeInsets.all(16),
                                             child: GradientText(
                                               "Załóż konto i korzystaj z jego zalet!",
-                                              style: TextStyle(
+                                              style: const TextStyle(
                                                 fontSize: 45,
                                                 fontWeight: FontWeight.bold,
                                               ),
-                                              gradient: LinearGradient(
+                                              gradient: const LinearGradient(
                                                   begin: Alignment.topLeft,
                                                   end: Alignment.bottomRight,
                                                   colors: [
@@ -96,18 +95,18 @@ class _RegisterPageState extends State<RegisterPage> {
                                       ],
                                     ),
                                   ),
-                                  state.email.pure
-                                      ? Padding(
-                                          padding:
-                                              const EdgeInsets.only(top: 70.0),
-                                          child: Text(
-                                            "Aby rozpocząć podaj adres Email:",
-                                            style: TextStyle(
-                                                fontSize: 16,
-                                                fontWeight: FontWeight.w500),
-                                          ),
-                                        )
-                                      : SizedBox(),
+                                  if (state.email.pure)
+                                    const Padding(
+                                      padding: EdgeInsets.only(top: 70.0),
+                                      child: Text(
+                                        "Aby rozpocząć podaj adres Email:",
+                                        style: TextStyle(
+                                            fontSize: 16,
+                                            fontWeight: FontWeight.w500),
+                                      ),
+                                    )
+                                  else
+                                    const SizedBox(),
                                   Padding(
                                     padding: const EdgeInsets.symmetric(
                                         horizontal: 16.0),
@@ -117,7 +116,10 @@ class _RegisterPageState extends State<RegisterPage> {
                               ),
                             ),
                           ),
-                          state.email.pure ? SocialRegister() : SizedBox(),
+                          if (state.email.pure)
+                            SocialRegister()
+                          else
+                            const SizedBox(),
                         ],
                       ),
                     ),
@@ -137,8 +139,8 @@ class SocialRegister extends StatelessWidget {
       padding: const EdgeInsets.all(8.0),
       child: Column(
         children: [
-          Padding(
-            padding: const EdgeInsets.only(top: 20.0),
+          const Padding(
+            padding: EdgeInsets.only(top: 20.0),
             child: Text(
               "lub skorzystaj z innych opcji:",
               style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500),

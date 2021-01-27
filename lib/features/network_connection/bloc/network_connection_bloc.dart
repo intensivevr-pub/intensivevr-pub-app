@@ -23,10 +23,8 @@ class NetworkConnectionBloc
       NetworkConnectionEvent event) async* {
     if (event is NetworkConnectionChanged) {
       if (event.status == DataConnectionStatus.connected) {
-        print("CONNECTED");
         yield NetworkConnectionState.connected();
       } else {
-        print("DISCONNECTED");
         yield NetworkConnectionState.disconnected();
       }
     }

@@ -6,6 +6,6 @@ abstract class HomeScreenEvent {}
 class RefreshRequested extends HomeScreenEvent {
   final bool online;
 
-  RefreshRequested(this.online);
+  RefreshRequested({this.online});
 
 }

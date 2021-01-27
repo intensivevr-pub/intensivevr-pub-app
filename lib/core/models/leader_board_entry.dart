@@ -7,7 +7,7 @@ class LeaderBoardEntry {
     this.user,
   });
 
-  LeaderBoardEntry.fromJson(var json)
-      : points = json['points'],
-        user = json['user'];
+  LeaderBoardEntry.fromJson(Map<String,dynamic> json)
+      : points = int.tryParse(json['points'].toString()),
+        user = json['user'].toString();
 }

@@ -11,7 +11,7 @@ class EventListTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.all(12.0),
+      margin: const EdgeInsets.all(12.0),
       width: 200.0,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(16),
@@ -28,7 +28,7 @@ class EventListTile extends StatelessWidget {
             Navigator.push(context, EventPage.route(event));
           },
           child: Padding(
-              padding: EdgeInsets.all(12.0),
+              padding: const EdgeInsets.all(12.0),
               child: Stack(
                 children : [
                   Container(
@@ -37,7 +37,7 @@ class EventListTile extends StatelessWidget {
                       padding: const EdgeInsets.all(4.0),
                       child: Text(
                         event.name,
-                        style: TextStyle(
+                        style: const TextStyle(
                           color: Colors.white,
                         ),
                       ),
@@ -51,7 +51,7 @@ class EventListTile extends StatelessWidget {
                         padding: const EdgeInsets.all(4.0),
                         child: Text(
                           formatDate(event.date),
-                          style: TextStyle(
+                          style: const TextStyle(
                             color: Colors.white,
                           ),
                         ),
@@ -68,9 +68,7 @@ class EventListTile extends StatelessWidget {
   }
 
   String formatDate(DateTime date) {
-    return date.day.toString() + '.'
-        + date.month.toString() + '.'
-        + date.year.toString();
+    return '${date.day}.${date.month}.${date.year}';
   }
 
 }

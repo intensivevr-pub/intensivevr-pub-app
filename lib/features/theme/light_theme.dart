@@ -3,15 +3,14 @@ import 'package:flutter/material.dart';
 ThemeData lightTheme = ThemeData(
     brightness: Brightness.light,
     primaryColor: Colors.black,
-    backgroundColor: Colors.grey[200],
-    shadowColor: Colors.grey[200],
-    toggleButtonsTheme: ToggleButtonsThemeData(
+    backgroundColor: Colors.white54,
+    toggleButtonsTheme: const ToggleButtonsThemeData(
         color: Colors.black87
     ),
-    iconTheme: IconThemeData(
+    iconTheme: const IconThemeData(
         color: Colors.black87
     ),
-    appBarTheme: AppBarTheme(
+    appBarTheme: const AppBarTheme(
       color:  Colors.white38,
     ));
 //TODO change colors

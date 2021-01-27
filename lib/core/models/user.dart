@@ -11,9 +11,9 @@ class User {
     this.isDemoUser,
   });
 
-  User.fromJson(var json)
-      : points = json['points'],
-        hash = json['userhash'],
+  User.fromJson(Map<String,dynamic> json)
+      : points = int.tryParse(json['points'].toString()),
+        hash = json['userhash'].toString(),
         isDemoUser = false,
-        name = json['nick'];
+        name = json['nick'].toString();
 }

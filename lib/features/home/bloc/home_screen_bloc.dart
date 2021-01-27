@@ -11,16 +11,16 @@ class HomeScreenBloc extends Bloc<HomeScreenEvent, HomeScreenState> {
   bool online;
   bool demo;
 
-  HomeScreenBloc(this.online, this.demo)
-      : super(HomeScreenState(online, demo, false));
+  HomeScreenBloc({this.online, this.demo})
+      : super(HomeScreenState(online: online, demo: demo, refreshing: false));
 
   @override
   Stream<HomeScreenState> mapEventToState(HomeScreenEvent event) async* {
     if (event is RefreshRequested) {
       yield state.copyWith(refreshing: true);
-      if (event.online){
+      if (event.online) {
         yield state.copyWith(online: true, refreshing: false);
-      }else{
+      } else {
         yield state.copyWith(online: false, refreshing: false);
       }
     }

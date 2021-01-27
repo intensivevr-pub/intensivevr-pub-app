@@ -17,19 +17,18 @@ class WelcomePage extends StatelessWidget {
       backgroundColor: Colors.white,
       body: SafeArea(
         child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Center(
               child: Padding(
-                padding: EdgeInsets.all(16.0),
+                padding: const EdgeInsets.all(16.0),
                 child: GradientText(
                   "Witamy w IntensiveVRPub!",
-                  style: TextStyle(
+                  style: const TextStyle(
                     fontSize: 32,
                     fontWeight: FontWeight.bold,
                   ),
-                  gradient: LinearGradient(
+                  gradient: const LinearGradient(
                       begin: Alignment.topLeft,
                       end: Alignment.bottomCenter,
                       colors: [Colors.purple, Colors.black]),
@@ -49,11 +48,11 @@ class WelcomePage extends StatelessWidget {
                             Navigator.push(context, LoginPage.route());
                           },
                           border: Border.all(),
-                          padding: EdgeInsets.all(16),
-                          borderRadius: BorderRadius.all(Radius.circular(10)),
-                          color: Color.fromRGBO(255, 255, 255, 0),
+                          padding: const EdgeInsets.all(16),
+                          borderRadius: const BorderRadius.all(Radius.circular(10)),
+                          color: const Color.fromRGBO(255, 255, 255, 0),
                           splashColor: Colors.purple,
-                          text: Text(
+                          text: const Text(
                             "Zaloguj się",
                             style: TextStyle(color: Colors.black),
                           )),
@@ -64,11 +63,11 @@ class WelcomePage extends StatelessWidget {
                           onPress: () {
                             Navigator.push(context, RegisterPage.route());
                           },
-                          padding: EdgeInsets.all(16),
-                          borderRadius: BorderRadius.all(Radius.circular(10)),
+                          padding: const EdgeInsets.all(16),
+                          borderRadius: const BorderRadius.all(Radius.circular(10)),
                           color: Colors.blue,
                           splashColor: Colors.purple,
-                          text: Text(
+                          text: const Text(
                             "Utwórz konto",
                             style: TextStyle(color: Colors.white),
                           )),
@@ -78,11 +77,11 @@ class WelcomePage extends StatelessWidget {
                           onPress: () {
                             Navigator.push(context, HomePage.route(demo: true));
                           },
-                          padding: EdgeInsets.all(16),
-                          borderRadius: BorderRadius.all(Radius.circular(10)),
+                          padding: const EdgeInsets.all(16),
+                          borderRadius: const BorderRadius.all(Radius.circular(10)),
                           color: Colors.blue,
                           splashColor: Colors.purple,
-                          text: Text(
+                          text: const Text(
                             "Tryb demo",
                             style: TextStyle(color: Colors.white),
                           )),

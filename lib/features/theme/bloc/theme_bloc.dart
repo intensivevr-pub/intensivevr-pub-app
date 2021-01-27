@@ -6,7 +6,7 @@ import 'package:intensivevr_pub/core/services/shared_preferences.dart';
 import 'bloc.dart';
 
 class ThemeBloc extends Bloc<ThemeEvent, ThemeState> {
-  ThemeBloc() : super(ThemeState(ThemeMode.system));
+  ThemeBloc() : super(const ThemeState(ThemeMode.system));
 
   @override
   Stream<ThemeState> mapEventToState(ThemeEvent event) async* {
@@ -22,10 +22,10 @@ class ThemeBloc extends Bloc<ThemeEvent, ThemeState> {
     final isDarkModeEnabled = sharedPrefService.isDarkModeEnabled;
 
     if (isDarkModeEnabled == null) {
-      sharedPrefService.setDarkModeInfo(false);
-      yield ThemeState(ThemeMode.light);
+      sharedPrefService.setDarkModeInfo(isDarkModeEnabled: false);
+      yield const ThemeState(ThemeMode.light);
     } else {
-      ThemeMode themeMode =
+      final ThemeMode themeMode =
       isDarkModeEnabled ? ThemeMode.dark : ThemeMode.light;
       yield ThemeState(themeMode);
     }
@@ -36,11 +36,11 @@ class ThemeBloc extends Bloc<ThemeEvent, ThemeState> {
     final isDarkModeEnabled = sharedPrefService.isDarkModeEnabled;
 
     if (value && !isDarkModeEnabled) {
-      await sharedPrefService.setDarkModeInfo(true);
-      yield ThemeState(ThemeMode.dark);
+      await sharedPrefService.setDarkModeInfo(isDarkModeEnabled: true);
+      yield const ThemeState(ThemeMode.dark);
     } else if (!value && isDarkModeEnabled) {
-      await sharedPrefService.setDarkModeInfo(false);
-      yield ThemeState(ThemeMode.light);
+      await sharedPrefService.setDarkModeInfo(isDarkModeEnabled: false);
+      yield const ThemeState(ThemeMode.light);
     }
   }
 }

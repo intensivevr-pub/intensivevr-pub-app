@@ -12,7 +12,7 @@ class LoginForm extends StatelessWidget {
     return BlocListener<LoginBloc, LoginState>(
       listener: (context, state) {
         if (state.status.isSubmissionFailure) {
-          Scaffold.of(context)
+          ScaffoldMessenger.of(context)
             ..hideCurrentSnackBar()
             ..showSnackBar(
               const SnackBar(content: Text('Authentication Failure')),
@@ -46,8 +46,8 @@ class _UsernameInput extends StatelessWidget {
         return CredentialInput(
           labelText: "Email",
           errorText: state.email.invalid ? state.email.getErrorMessage() : null,
-          onChanged: (username) =>
-              context.read<LoginBloc>().add(LoginEmailChanged(username)),
+          onChanged: (String email) =>
+              context.read<LoginBloc>().add(LoginEmailChanged(email)),
           fieldKey: const Key('loginForm_usernameInput_textField'),
         );
       },
@@ -66,7 +66,7 @@ class _PasswordInput extends StatelessWidget {
           obscure: true,
           errorText:
               state.password.invalid ? state.password.getErrorMessage() : null,
-          onChanged: (password) =>
+          onChanged: (String password) =>
               context.read<LoginBloc>().add(LoginPasswordChanged(password)),
           fieldKey: const Key('loginForm_passwordInput_textField'),
         );
@@ -84,21 +84,21 @@ class _LoginButton extends StatelessWidget {
         return state.status.isSubmissionInProgress
             ? const CircularProgressIndicator()
             : WelcomeButton(
-            onPress: state.status.isValidated
-                ? () {
-              context.read<LoginBloc>().add(const LoginSubmitted());
-            }
-                : null,
-            border: Border.all(width: 1.5),
-            padding: EdgeInsets.all(16),
-            borderRadius: BorderRadius.all(Radius.circular(15)),
-            color: Color.fromRGBO(255, 255, 255, 0),
-            splashColor: Colors.purple,
-            text: Text(
-              "Zaloguj się",
-              style: TextStyle(
-                  color: Colors.black, fontWeight: FontWeight.w600),
-            ));
+                onPress: state.status.isValidated
+                    ? () {
+                        context.read<LoginBloc>().add(const LoginSubmitted());
+                      }
+                    : null,
+                border: Border.all(width: 1.5),
+                padding: const EdgeInsets.all(16),
+                borderRadius: const BorderRadius.all(Radius.circular(15)),
+                color: const Color.fromRGBO(255, 255, 255, 0),
+                splashColor: Colors.purple,
+                text: const Text(
+                  "Zaloguj się",
+                  style: TextStyle(
+                      color: Colors.black, fontWeight: FontWeight.w600),
+                ));
       },
     );
   }

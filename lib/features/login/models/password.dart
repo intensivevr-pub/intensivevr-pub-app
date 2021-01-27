@@ -11,8 +11,9 @@ class Password extends FormzInput<String, PasswordValidationError> {
   PasswordValidationError validator(String value) {
     if (!value.isNotEmpty) return PasswordValidationError.empty;
     if (value.length < 8) return PasswordValidationError.toShort;
-    if (RegExp(r'^[0-9]*$').hasMatch(value))
+    if (RegExp(r'^[0-9]*$').hasMatch(value)) {
       return PasswordValidationError.onlyNumbers;
+    }
     return null;
   }
 

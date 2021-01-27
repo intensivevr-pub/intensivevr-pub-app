@@ -17,7 +17,7 @@ class _CouponListTileState extends State<CouponListTile> {
   Color textColor;
   PaletteGenerator paletteGenerator;
 
-  void getColors() async {
+  Future<bool> getColors() async {
     paletteGenerator = await PaletteGenerator.fromImageProvider(
       NetworkImage(widget.coupon.prize.thumbnail),
     );
@@ -31,6 +31,7 @@ class _CouponListTileState extends State<CouponListTile> {
     setState(() {
       loaded = true;
     });
+    return true;
   }
 
   @override
@@ -42,7 +43,7 @@ class _CouponListTileState extends State<CouponListTile> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.all(12.0),
+      margin: const EdgeInsets.all(12.0),
       width: 140.0,
       decoration: BoxDecoration(
         color: loaded ? backgroundColor : Colors.white,
@@ -54,7 +55,7 @@ class _CouponListTileState extends State<CouponListTile> {
           borderRadius: BorderRadius.circular(16),
           onTap: () {},
           child: Padding(
-            padding: EdgeInsets.all(12.0),
+            padding: const EdgeInsets.all(12.0),
             child: Stack(
               children: [
                 Text(

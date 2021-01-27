@@ -9,6 +9,7 @@ class Email extends FormzInput<String, EmailValidationError> {
       : isDuplicate = false,
         super.dirty(value);
   bool isDuplicate = false;
+  bool isBad = false;
 
   @override
   EmailValidationError validator(String value) {
@@ -18,6 +19,9 @@ class Email extends FormzInput<String, EmailValidationError> {
     ).hasMatch(value.trim())) return EmailValidationError.bad;
     if (isDuplicate) {
       return EmailValidationError.duplicate;
+    }
+    if (isBad) {
+      return EmailValidationError.bad;
     }
     return null;
   }

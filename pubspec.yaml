@@ -26,11 +26,11 @@ dependencies:
   day_night_switcher: ^0.1.1+1
   data_connection_checker: ^0.3.4
   palette_generator: ^0.2.3
-  dio: ^3.0.10
   auth_buttons: ^0.0.4
   authentication_repository:
     path: packages/authentication_repository
 dev_dependencies:
+  lint: ^1.5.1
   flutter_test:
     sdk: flutter
 

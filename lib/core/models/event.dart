@@ -19,12 +19,13 @@ class Event {
     this.category,
   });
 
-  Event.fromJson(var json)
-      : name = json['event_name'],
-        id = json['id'],
-        description = json['description'],
-        thumbnails = ImageManager.getCompressedImageUrlList(json['pics'] as List),
-        pictures = ImageManager.getImageUrlList(json['pics'] as List),
-        date = DateTime.parse(json['event_date']),
-        category = json['event_category'];
+  Event.fromJson(Map<String,dynamic> json)
+      : name = json['event_name'].toString(),
+        id = int.tryParse(json['id'].toString()),
+        description = json['description'].toString(),
+        thumbnails = ImageManager.getCompressedImageUrlList(
+            json['pics'] as List<dynamic>),
+        pictures = ImageManager.getImageUrlList(json['pics'] as List<dynamic>),
+        date = DateTime.parse(json['event_date'].toString()),
+        category = json['event_category'].toString();
 }

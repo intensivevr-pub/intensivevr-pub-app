@@ -5,7 +5,7 @@ class CredentialInput extends StatelessWidget {
   final String hint;
   final String labelText;
   final String errorText;
-  final Function onChanged;
+  final void Function(String) onChanged;
   final Key fieldKey;
   final bool obscure;
 
@@ -22,13 +22,16 @@ class CredentialInput extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.symmetric(vertical: 5, horizontal: 0),
+      padding: const EdgeInsets.symmetric(vertical: 5),
       child: Container(
-        padding: EdgeInsets.symmetric(horizontal:16,vertical: 2),
+        padding: const EdgeInsets.symmetric(horizontal:16,vertical: 2),
         height: 54,
+        decoration: const BoxDecoration(
+          color: Color.fromRGBO(200, 200, 200, 100),
+          borderRadius: BorderRadius.all(Radius.circular(10)),
+        ),
         child: TextFormField(
           key: fieldKey,
-          maxLines: 1,
           obscureText: obscure,
           onChanged: onChanged,
           textAlignVertical: TextAlignVertical.center,
@@ -47,10 +50,6 @@ class CredentialInput extends StatelessWidget {
             errorText: errorText,
             border: InputBorder.none,
           ),
-        ),
-        decoration: BoxDecoration(
-          color: Color.fromRGBO(200, 200, 200, 100),
-          borderRadius: BorderRadius.all(Radius.circular(10)),
         ),
       ),
     );

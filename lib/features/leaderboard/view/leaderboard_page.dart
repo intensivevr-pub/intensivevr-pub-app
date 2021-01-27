@@ -22,11 +22,12 @@ class _LeaderboardPageState extends State<LeaderboardPage> {
   List<LeaderBoardEntry> entries = [];
   bool loaded = false;
 
-  void fillWithData() async {
+  Future<bool> fillWithData() async {
     entries = await DataRepository.getLeaderboard(widget.game, 10);
     setState(() {
       loaded = true;
     });
+    return true;
   }
 
   @override
@@ -52,21 +53,21 @@ class _LeaderboardPageState extends State<LeaderboardPage> {
           expandedHeight: 200,
         ),
         SliverPadding(
-          padding: EdgeInsets.symmetric(vertical: 20),
+          padding: const EdgeInsets.symmetric(vertical: 20),
           sliver: loaded
-              ? entries.length != 0
+              ? entries.isNotEmpty
                   ? SliverList(
                       delegate: SliverChildBuilderDelegate(
                         (context, index) => LeaderboardEntryListTile(index+1,entries[index]),
                         childCount: entries.length,
                       ),
                     )
-                  : SliverToBoxAdapter(
+                  : const SliverToBoxAdapter(
                       child: Center(
                         child: Text("Brak wyników dla tej gry",style: TextStyle(fontSize: 20),),
                       ),
                     )
-              : SliverToBoxAdapter(
+              : const SliverToBoxAdapter(
                   child: Center(
                     child: CircularProgressIndicator(),
                   ),

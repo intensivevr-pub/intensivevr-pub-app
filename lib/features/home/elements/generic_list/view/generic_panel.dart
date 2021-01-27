@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:intensivevr_pub/core/models/models.dart';
 import 'package:intensivevr_pub/features/authentication/authentication.dart';
 import 'package:intensivevr_pub/features/home/bloc/home_screen_bloc.dart';
 import 'package:intensivevr_pub/features/home/elements/discounts_list/discounts_list.dart';
@@ -59,7 +60,7 @@ class _GenericPanelState extends State<GenericPanel> {
             begin: Alignment.topCenter,
             end: Alignment.bottomCenter,
             colors: [widget.color, widget.color.withAlpha(0)],
-            stops: [.35, 1],
+            stops: const [.35, 1],
           )),
           height: 250,
           child: Column(
@@ -69,29 +70,29 @@ class _GenericPanelState extends State<GenericPanel> {
                 padding: const EdgeInsets.all(12.0),
                 child: Text(
                   widget.title,
-                  style: TextStyle(
+                  style: const TextStyle(
                     color: Colors.white,
                     fontSize: 16,
                   ),
                 ),
               ),
-              Container(
+              SizedBox(
                 height: 200,
                 child: BlocBuilder<GenericListBloc, GenericListState>(
                   builder: (BuildContext context, GenericListState state) {
                     if (state is InitialListState) {
-                      return Center(
+                      return const Center(
                         child: CircularProgressIndicator(),
                       );
                     }
                     if (state is ListError) {
-                      return Center(
+                      return const Center(
                         child: Text("Nie można wczytać czegoś"),
                       );
                     }
                     if (state is ListLoaded) {
                       if (state.items.isEmpty) {
-                        return Center(
+                        return const Center(
                           child: Text('Brak czegoś'),
                         );
                       }
@@ -102,23 +103,26 @@ class _GenericPanelState extends State<GenericPanel> {
                           if (index >= state.items.length) {
                             return SideLoader();
                           } else {
-                            var item = state.items[index];
                             switch (widget.type) {
                               case PanelType.prize:
+                                final Prize prize = state.items[index] as Prize;
                                 return BlocProvider<PrizeBloc>(
                                     create: (BuildContext context) {
-                                      return new PrizeBloc(
+                                      return PrizeBloc(
                                           BlocProvider.of<AuthenticationBloc>(
                                               context),
-                                          item);
+                                          prize);
                                     },
-                                    child: PrizeListTile(prize: item));
+                                    child: PrizeListTile(prize: prize));
                               case PanelType.event:
-                                return EventListTile(event: item);
+                                return EventListTile(
+                                    event: state.items[index] as Event);
                               case PanelType.game:
-                                return GameListTile(game: item);
+                                return GameListTile(
+                                    game: state.items[index] as Game);
                               case PanelType.discounts:
-                                return DiscountListTile(discount: item);
+                                return DiscountListTile(
+                                    discount: state.items[index] as Discount);
                               default:
                                 return Container(
                                   color: Colors.red,
@@ -132,7 +136,7 @@ class _GenericPanelState extends State<GenericPanel> {
                         controller: _mainScrollController,
                       );
                     } else {
-                      return Center(
+                      return const Center(
                         child: CircularProgressIndicator(),
                       );
                     }
@@ -150,6 +154,6 @@ class _GenericPanelState extends State<GenericPanel> {
 class SideLoader extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Center(child: CircularProgressIndicator());
+    return const Center(child: CircularProgressIndicator());
   }
 }

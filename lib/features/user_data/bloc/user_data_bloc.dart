@@ -13,15 +13,15 @@ class UserDataBloc extends Bloc<UserDataEvent, UserDataState> {
   final bool online;
   final bool demo;
 
-  UserDataBloc(this.authBloc, this.online, this.demo)
-      : super(UserDataState.initial(demo));
+  UserDataBloc(this.authBloc, {this.online, this.demo})
+      : super(UserDataState.initial(demo: demo));
 
   @override
   Stream<UserDataState> mapEventToState(UserDataEvent event) async* {
     if (event is GetInitialUserData) {
       if (online) {
         if (demo) {
-          yield UserDataState(
+          yield const UserDataState(
               username: null,
               points: null,
               hash: null,
@@ -30,10 +30,10 @@ class UserDataBloc extends Bloc<UserDataEvent, UserDataState> {
               loaded: true);
         } else {
           try {
-            User user = await DataRepository.getUserData(authBloc);
+            final User user = await DataRepository.getUserData(authBloc);
             final sharedPrefService = await SharedPreferencesService.instance;
             await sharedPrefService.setUserInfo(user);
-            List<Coupon> activeCoupons =
+            final List<Coupon> activeCoupons =
                 await DataRepository.getActiveCoupons(authBloc);
             yield UserDataState(
               username: user.name,
@@ -49,7 +49,7 @@ class UserDataBloc extends Bloc<UserDataEvent, UserDataState> {
         }
       } else {
         final sharedPrefService = await SharedPreferencesService.instance;
-        User user = User(
+        final User user = User(
             name: sharedPrefService.userName, hash: sharedPrefService.userHash);
         yield UserDataState(
             username: user.name,
@@ -61,10 +61,10 @@ class UserDataBloc extends Bloc<UserDataEvent, UserDataState> {
       }
     } else if (event is RefreshPointsAndRewards) {
       try {
-        int points = await DataRepository.getUserPoints(authBloc);
-        List<Coupon> activeCoupons =
+        final int points = await DataRepository.getUserPoints(authBloc);
+        final List<Coupon> activeCoupons =
             await DataRepository.getActiveCoupons(authBloc);
-        yield state.copyWith(points: points, activeRewards: activeCoupons);
+        yield state.copyWith(points: points, activeCoupons: activeCoupons);
       } catch (e) {
         print("error");
       }

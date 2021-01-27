@@ -12,12 +12,11 @@ class GameListTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.all(12.0),
+      margin: const EdgeInsets.all(12.0),
       width: 290.0,
       decoration: BoxDecoration(
         image: DecorationImage(
           image: NetworkImage(game.thumbnails[0]),
-          alignment: Alignment.center,
           fit: BoxFit.cover,
         ),
         borderRadius: BorderRadius.circular(16),
@@ -30,28 +29,24 @@ class GameListTile extends StatelessWidget {
             Navigator.push(context, GamePage.route(game));
           },
           child: Padding(
-            padding: EdgeInsets.all(12.0),
-            child: Center(
-              child: Container(
-                color: Colors.grey[900].withAlpha(100),
-                child: Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Text(
-                    game.name,
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-
-                      color: Colors.white,
-                      fontWeight: FontWeight.bold,
-                      fontSize: 32,
-
+              padding: const EdgeInsets.all(12.0),
+              child: Center(
+                child: Container(
+                  color: Colors.grey[900].withAlpha(100),
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Text(
+                      game.name,
+                      textAlign: TextAlign.center,
+                      style: const TextStyle(
+                        color: Colors.white,
+                        fontWeight: FontWeight.bold,
+                        fontSize: 32,
+                      ),
                     ),
                   ),
                 ),
-              ),
-
-            )
-          ),
+              )),
         ),
       ),
     );

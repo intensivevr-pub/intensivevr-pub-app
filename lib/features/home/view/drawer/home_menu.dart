@@ -11,35 +11,32 @@ import 'package:intensivevr_pub/widgets/complex/complex.dart';
 class HomeMenu extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    print(Theme.of(context).brightness.toString());
     return Drawer(
-      child: Container(
-        child: ListView(
-          children: [
-            UserInfo(),
-            ListTile(
-              title: Text("Zmień tryb: "),
-              trailing: ThemeSwitcher(),
-            ),
-            HomeMenuOption(
-                title: "Tablice wyników",
-                onPress: () {
-                  Navigator.push(context, GameListPage.route());
-                }),
-            HomeMenuOption(
-                title: "Oferta Baru (produkty)",
-                onPress: () {
-                  Navigator.push(context, ProductsPage.route());
-                }),
-            HomeMenuOption(
-              title: "Logout",
+      child: ListView(
+        children: [
+          UserInfo(),
+          ListTile(
+            title: const Text("Zmień tryb: "),
+            trailing: ThemeSwitcher(),
+          ),
+          HomeMenuOption(
+              title: "Tablice wyników",
               onPress: () {
-                BlocProvider.of<AuthenticationBloc>(context)
-                    .add(AuthenticationLogoutRequested());
-              },
-            )
-          ],
-        ),
+                Navigator.push(context, GameListPage.route());
+              }),
+          HomeMenuOption(
+              title: "Oferta Baru (produkty)",
+              onPress: () {
+                Navigator.push(context, ProductsPage.route());
+              }),
+          HomeMenuOption(
+            title: "Logout",
+            onPress: () {
+              BlocProvider.of<AuthenticationBloc>(context)
+                  .add(AuthenticationLogoutRequested());
+            },
+          )
+        ],
       ),
     );
   }
