@@ -4,6 +4,7 @@ ThemeData lightTheme = ThemeData(
     brightness: Brightness.light,
     primaryColor: Colors.black,
     backgroundColor: Colors.white54,
+    shadowColor: Colors.grey[200],
     toggleButtonsTheme: const ToggleButtonsThemeData(
         color: Colors.black87
     ),

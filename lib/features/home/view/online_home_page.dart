@@ -119,10 +119,9 @@ class _OnlineHomePageState extends State<OnlineHomePage> {
                         const BorderRadius.vertical(top: Radius.circular(16)),
                     boxShadow: [
                       BoxShadow(
-                        color:
-                            Theme.of(context).backgroundColor.withOpacity(0.4),
+                        color: Theme.of(context).shadowColor,
                         spreadRadius: 5,
-                        blurRadius: 7, // changes position of shadow
+                        blurRadius: 7,
                       ),
                     ],
                   ),

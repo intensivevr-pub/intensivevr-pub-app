@@ -35,13 +35,10 @@ class CredentialInput extends StatelessWidget {
           obscureText: obscure,
           onChanged: onChanged,
           textAlignVertical: TextAlignVertical.center,
-          style: TextStyle(
+          style: const TextStyle(
             color: Colors.black,
           ),
           decoration: InputDecoration(
-            hintStyle: TextStyle(
-              color: Colors.red,
-            ),
             hintText: hint,
             alignLabelWithHint: true,
             isDense: true,
