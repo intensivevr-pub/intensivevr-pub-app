@@ -27,6 +27,7 @@ class GamePage extends StatelessWidget {
             iconTheme: Theme.of(context).iconTheme,
             title: Text(
               game.name,
+              style: TextStyle(color: Theme.of(context).primaryColor),
             ),
           ),
           body: Column(

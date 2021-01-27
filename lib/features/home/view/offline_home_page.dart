@@ -57,7 +57,7 @@ class _OfflineHomePageState extends State<OfflineHomePage> {
                               padding: const EdgeInsets.all(12),
                               child: BarcodeWidget(
                                 barcode: Barcode.code128(),
-                                data: "Tutaj będzie Twój kod",
+                                data: "Tutaj bedzie Twoj kod",
                                 width: width * 0.7,
                                 height: 130,
                                 style: const TextStyle(color: Colors.black),

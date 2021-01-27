@@ -42,7 +42,9 @@ class _LeaderboardPageState extends State<LeaderboardPage> {
         body: CustomScrollView(
       slivers: [
         SliverAppBar(
+          iconTheme: Theme.of(context).iconTheme,
           flexibleSpace: Hero(
+
               tag: widget.game.id,
               child: Container(
                 decoration: BoxDecoration(
