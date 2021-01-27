@@ -17,7 +17,7 @@ class LeaderboardGameListTile extends StatelessWidget {
         },
         child: Container(
           decoration: BoxDecoration(
-              border: Border.fromBorderSide(BorderSide(width: 0.6)),
+              border: const Border.fromBorderSide(BorderSide(width: 0.6)),
               borderRadius: BorderRadius.circular(10)),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -39,7 +39,7 @@ class LeaderboardGameListTile extends StatelessWidget {
                     game.name,
                     softWrap: true,
                     textAlign: TextAlign.center,
-                    style: TextStyle(fontWeight: FontWeight.w500, fontSize: 16, ),
+                    style: const TextStyle(fontWeight: FontWeight.w500, fontSize: 16, ),
                   ),
                 ),
               ),

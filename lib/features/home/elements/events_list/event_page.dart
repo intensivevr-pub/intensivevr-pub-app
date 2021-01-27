@@ -7,7 +7,7 @@ class EventPage extends StatelessWidget {
 
   const EventPage({Key key, this.event}) : super(key: key);
 
-  static Route route(event) {
+  static Route route(Event event) {
     return MaterialPageRoute<void>(
         builder: (_) => EventPage(
           event: event,
@@ -28,7 +28,6 @@ class EventPage extends StatelessWidget {
         child: SafeArea(
             child: Expanded(
               child: Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   SizedBox(width: MediaQuery.of(context).size.width,),
@@ -57,9 +56,9 @@ class EventPage extends StatelessWidget {
                     ),
                   ),
                   Padding(
-                    padding: EdgeInsets.only(bottom: 32),
+                    padding: const EdgeInsets.only(bottom: 32),
                     child: Text(
-                        "Kategoria: " + event.category,
+                        "Kategoria: ${event.category}",
                         textAlign: TextAlign.center,
                         style: TextStyle(
                           color: Colors.white,
@@ -69,7 +68,7 @@ class EventPage extends StatelessWidget {
                     ),
                   ),
                   Padding(
-                    padding: EdgeInsets.only(bottom: 20),
+                    padding: const EdgeInsets.only(bottom: 20),
                     child: Text(
                       event.description,
                       textAlign: TextAlign.center,
@@ -90,7 +89,7 @@ class EventPage extends StatelessWidget {
   }
 
   List<Image> pictures() {
-    List<Image> out = [];
+    final List<Image> out = [];
     for (int i = 1; i < event.thumbnails.length; i++) {
       out.add(Image(image: NetworkImage(event.thumbnails[i])));
     }
@@ -98,9 +97,7 @@ class EventPage extends StatelessWidget {
   }
 
   String formatDate(DateTime date) {
-    return date.day.toString() + '.'
-        + date.month.toString() + '.'
-        + date.year.toString();
+    return '${date.day}.${date.month}.${date.year}';
   }
 
 }

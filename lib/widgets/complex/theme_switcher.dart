@@ -11,7 +11,7 @@ class ThemeSwitcher extends StatelessWidget {
           BlocProvider.of<ThemeBloc>(context).state.themeMode == ThemeMode.dark,
       onStateChanged: (bool isDarkModeEnabled) =>
           BlocProvider.of<ThemeBloc>(context)
-              .add(ThemeChanged(isDarkModeEnabled)),
+              .add(ThemeChanged(value: isDarkModeEnabled)),
     );
   }
 }

@@ -1,6 +1,7 @@
 export 'category.dart';
 export 'coupon.dart';
 export 'discount.dart';
+export 'event.dart';
 export 'game.dart';
 export 'leader_board_entry.dart';
 export 'prize.dart';

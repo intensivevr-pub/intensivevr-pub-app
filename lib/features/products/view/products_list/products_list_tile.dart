@@ -23,7 +23,7 @@ class _ProductsListTileState extends State<ProductsListTile> {
     super.initState();
   }
 
-  void getColors() async {
+  Future<bool> getColors() async {
     paletteGenerator = await PaletteGenerator.fromImageProvider(
       NetworkImage(widget.product.thumbnail),
     );
@@ -37,6 +37,7 @@ class _ProductsListTileState extends State<ProductsListTile> {
     setState(() {
       loaded = true;
     });
+    return true;
   }
 
   @override
@@ -44,14 +45,13 @@ class _ProductsListTileState extends State<ProductsListTile> {
     return Padding(
       padding: const EdgeInsets.all(12.0),
       child: Container(
-        padding: EdgeInsets.all(20),
+        padding: const EdgeInsets.all(20),
         height: 300,
         width: 200,
         decoration: BoxDecoration(
             color: loaded ? backgroundColor : Colors.white,
             borderRadius: BorderRadius.circular(16.0)),
         child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Padding(

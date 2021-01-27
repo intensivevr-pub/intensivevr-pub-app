@@ -11,7 +11,7 @@ class UserInfo extends StatelessWidget {
         child: BlocBuilder<UserDataBloc, UserDataState>(
           builder: (BuildContext context, UserDataState state) {
             if(state.isDemoUser){
-             return Text("Witaj nieznajomy");
+             return const Text("Witaj nieznajomy");
             }else {
               return Text("Witaj, ${state.username}");
             }

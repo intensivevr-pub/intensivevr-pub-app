@@ -18,12 +18,14 @@ class _DiscountListTileState extends State<DiscountListTile> {
   Color backgroundColor;
   Color textColor;
   PaletteGenerator paletteGenerator;
+
   @override
   void initState() {
     getColors();
     super.initState();
   }
-  void getColors() async {
+
+  Future<bool> getColors() async {
     paletteGenerator = await PaletteGenerator.fromImageProvider(
       NetworkImage(widget.discount.thumbnail),
     );
@@ -37,15 +39,16 @@ class _DiscountListTileState extends State<DiscountListTile> {
     setState(() {
       loaded = true;
     });
+    return true;
   }
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.all(12.0),
+      margin: const EdgeInsets.all(12.0),
       width: 140.0,
       decoration: BoxDecoration(
-        color: loaded ? backgroundColor :DiscountListTile.color,
+        color: loaded ? backgroundColor : DiscountListTile.color,
         borderRadius: BorderRadius.circular(16),
       ),
       child: Material(
@@ -56,32 +59,30 @@ class _DiscountListTileState extends State<DiscountListTile> {
             bottomSheet(context);
           },
           child: Padding(
-              padding: EdgeInsets.all(12.0),
-              child: Stack(
-                  children: [
-                    Text(
-                      widget.discount.name,
-                      style: TextStyle(
-                        color:loaded ? textColor: Colors.white,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                    Positioned(
-                      bottom: 0,
-                      right: 0,
-                      child: Image(
-                        image: NetworkImage(widget.discount.thumbnail),
-                        height: 110,
-                      ),
-                    )]
-              )
-          ),
+              padding: const EdgeInsets.all(12.0),
+              child: Stack(children: [
+                Text(
+                  widget.discount.name,
+                  style: TextStyle(
+                    color: loaded ? textColor : Colors.white,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                Positioned(
+                  bottom: 0,
+                  right: 0,
+                  child: Image(
+                    image: NetworkImage(widget.discount.thumbnail),
+                    height: 110,
+                  ),
+                )
+              ])),
         ),
       ),
     );
   }
 
-  void bottomSheet(context) {
+  void bottomSheet(BuildContext context) {
     showBottomSheet(
         context: context,
         backgroundColor: Colors.transparent,
@@ -89,13 +90,13 @@ class _DiscountListTileState extends State<DiscountListTile> {
           return Container(
               height: MediaQuery.of(context).size.height * .75,
               width: MediaQuery.of(context).size.width,
-              padding: EdgeInsets.all(20),
+              padding: const EdgeInsets.all(20),
               decoration: BoxDecoration(
                 color: loaded ? backgroundColor : DiscountListTile.color,
-                borderRadius: BorderRadius.vertical(top: Radius.circular(32.0)),
+                borderRadius:
+                    const BorderRadius.vertical(top: Radius.circular(32.0)),
               ),
               child: Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
                   Padding(
@@ -103,10 +104,9 @@ class _DiscountListTileState extends State<DiscountListTile> {
                     child: Text(
                       widget.discount.name,
                       style: TextStyle(
-                          color: loaded ? textColor: Colors.white,
+                          color: loaded ? textColor : Colors.white,
                           fontWeight: FontWeight.bold,
-                          fontSize: 18
-                      ),
+                          fontSize: 18),
                     ),
                   ),
                   Padding(
@@ -121,20 +121,17 @@ class _DiscountListTileState extends State<DiscountListTile> {
                     child: Text(
                       formatDescription(),
                       style: TextStyle(
-                          color: loaded ? textColor: Colors.white,
-                          fontSize: 18
-                      ),
+                          color: loaded ? textColor : Colors.white,
+                          fontSize: 18),
                     ),
                   ),
                 ],
-              )
-          );
-        }
-    );
+              ));
+        });
   }
 
   String formatDescription() {
-    switch(widget.discount.type){
+    switch (widget.discount.type) {
       case DiscountType.gl:
         return '';
       case DiscountType.pf:
@@ -142,17 +139,13 @@ class _DiscountListTileState extends State<DiscountListTile> {
       case DiscountType.pp:
         return widget.discount.product.description;
       case DiscountType.cp:
-        return "Kategoria: " + widget.discount.category.name;
+        return "Kategoria: ${widget.discount.category.name}";
       default:
         return "Oj, tego nie wiem";
     }
   }
 
   String formatDate() {
-    return widget.discount.dateStart.day.toString() + '.'
-        + widget.discount.dateStart.month.toString() + ' - '
-        + widget.discount.dateEnd.day.toString() + '.'
-        + widget.discount.dateEnd.month.toString();
-
+    return '${widget.discount.dateStart.day}.${widget.discount.dateStart.month} - ${widget.discount.dateEnd.day}.${widget.discount.dateEnd.month}';
   }
 }

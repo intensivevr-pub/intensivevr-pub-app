@@ -23,13 +23,17 @@ class RegisterForm extends StatelessWidget {
               ScaffoldMessenger.of(context)
                 ..hideCurrentSnackBar()
                 ..showSnackBar(const SnackBar(content: Text("Nick zajęty")));
+            } else if (state.error.runtimeType == EmailIncorrectError) {
+              ScaffoldMessenger.of(context)
+                ..hideCurrentSnackBar()
+                ..showSnackBar(const SnackBar(
+                    content: Text("Nieznany błąd związany z emailem")));
             }
-          }else{
+          } else {
             ScaffoldMessenger.of(context)
               ..hideCurrentSnackBar()
               ..showSnackBar(const SnackBar(content: Text("Nieznany błąd")));
           }
-
         }
       },
       child: BlocBuilder<RegisterBloc, RegisterState>(
@@ -39,25 +43,29 @@ class RegisterForm extends StatelessWidget {
             children: [
               _EmailInput(),
               AppearingInput(
-                child: _LoginInput(),
                 visible: !state.email.pure,
+                child: _LoginInput(),
               ),
               AppearingInput(
-                child: _PasswordInput(),
                 visible: !state.username.pure,
+                child: _PasswordInput(),
               ),
               AppearingInput(
-                  child: _ConfirmPasswordInput(),
-                  visible: !state.password.pure),
+                visible: !state.password.pure,
+                child: _ConfirmPasswordInput(),
+              ),
               AppearingInput(
-                  child: _DateOfBirth(),
-                  visible: !state.passwordConfirmation.pure),
+                visible: !state.passwordConfirmation.pure,
+                child: _DateOfBirth(),
+              ),
               AppearingInput(
-                  child: _TermsOfUse(),
-                  visible: !state.passwordConfirmation.pure),
+                visible: !state.passwordConfirmation.pure,
+                child: _TermsOfUse(),
+              ),
               AppearingInput(
-                  child: _RegisterButton(),
-                  visible: !state.passwordConfirmation.pure),
+                visible: !state.passwordConfirmation.pure,
+                child: _RegisterButton(),
+              ),
             ],
           );
         },
@@ -70,7 +78,7 @@ class AppearingInput extends StatelessWidget {
   final bool visible;
   final Widget child;
 
-  AppearingInput({this.visible, this.child});
+  const AppearingInput({this.visible, this.child});
 
   @override
   Widget build(BuildContext context) {
@@ -80,7 +88,7 @@ class AppearingInput extends StatelessWidget {
       maintainAnimation: true,
       child: AnimatedOpacity(
         opacity: visible ? 1 : 0,
-        duration: Duration(milliseconds: 500),
+        duration: const Duration(milliseconds: 500),
         child: child,
       ),
     );
@@ -99,7 +107,7 @@ class _EmailInput extends StatelessWidget {
             labelText: "Email",
             errorText:
                 state.email.invalid ? state.email.getErrorMessage() : null,
-            onChanged: (email) =>
+            onChanged: (String email) =>
                 context.read<RegisterBloc>().add(RegisterEmailChanged(email)),
             fieldKey: const Key('registerForm_emailInput_textField'),
           ),
@@ -121,7 +129,7 @@ class _LoginInput extends StatelessWidget {
             labelText: "Nick",
             errorText:
                 state.username.invalid ? 'Nick nie może być pusty' : null,
-            onChanged: (username) => context
+            onChanged: (String username) => context
                 .read<RegisterBloc>()
                 .add(RegisterUsernameChanged(username)),
             fieldKey: const Key('registerForm_usernameInput_textField'),
@@ -146,7 +154,7 @@ class _PasswordInput extends StatelessWidget {
             errorText: state.password.invalid
                 ? state.password.getErrorMessage()
                 : null,
-            onChanged: (password) => context
+            onChanged: (String password) => context
                 .read<RegisterBloc>()
                 .add(RegisterPasswordChanged(password)),
             fieldKey: const Key('registerForm_passwordInput_textField'),
@@ -172,7 +180,7 @@ class _ConfirmPasswordInput extends StatelessWidget {
             errorText: state.passwordConfirmation.invalid
                 ? "Hasła nie są takie same"
                 : null,
-            onChanged: (passwordConfirmation) => context
+            onChanged: (String passwordConfirmation) => context
                 .read<RegisterBloc>()
                 .add(RegisterPasswordConfirmationChanged(passwordConfirmation)),
             fieldKey:
@@ -190,18 +198,17 @@ class _DateOfBirth extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Padding(
-          padding: const EdgeInsets.symmetric(vertical: 8.0),
+        const Padding(
+          padding: EdgeInsets.symmetric(vertical: 8.0),
           child: Text("Data urodzenia:"),
         ),
         Padding(
           padding: const EdgeInsets.symmetric(vertical: 8.0),
-          child: Container(
+          child: SizedBox(
             height: 60,
             child: CupertinoDatePicker(
               onDateTimeChanged: (DateTime value) {},
               mode: CupertinoDatePickerMode.date,
-              use24hFormat: false,
             ),
           ),
         )
@@ -213,8 +220,8 @@ class _DateOfBirth extends StatelessWidget {
 class _TermsOfUse extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 30.0),
+    return const Padding(
+      padding: EdgeInsets.symmetric(vertical: 30.0),
       child: Text(
         "Rejestrując się wyrażasz zgodę na warunki zawarte w regulaminie.",
         textAlign: TextAlign.center,
@@ -240,11 +247,11 @@ class _RegisterButton extends StatelessWidget {
                       }
                     : null,
                 border: Border.all(),
-                padding: EdgeInsets.all(16),
-                borderRadius: BorderRadius.all(Radius.circular(10)),
-                color: Color.fromRGBO(255, 255, 255, 0),
+                padding: const EdgeInsets.all(16),
+                borderRadius: const BorderRadius.all(Radius.circular(10)),
+                color: const Color.fromRGBO(255, 255, 255, 0),
                 splashColor: Colors.purple,
-                text: Text(
+                text: const Text(
                   "Zarejestruj się",
                   style: TextStyle(color: Colors.black),
                 ));

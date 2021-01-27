@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:intensivevr_pub/core/models/models.dart';
 import 'package:intensivevr_pub/features/home/elements/generic_list/bloc/bloc.dart';
 import 'package:intensivevr_pub/features/products/view/products_list/products_list_tile.dart';
 
@@ -32,30 +33,29 @@ class _ProductsListState extends State<ProductsList> {
     return BlocBuilder<GenericListBloc, GenericListState>(
       builder: (BuildContext context, GenericListState state) {
         if (state is InitialListState) {
-          return Center(
+          return const Center(
             child: CircularProgressIndicator(),
           );
         }
         if (state is ListError) {
-          return Center(
+          return const Center(
             child: Text("Nie można wczytać czegoś"),
           );
         }
         if (state is ListLoaded) {
           if (state.items.isEmpty) {
-            return Center(
+            return const Center(
               child: Text('Brak czegoś'),
             );
           }
           return ListView.builder(
-            scrollDirection: Axis.vertical,
             shrinkWrap: true,
             itemBuilder: (BuildContext context, int index) {
               if (index >= state.items.length) {
                 return BottomLoader();
               } else {
                 return ProductsListTile(
-                  product: state.items[index],
+                  product: state.items[index] as Product,
                 );
               }
             },
@@ -65,7 +65,7 @@ class _ProductsListState extends State<ProductsList> {
             controller: _mainScrollController,
           );
         }
-        return Center(
+        return const Center(
           child: CircularProgressIndicator(),
         );
       },
@@ -76,6 +76,6 @@ class _ProductsListState extends State<ProductsList> {
 class BottomLoader extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Center(child: CircularProgressIndicator());
+    return const Center(child: CircularProgressIndicator());
   }
 }

@@ -17,20 +17,15 @@ class SharedPreferencesService {
   SharedPreferencesService._internal();
 
   static Future<SharedPreferencesService> get instance async {
-    if (_instance == null) {
-      _instance = SharedPreferencesService._internal();
-    }
+    _instance ??= SharedPreferencesService._internal();
 
-    if (_preferences == null) {
-      _preferences = await SharedPreferences.getInstance();
-    }
+    _preferences ??= await SharedPreferences.getInstance();
 
     return _instance;
   }
 
-  Future<void> setDarkModeInfo(bool isDarkModeEnabled) async =>
-      await _preferences.setBool(
-          SharedPrefKeys.darkModeEnabled, isDarkModeEnabled);
+  Future<void> setDarkModeInfo({bool isDarkModeEnabled}) async =>
+      _preferences.setBool(SharedPrefKeys.darkModeEnabled, isDarkModeEnabled);
 
   bool get isDarkModeEnabled =>
       _preferences.getBool(SharedPrefKeys.darkModeEnabled);

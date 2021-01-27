@@ -13,17 +13,17 @@ class LeaderboardEntryListTile extends StatelessWidget {
       child: Padding(
         padding: const EdgeInsets.all(12.0),
         child: Container(
-          decoration: BoxDecoration(border:
+          decoration: const BoxDecoration(border:
           Border(bottom: BorderSide(width: 0.5))),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Text("$index.",style: TextStyle(fontSize: 18,fontWeight: FontWeight.w600),),
+              Text("$index.",style: const TextStyle(fontSize: 18,fontWeight: FontWeight.w600),),
               Expanded(child: Padding(
                 padding: const EdgeInsets.all(8.0),
-                child: Text(leaderboardEntry.user,style: TextStyle(fontSize: 18),),
+                child: Text(leaderboardEntry.user,style: const TextStyle(fontSize: 18),),
               )),
-              Text(leaderboardEntry.points.toString(),style: TextStyle(fontSize: 18)),
+              Text(leaderboardEntry.points.toString(),style: const TextStyle(fontSize: 18)),
             ],
           ),
         ),

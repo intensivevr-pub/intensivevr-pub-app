@@ -19,7 +19,7 @@ class RegisterBloc extends Bloc<RegisterEvent, RegisterState> {
         _authenticationRepository = authenticationRepository,
         super(RegisterState(
           Username.pure(),
-          Password.pure(),
+          const Password.pure(),
           Email.pure(),
         ));
 
@@ -101,7 +101,7 @@ class RegisterBloc extends Bloc<RegisterEvent, RegisterState> {
     if (state.status.isValidated) {
       yield state.copyWith(status: FormzStatus.submissionInProgress);
       try {
-        Either<bool, RegisterError> result =
+        final Either<bool, RegisterError> result =
             await _authenticationRepository.register(
           username: state.username.value,
           password: state.password.value,
@@ -110,16 +110,23 @@ class RegisterBloc extends Bloc<RegisterEvent, RegisterState> {
         if (result.isLeft()) {
           yield state.copyWith(status: FormzStatus.submissionSuccess);
         } else {
-          RegisterError error = result.getOrElse(() => null);
+          final RegisterError error = result.getOrElse(() => null);
           if (error.runtimeType == EmailAlreadyExistsError) {
-            Email email = state.email;
+            final Email email = state.email;
             email.isDuplicate = true;
             yield state.copyWith(
                 status: FormzStatus.submissionFailure,
                 error: error,
                 email: email);
+          }else if(error.runtimeType == EmailIncorrectError){
+            final Email email = state.email;
+            email.isBad = true;
+            yield state.copyWith(
+                status: FormzStatus.submissionFailure,
+                error: error,
+                email: email);
           }else if(error.runtimeType == UsernameTakenError){
-            Username username = state.username;
+            final Username username = state.username;
             username.isDuplicate = true;
             yield state.copyWith(
                 status: FormzStatus.submissionFailure,

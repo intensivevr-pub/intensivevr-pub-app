@@ -32,7 +32,7 @@ class WelcomeButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.symmetric(vertical: 5, horizontal: 0),
+      padding: const EdgeInsets.symmetric(vertical: 5),
       child: Container(
         height: height,
         width: width,

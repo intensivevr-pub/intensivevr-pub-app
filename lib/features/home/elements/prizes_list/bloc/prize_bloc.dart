@@ -20,19 +20,19 @@ class PrizeBloc extends Bloc<PrizeEvent, PrizeState> {
   Stream<PrizeState> mapEventToState(PrizeEvent event) async* {
     if (event is CollectPrizeButtonPressed) {
       yield LoadingPrizeRealization();
-      var response;
+      bool response;
       try {
-        response = await DataRepository.postRewardCollect(
-            authBloc, prize.id);
-      } catch (Exception) {
+        response = await DataRepository.postRewardCollect(authBloc, prize.id);
+      } on Exception {
         print(Exception);
         yield PrizeCollectionError();
         return;
       }
-      if (response)
+      if (response) {
         yield PrizeCollected();
-      else
+      } else {
         yield PrizeCollectionError();
+      }
     }
   }
 }

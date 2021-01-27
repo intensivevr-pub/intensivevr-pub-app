@@ -1,6 +1,7 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:intensivevr_pub/color_consts.dart';
 import 'package:intensivevr_pub/core/models/game.dart';
 import 'package:intensivevr_pub/features/leaderboard/leaderboard.dart';
 
@@ -9,7 +10,7 @@ class GamePage extends StatelessWidget {
 
   const GamePage({Key key, this.game}) : super(key: key);
 
-  static Route route(game) {
+  static Route route(Game game) {
     return MaterialPageRoute<void>(
         builder: (_) => GamePage(
               game: game,
@@ -19,7 +20,7 @@ class GamePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: Color(0xFF6A11CB),
+      color: kPurpleGradientColor,
       child: SafeArea(
         child: Scaffold(
           appBar: AppBar(
@@ -36,7 +37,7 @@ class GamePage extends StatelessWidget {
                 child: CarouselSlider(
                   options: CarouselOptions(
                     height: 200,
-                    autoPlayInterval: Duration(seconds: 12),
+                    autoPlayInterval: const Duration(seconds: 12),
                     autoPlay: true,
                   ),
                   items: pictures(),
@@ -59,19 +60,22 @@ class GamePage extends StatelessWidget {
                       color: Theme.of(context).toggleButtonsTheme.color,
                       child: InkWell(
                         customBorder: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(45)
-                        ),
+                            borderRadius: BorderRadius.circular(45)),
                         onTap: () {
                           Navigator.push(context, LeaderboardPage.route(game));
                         },
                         child: Container(
                           decoration: BoxDecoration(
-                            border: Border.fromBorderSide(BorderSide(width: 0.6)),
-                            borderRadius: BorderRadius.circular(45)
-                          ),
+                              border:
+                                  const Border.fromBorderSide(BorderSide(width: 0.6)),
+                              borderRadius: BorderRadius.circular(45)),
                           width: 200,
                           height: 60,
-                          child: Center(child: Text("Tablica wyników",style: TextStyle(color: Colors.white),)),
+                          child: const Center(
+                              child: Text(
+                            "Tablica wyników",
+                            style: TextStyle(color: Colors.white),
+                          )),
                         ),
                       ),
                     ),
@@ -86,11 +90,10 @@ class GamePage extends StatelessWidget {
   }
 
   List<Image> pictures() {
-    List<Image> out = [];
+    final List<Image> out = [];
     for (int i = 0; i < game.pictures.length; i++) {
       out.add(Image(image: NetworkImage(game.pictures[i])));
     }
-    print(out);
     return out;
   }
 

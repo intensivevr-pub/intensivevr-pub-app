@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:intensivevr_pub/color_consts.dart';
 import 'package:intensivevr_pub/core/models/models.dart';
 import 'package:intensivevr_pub/core/services/data_repository.dart';
 import 'package:intensivevr_pub/features/leaderboard/view/leaderboard_game_list_tile.dart';
@@ -15,11 +16,12 @@ class _GameListPageState extends State<GameListPage> {
   List<Game> listOfGames = [];
   bool loaded = false;
 
-  void fillWithData() async {
+  Future<bool> fillWithData() async {
     listOfGames = await DataRepository.getGames(0, null);
     setState(() {
       loaded = true;
     });
+    return true;
   }
 
   @override
@@ -31,7 +33,7 @@ class _GameListPageState extends State<GameListPage> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: Color(0xFF6A11CB),
+      color: kPurpleGradientColor,
       child: SafeArea(
         child: Scaffold(
           appBar: AppBar(
@@ -39,17 +41,17 @@ class _GameListPageState extends State<GameListPage> {
             title: Text("Wybierz grę", style: TextStyle(color: Theme.of(context).primaryColor),),
           ),
             body: loaded
-                ? listOfGames.length != 0
+                ? listOfGames.isNotEmpty
                     ? ListView.builder(
                         itemCount: listOfGames.length,
                         itemBuilder: (BuildContext context, int index) {
                           return LeaderboardGameListTile(game: listOfGames[index],);
                         },
                       )
-                    : Center(
+                    : const Center(
                         child: Text("Brak Gier"),
                       )
-                : Center(
+                : const Center(
                     child: CircularProgressIndicator(),
                   )),
       ),

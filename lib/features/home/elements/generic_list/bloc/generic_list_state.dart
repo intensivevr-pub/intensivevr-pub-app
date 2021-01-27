@@ -15,7 +15,7 @@ class ListLoaded extends GenericListState {
   final List<dynamic> items;
   final bool hasReachedMax;
 
-  ListLoaded({this.hasReachedMax, this.items});
+  const ListLoaded({this.hasReachedMax, this.items});
 
   ListLoaded copyWith({
     List<dynamic> items,

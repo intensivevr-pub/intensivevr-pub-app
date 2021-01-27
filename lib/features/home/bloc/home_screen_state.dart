@@ -6,13 +6,13 @@ class HomeScreenState {
   final bool demo;
   final bool refreshing;
 
-  HomeScreenState(this.online, this.demo, this.refreshing);
+  const HomeScreenState({this.online, this.demo, this.refreshing});
 
-  HomeScreenState copyWith({online, demo, refreshing}) {
+  HomeScreenState copyWith({bool online, bool demo, bool refreshing}) {
     return HomeScreenState(
-      online ?? this.online,
-      demo ?? this.demo,
-      refreshing ?? this.refreshing,
+      online: online ?? this.online,
+      demo: demo ?? this.demo,
+      refreshing: refreshing ?? this.refreshing,
     );
   }
 }

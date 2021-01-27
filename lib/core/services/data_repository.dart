@@ -8,16 +8,16 @@ import 'package:intensivevr_pub/features/authentication/authentication.dart';
 import 'server_connector.dart';
 
 class DataRepository {
-  static Future getUserPoints(AuthenticationBloc authenticationBloc) async {
+  static Future<int> getUserPoints(AuthenticationBloc authenticationBloc) async {
     const String apiUrl = "/api/points/";
     final http.Response response = await ServerConnector.makeRequest(
         apiUrl, authenticationBloc, requestType.get);
     final data = json.decode(utf8.decode(response.bodyBytes));
-    final points = data[0]['points'];
+    final int points = int.tryParse(data[0]['points'].toString());
     return points;
   }
 
-  static Future getPrizes(int threshold, int portion) async {
+  static Future<List<dynamic>> getPrizes(int threshold, int portion) async {
     final String apiUrl =
         "/api/prizes/sort/1/category/all/portion/${portion ?? -1}/threshold/$threshold/";
     final http.Response response =
@@ -31,7 +31,7 @@ class DataRepository {
     }).toList();
   }
 
-  static Future getDiscounts(int threshold, int portion) async {
+  static Future<List<dynamic>> getDiscounts(int threshold, int portion) async {
     final String apiUrl =
         "/api/discounts/type/all/portion/${portion ?? -1}/threshold/$threshold/";
     final http.Response response =
@@ -59,7 +59,7 @@ class DataRepository {
     }).toList());
   }
 
-  static Future getProducts(int threshold, int portion) async {
+  static Future<List<Product>> getProducts(int threshold, int portion) async {
     final String apiUrl =
         "/api/products/sort/1/category/all/portion/${portion ?? -1}/threshold/$threshold/";
     final http.Response response =
@@ -74,7 +74,7 @@ class DataRepository {
     }).toList();
   }
 
-  static Future getEvents(int threshold, int portion) async {
+  static Future<List<dynamic>> getEvents(int threshold, int portion) async {
     final String apiUrl =
         "/api/events/status/2/category/all/portion/${portion ?? -1}/threshold/$threshold/";
     final http.Response response =
@@ -88,7 +88,7 @@ class DataRepository {
     }).toList();
   }
 
-  static Future getUserData(AuthenticationBloc authenticationBloc) async {
+  static Future<User> getUserData(AuthenticationBloc authenticationBloc) async {
     const String apiUrl = "/api/user/";
     final http.Response response = await ServerConnector.makeRequest(
         apiUrl, authenticationBloc, requestType.get);
@@ -99,7 +99,7 @@ class DataRepository {
     return User.fromJson(properUser);
   }
 
-  static Future postRewardCollect(
+  static Future<bool> postRewardCollect(
       AuthenticationBloc authenticationBloc, int prizeID) async {
     final String apiUrl = "/api/redeem/$prizeID/";
     await ServerConnector.makeRequest(

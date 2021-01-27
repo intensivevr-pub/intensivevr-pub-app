@@ -30,23 +30,21 @@ class LoginPage extends StatelessWidget {
               );
             },
             child: Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
                 Center(
                   child: Padding(
-                    padding: EdgeInsets.all(16.0),
+                    padding: const EdgeInsets.all(16.0),
                     child: Row(
                       children: [
                         Expanded(
                           child: GradientText(
                             "Zaloguj się i\ndołącz do rozrywki",
-                            textAlign: TextAlign.left,
-                            style: TextStyle(
+                            style: const TextStyle(
                               fontSize: 40,
                               fontWeight: FontWeight.bold,
                             ),
-                            gradient: LinearGradient(
+                            gradient: const LinearGradient(
                                 begin: Alignment.topLeft,
                                 end: Alignment.bottomRight,
                                 colors: [kPurpleGradientColor, Colors.black]),

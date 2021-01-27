@@ -11,7 +11,7 @@ class UserDataState extends Equatable {
   final bool isDemoUser;
   final bool loaded;
 
-  UserDataState({
+  const UserDataState({
     @required this.username,
     @required this.points,
     @required this.hash,
@@ -20,12 +20,12 @@ class UserDataState extends Equatable {
     @required this.loaded,
   });
 
-  factory UserDataState.initial(bool demo) {
+  factory UserDataState.initial({bool demo}) {
     return UserDataState(
         username: "User",
         points: -1,
         hash: "hash",
-        activeCoupons: [],
+        activeCoupons: const [],
         isDemoUser: demo,
         loaded: false);
   }
@@ -34,13 +34,13 @@ class UserDataState extends Equatable {
     final String username,
     final int points,
     final String hash,
-    final List<Coupon> activeRewards,
+    final List<Coupon> activeCoupons,
   }) {
     return UserDataState(
       username: username ?? this.username,
       points: points ?? this.points,
       hash: hash ?? this.hash,
-      activeCoupons: activeRewards ?? this.activeCoupons,
+      activeCoupons: activeCoupons ?? this.activeCoupons,
       isDemoUser: isDemoUser ?? isDemoUser,
       loaded: loaded ?? loaded,
     );

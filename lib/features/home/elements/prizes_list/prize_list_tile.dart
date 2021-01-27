@@ -35,7 +35,7 @@ class _PrizeListTileState extends State<PrizeListTile> {
     super.initState();
   }
 
-  void getColors() async {
+  Future<bool> getColors() async {
     paletteGenerator = await PaletteGenerator.fromImageProvider(
       NetworkImage(widget.prize.thumbnail),
     );
@@ -49,6 +49,7 @@ class _PrizeListTileState extends State<PrizeListTile> {
     setState(() {
       loaded = true;
     });
+    return true;
   }
 
   @override
@@ -60,7 +61,7 @@ class _PrizeListTileState extends State<PrizeListTile> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.all(12.0),
+      margin: const EdgeInsets.all(12.0),
       width: 140.0,
       decoration: BoxDecoration(
         color: loaded
@@ -78,7 +79,7 @@ class _PrizeListTileState extends State<PrizeListTile> {
             bottomSheet(context);
           },
           child: Padding(
-            padding: EdgeInsets.all(12.0),
+            padding: const EdgeInsets.all(12.0),
             child: Stack(
               children: [
                 Text(
@@ -101,7 +102,7 @@ class _PrizeListTileState extends State<PrizeListTile> {
     );
   }
 
-  void bottomSheet(context) {
+  void bottomSheet(BuildContext context) {
     showBottomSheet(
         context: context,
         backgroundColor: Colors.transparent,
@@ -109,17 +110,16 @@ class _PrizeListTileState extends State<PrizeListTile> {
           return Container(
               height: MediaQuery.of(context).size.height * .8,
               width: MediaQuery.of(context).size.width,
-              padding: EdgeInsets.all(20),
+              padding: const EdgeInsets.all(20),
               decoration: BoxDecoration(
                 color: loaded
                     ? backgroundColor
                     : active
                         ? PrizeListTile.activeColorBackground
                         : PrizeListTile.inactiveColorBackground,
-                borderRadius: BorderRadius.vertical(top: Radius.circular(32.0)),
+                borderRadius: const BorderRadius.vertical(top: Radius.circular(32.0)),
               ),
               child: Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
                   Text(widget.prize.name),
@@ -127,7 +127,7 @@ class _PrizeListTileState extends State<PrizeListTile> {
                     image: NetworkImage(widget.prize.picture),
                     height: 230,
                   ),
-                  Text("koszt: " + widget.prize.cost.toString() + " punktów"),
+                  Text("koszt: ${widget.prize.cost} punktów"),
                   BlocConsumer<PrizeBloc, PrizeState>(
                     listener: (context, state) {
                       if (state is PrizeCollected) {
@@ -144,21 +144,21 @@ class _PrizeListTileState extends State<PrizeListTile> {
                               onPressed: () =>
                                   prizeBloc.add(CollectPrizeButtonPressed()),
                               child: state is InitialPrizeState
-                                  ? Text(
+                                  ? const Text(
                                       "Wybierz nagrodę",
                                       style: TextStyle(color: Colors.black),
                                     )
                                   : state is LoadingPrizeRealization
-                                      ? Center(
+                                      ? const Center(
                                           child: CircularProgressIndicator(),
                                         )
                                       : state is PrizeCollectionError
-                                          ? Text(
+                                          ? const Text(
                                               "Error",
                                               style: TextStyle(
                                                   color: Colors.black),
                                             )
-                                          : Text(
+                                          : const Text(
                                               "Wybierz nagrodę",
                                               style: TextStyle(
                                                   color: Colors.black),
@@ -171,7 +171,7 @@ class _PrizeListTileState extends State<PrizeListTile> {
                               decoration: BoxDecoration(
                                   borderRadius: BorderRadius.circular(30),
                                   color: Colors.green),
-                              child: Center(
+                              child: const Center(
                                 child: Text(
                                   "Tutaj będziesz mógł odebrać nagrodę",
                                   style: TextStyle(color: Colors.black),
@@ -184,10 +184,9 @@ class _PrizeListTileState extends State<PrizeListTile> {
                     },
                   ),
                   if (widget.prize.isLimited)
-                    Text("Nagroda dostępna do: " +
-                        formatDate(widget.prize.deadline))
+                    Text("Nagroda dostępna do: ${formatDate(widget.prize.deadline)}")
                   else
-                    Text("Nagroda dostępna zawsze"),
+                    const Text("Nagroda dostępna zawsze"),
                 ],
               ));
         });
@@ -195,21 +194,6 @@ class _PrizeListTileState extends State<PrizeListTile> {
 }
 
 String formatDate(DateTime date) {
-  if (date != null) return date.month.toString() + '.' + date.day.toString();
+  if (date != null) return '${date.month}.${date.day}';
   return "XX.XX";
 }
-//WelcomeButton(
-//                         onPress: () => BlocProvider.of<PrizeBloc>(context)
-//                             .add(CollectPrizeButtonPressed()),
-//                         border: Border.all(),
-//                         padding: EdgeInsets.all(16),
-//                         borderRadius: BorderRadius.all(Radius.circular(10)),
-//                         color: active
-//                             ? PrizeListTile.activeColorButton
-//                             : PrizeListTile.inactiveColorButton,
-//                         splashColor: Colors.purple,
-//                         text: Text(
-//                           "Wybierz nagrodę",
-//                           style: TextStyle(color: Colors.black),
-//                         ),
-//                       );

@@ -29,7 +29,6 @@ void main() {
   Bloc.observer = SimpleBlocDelegate();
   runApp(
     MultiBlocProvider(
-      child: App(authenticationRepository: AuthenticationRepository()),
       providers: [
         BlocProvider<ThemeBloc>(
           create: (BuildContext context) =>
@@ -38,6 +37,7 @@ void main() {
         BlocProvider<NetworkConnectionBloc>(
             create: (BuildContext context) => NetworkConnectionBloc()),
       ],
+      child: App(authenticationRepository: AuthenticationRepository()),
     ),
   );
 }

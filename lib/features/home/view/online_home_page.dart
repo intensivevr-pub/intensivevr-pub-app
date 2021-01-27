@@ -2,6 +2,7 @@ import 'package:backdrop/backdrop.dart';
 import 'package:barcode_widget/barcode_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:intensivevr_pub/color_consts.dart';
 import 'package:intensivevr_pub/core/services/data_repository.dart';
 import 'package:intensivevr_pub/features/authentication/authentication.dart';
 import 'package:intensivevr_pub/features/home/bloc/home_screen_bloc.dart';
@@ -18,14 +19,14 @@ class OnlineHomePage extends StatefulWidget {
 }
 
 class _OnlineHomePageState extends State<OnlineHomePage> {
-  final RefreshController _refreshController =
-      RefreshController(initialRefresh: false);
+  final RefreshController _refreshController = RefreshController();
 
   // ignore: close_sinks
   AuthenticationBloc authBloc;
 
-  void onRefresh(bool isOnline) {
-    BlocProvider.of<HomeScreenBloc>(context).add(RefreshRequested(isOnline));
+  void onRefresh({bool isOnline}) {
+    BlocProvider.of<HomeScreenBloc>(context)
+        .add(RefreshRequested(online: isOnline));
   }
 
   @override
@@ -36,8 +37,8 @@ class _OnlineHomePageState extends State<OnlineHomePage> {
 
   @override
   Widget build(BuildContext context) {
-    double width = MediaQuery.of(context).size.width;
-    double height = MediaQuery.of(context).size.height;
+    final double width = MediaQuery.of(context).size.width;
+    final double height = MediaQuery.of(context).size.height;
     return BlocListener<HomeScreenBloc, HomeScreenState>(
       listener: (context, state) {
         if (!state.refreshing) {
@@ -47,15 +48,22 @@ class _OnlineHomePageState extends State<OnlineHomePage> {
         }
       },
       child: Container(
-        color: Color(0xFF6A11CB),
+        color: kPurpleGradientColor,
         child: SafeArea(
           child: BlocBuilder<UserDataBloc, UserDataState>(
               builder: (context, userState) {
             return BackdropScaffold(
               floatingActionButton: userState.isDemoUser
                   ? InkWell(
-                      onTap: ()=>print("test"),
-                      child: Container(height: 50,width: width*0.9, decoration: BoxDecoration(borderRadius: BorderRadius.circular(30),color: Colors.green,),child: Center(child: Text("Tryb demo"))),
+                      onTap: () {},
+                      child: Container(
+                          height: 50,
+                          width: width * 0.9,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(30),
+                            color: Colors.green,
+                          ),
+                          child: const Center(child: Text("Tryb demo"))),
                     )
                   : null,
               inactiveOverlayOpacity: 0,
@@ -74,10 +82,10 @@ class _OnlineHomePageState extends State<OnlineHomePage> {
                 ],
               ),
               backLayer: Padding(
-                padding: EdgeInsets.only(top: 50.0),
+                padding: const EdgeInsets.only(top: 50.0),
                 child: BlocBuilder<UserDataBloc, UserDataState>(
                   builder: (BuildContext context, UserDataState state) {
-                    if(state.isDemoUser){
+                    if (state.isDemoUser) {
                       return BarcodeWidget(
                         barcode: Barcode.code128(),
                         data: "Tutaj bedzie Twoj kod",
@@ -85,7 +93,7 @@ class _OnlineHomePageState extends State<OnlineHomePage> {
                         height: 130,
                         color: Theme.of(context).iconTheme.color,
                       );
-                    }else {
+                    } else {
                       if (state != null && state.hash != null) {
                         return BarcodeWidget(
                           barcode: Barcode.code128(),
@@ -95,32 +103,32 @@ class _OnlineHomePageState extends State<OnlineHomePage> {
                           color: Theme.of(context).iconTheme.color,
                         );
                       } else {
-                        return SizedBox();
+                        return const SizedBox();
                       }
                     }
                   },
                 ),
               ),
               frontLayer: Padding(
-                padding: EdgeInsets.only(top: 7.0),
+                padding: const EdgeInsets.only(top: 7.0),
                 child: Container(
                   clipBehavior: Clip.hardEdge,
                   decoration: BoxDecoration(
                     color: Theme.of(context).backgroundColor,
                     borderRadius:
-                        BorderRadius.vertical(top: Radius.circular(16)),
+                        const BorderRadius.vertical(top: Radius.circular(16)),
                     boxShadow: [
                       BoxShadow(
-                        color: Theme.of(context).backgroundColor.withOpacity(0.4),
+                        color:
+                            Theme.of(context).backgroundColor.withOpacity(0.4),
                         spreadRadius: 5,
-                        blurRadius: 7,
-                        offset: Offset(0, 0), // changes position of shadow
+                        blurRadius: 7, // changes position of shadow
                       ),
                     ],
                   ),
                   child: NotificationListener<OverscrollIndicatorNotification>(
-                    onNotification: (overscroll) {
-                      overscroll.disallowGlow();
+                    onNotification: (overScroll) {
+                      overScroll.disallowGlow();
                       return false;
                     },
                     child: BlocBuilder<NetworkConnectionBloc,
@@ -128,7 +136,8 @@ class _OnlineHomePageState extends State<OnlineHomePage> {
                         builder: (context, networkState) {
                       return SmartRefresher(
                         onRefresh: () => onRefresh(
-                            networkState.status == NetworkStatus.connected),
+                            isOnline:
+                                networkState.status == NetworkStatus.connected),
                         controller: _refreshController,
                         child: SingleChildScrollView(
                           child: Column(
@@ -138,13 +147,16 @@ class _OnlineHomePageState extends State<OnlineHomePage> {
                               BlocBuilder<UserDataBloc, UserDataState>(
                                 builder: (BuildContext context,
                                     UserDataState state) {
-                                  if(state.isDemoUser){
-                                    return PointsPanel(points: -1,demo: true,);
-                                  }else {
+                                  if (state.isDemoUser) {
+                                    return const PointsPanel(
+                                      points: -1,
+                                      demo: true,
+                                    );
+                                  } else {
                                     if (state.points != null) {
                                       return PointsPanel(points: state.points);
                                     } else {
-                                      return PointsPanel(points: -1);
+                                      return const PointsPanel(points: -1);
                                     }
                                   }
                                 },
@@ -155,7 +167,7 @@ class _OnlineHomePageState extends State<OnlineHomePage> {
                                   if (state != null &&
                                       !state.isDemoUser &&
                                       state.activeCoupons != null &&
-                                      state.activeCoupons.length > 0) {
+                                      state.activeCoupons.isNotEmpty) {
                                     return Padding(
                                       padding: const EdgeInsets.symmetric(
                                           vertical: 12.0),
@@ -168,16 +180,16 @@ class _OnlineHomePageState extends State<OnlineHomePage> {
                                             Colors.green,
                                             Colors.green.withAlpha(0)
                                           ],
-                                          stops: [.35, 1],
+                                          stops: const [.35, 1],
                                         )),
                                         height: 250,
                                         child: Column(
                                           crossAxisAlignment:
                                               CrossAxisAlignment.start,
                                           children: [
-                                            Padding(
+                                            const Padding(
                                               padding:
-                                                  const EdgeInsets.all(12.0),
+                                                  EdgeInsets.all(12.0),
                                               child: Text(
                                                 "Aktywowane kupony:",
                                                 style: TextStyle(
@@ -186,7 +198,7 @@ class _OnlineHomePageState extends State<OnlineHomePage> {
                                                 ),
                                               ),
                                             ),
-                                            Container(
+                                            SizedBox(
                                               height: 200,
                                               child: ListView.builder(
                                                 scrollDirection:
@@ -209,13 +221,13 @@ class _OnlineHomePageState extends State<OnlineHomePage> {
                                       ),
                                     );
                                   } else {
-                                    return SizedBox();
+                                    return const SizedBox();
                                   }
                                 },
                               ),
                               BlocProvider<GenericListBloc>(
                                   create: (BuildContext context) {
-                                    return new GenericListBloc(
+                                    return GenericListBloc(
                                       method: DataRepository.getPrizes,
                                       portion: 5,
                                     )..add(ReachedBottomOfList());
@@ -226,7 +238,7 @@ class _OnlineHomePageState extends State<OnlineHomePage> {
                                       color: Colors.orange[300])),
                               BlocProvider<GenericListBloc>(
                                   create: (BuildContext context) {
-                                    return new GenericListBloc(
+                                    return GenericListBloc(
                                       method: DataRepository.getDiscounts,
                                       portion: 5,
                                     )..add(ReachedBottomOfList());
@@ -237,7 +249,7 @@ class _OnlineHomePageState extends State<OnlineHomePage> {
                                       color: Colors.grey[500])),
                               BlocProvider<GenericListBloc>(
                                   create: (BuildContext context) {
-                                    return new GenericListBloc(
+                                    return GenericListBloc(
                                       method: DataRepository.getGames,
                                       portion: 5,
                                     )..add(ReachedBottomOfList());
@@ -248,7 +260,7 @@ class _OnlineHomePageState extends State<OnlineHomePage> {
                                       color: Colors.purple[900])),
                               BlocProvider<GenericListBloc>(
                                   create: (BuildContext context) {
-                                    return new GenericListBloc(
+                                    return GenericListBloc(
                                       method: DataRepository.getEvents,
                                       portion: 5,
                                     )..add(ReachedBottomOfList());

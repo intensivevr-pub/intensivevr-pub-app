@@ -62,6 +62,7 @@ class UserRepository {
       'password': password,
       'nick': username,
     });
+    print("Rejestruje się z mailem: $email nazwą $username i hasłem $password");
     var response = await http.post(
       uri,
       headers: {
@@ -70,6 +71,7 @@ class UserRepository {
       body: body,
     );
     if (response.statusCode != 201) {
+      print("Błąd rejestracji: ${response.body}");
       var reason = json.decode(utf8.decode(response.bodyBytes));
       if(reason['email']!=null){
         if(reason['email']=="Istnieje już użytkownik z tą wartością pola adres email."){
@@ -87,6 +89,7 @@ class UserRepository {
       print(reason);
       return Right(UnknownError());
     }
+    print("Rejestracja udana");
     return Left(true);
   }
 

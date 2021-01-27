@@ -1,6 +1,7 @@
 import 'package:barcode_widget/barcode_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:intensivevr_pub/color_consts.dart';
 import 'package:intensivevr_pub/features/home/bloc/home_screen_bloc.dart';
 import 'package:intensivevr_pub/features/network_connection/bloc/network_connection_bloc.dart';
 import 'package:intensivevr_pub/features/user_data/bloc/bloc.dart';
@@ -12,18 +13,18 @@ class OfflineHomePage extends StatefulWidget {
 }
 
 class _OfflineHomePageState extends State<OfflineHomePage> {
-  final RefreshController _refreshController =
-      RefreshController(initialRefresh: false);
+  final RefreshController _refreshController = RefreshController();
 
-  void onRefresh(bool isOnline) {
-    BlocProvider.of<HomeScreenBloc>(context).add(RefreshRequested(isOnline));
+  void onRefresh({bool isOnline}) {
+    BlocProvider.of<HomeScreenBloc>(context)
+        .add(RefreshRequested(online: isOnline));
   }
 
   @override
   Widget build(BuildContext context) {
-    double width = MediaQuery.of(context).size.width;
+    final double width = MediaQuery.of(context).size.width;
     return Container(
-      color: Color(0xFF6A11CB),
+      color: kPurpleGradientColor,
       child: SafeArea(
         child: BlocListener<HomeScreenBloc, HomeScreenState>(
           listener: (context, state) {
@@ -36,47 +37,45 @@ class _OfflineHomePageState extends State<OfflineHomePage> {
             body: BlocConsumer<NetworkConnectionBloc, NetworkConnectionState>(
                 listener: (context, state) {
               if (state.status == NetworkStatus.connected) {
-                onRefresh(true);
+                onRefresh(isOnline: true);
               }
             }, builder: (context, state) {
               return SmartRefresher(
                 controller: _refreshController,
-                onRefresh: () =>
-                    onRefresh(state.status == NetworkStatus.connected),
-                child: Container(
-                  child: Center(
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.spaceAround,
-                      children: [
-                        Text("Nie masz połączenia z internetem"),
-                        BlocBuilder<UserDataBloc, UserDataState>(
-                          builder: (context, state) {
-                            if(state.isDemoUser) {
-                              return BarcodeWidget(
-                                barcode: Barcode.code128(),
-                                data: "Tutaj bedzie Twoj kod",
-                                // Content
-                                width: width * 0.7,
-                                height: 130,
-                              );
-                            }else{
-                              return BarcodeWidget(
-                                barcode: Barcode.code128(),
-                                data: state.hash,
-                                // Content
-                                width: width * 0.7,
-                                height: 130,
-                              );
-                            }
-                          },
-                        ),
-                        RaisedButton(
-                          onPressed: () => onRefresh(
-                              state.status == NetworkStatus.connected),
-                          child: Text("Odśwież"),
-                        )
-                      ],
-                    ),
+                onRefresh: () => onRefresh(
+                    isOnline: state.status == NetworkStatus.connected),
+                child: Center(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    children: [
+                      const Text("Nie masz połączenia z internetem"),
+                      BlocBuilder<UserDataBloc, UserDataState>(
+                        builder: (context, state) {
+                          if (state.isDemoUser) {
+                            return BarcodeWidget(
+                              barcode: Barcode.code128(),
+                              data: "Tutaj bedzie Twoj kod",
+                              // Content
+                              width: width * 0.7,
+                              height: 130,
+                            );
+                          } else {
+                            return BarcodeWidget(
+                              barcode: Barcode.code128(),
+                              data: state.hash,
+                              // Content
+                              width: width * 0.7,
+                              height: 130,
+                            );
+                          }
+                        },
+                      ),
+                      RaisedButton(
+                        onPressed: () => onRefresh(
+                            isOnline: state.status == NetworkStatus.connected),
+                        child: const Text("Odśwież"),
+                      )
+                    ],
                   ),
                 ),
               );

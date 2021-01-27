@@ -14,27 +14,23 @@ class RegisterSuccessPage extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Container(
-              child: Text("Rejestracja powiodła się!",
-              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16)),
-            ),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Container(
-                child: Text("Kliknij w link aktywacyjny w mailu!",
-                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16)),
-              ),
+            const Text("Rejestracja powiodła się!",
+            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16)),
+            const Padding(
+              padding: EdgeInsets.all(8.0),
+              child: Text("Kliknij w link aktywacyjny w mailu!",
+                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16)),
             ),
             Padding(
               padding: const EdgeInsets.all(18.0),
               child: WelcomeButton(
                   onPress: () =>
                       Navigator.pushReplacement(context, LoginPage.route()),
-                  padding: EdgeInsets.all(16),
-                  borderRadius: BorderRadius.all(Radius.circular(10)),
+                  padding: const EdgeInsets.all(16),
+                  borderRadius: const BorderRadius.all(Radius.circular(10)),
                   color: Colors.blue,
                   splashColor: Colors.purple,
-                  text: Text(
+                  text: const Text(
                     "Przejdź do logowania",
                     style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
                   )),

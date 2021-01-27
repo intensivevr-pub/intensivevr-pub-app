@@ -14,10 +14,13 @@ class HomePage extends StatefulWidget {
         providers: [
           BlocProvider<UserDataBloc>(
               create: (BuildContext context) => UserDataBloc(
-                  BlocProvider.of<AuthenticationBloc>(context), online, demo,)
-                ..add(GetInitialUserData())),
+                    BlocProvider.of<AuthenticationBloc>(context),
+                    online: online,
+                    demo: demo,
+                  )..add(GetInitialUserData())),
           BlocProvider<HomeScreenBloc>(
-            create: (BuildContext context) => HomeScreenBloc(online, demo),
+            create: (BuildContext context) =>
+                HomeScreenBloc(online: online, demo: demo),
           )
         ],
         child: HomePage(),

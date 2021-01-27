@@ -6,17 +6,17 @@ enum NetworkStatus { connected, disconnected, unknown }
 class NetworkConnectionState {
   final NetworkStatus status;
 
-  NetworkConnectionState(this.status);
+  const NetworkConnectionState(this.status);
 
   factory NetworkConnectionState.initial() {
-    return NetworkConnectionState(NetworkStatus.unknown);
+    return const NetworkConnectionState(NetworkStatus.unknown);
   }
 
   factory NetworkConnectionState.connected() {
-    return NetworkConnectionState(NetworkStatus.connected);
+    return const NetworkConnectionState(NetworkStatus.connected);
   }
 
   factory NetworkConnectionState.disconnected() {
-    return NetworkConnectionState(NetworkStatus.disconnected);
+    return const NetworkConnectionState(NetworkStatus.disconnected);
   }
 }
