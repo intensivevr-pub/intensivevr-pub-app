@@ -5,10 +5,10 @@ ThemeData darkTheme = ThemeData(
     primaryColor: Colors.white,
     backgroundColor: Colors.black12,
     toggleButtonsTheme: ToggleButtonsThemeData(
-        color: Colors.white54
+        color: Colors.white70
     ),
     iconTheme: IconThemeData(
-      color: Colors.white54
+      color: Colors.white70
     ),
     appBarTheme: AppBarTheme(
       color:  Colors.black54,

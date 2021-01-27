@@ -68,6 +68,7 @@ class _OnlineHomePageState extends State<OnlineHomePage> {
                 iconTheme: Theme.of(context).iconTheme,
                 actions: [
                   BackdropToggleButton(
+                    color: Theme.of(context).toggleButtonsTheme.color,
                     icon: AnimatedIcons.list_view,
                   )
                 ],
@@ -110,7 +111,7 @@ class _OnlineHomePageState extends State<OnlineHomePage> {
                         BorderRadius.vertical(top: Radius.circular(16)),
                     boxShadow: [
                       BoxShadow(
-                        color: Theme.of(context).backgroundColor.withOpacity(0.2),
+                        color: Theme.of(context).backgroundColor.withOpacity(0.4),
                         spreadRadius: 5,
                         blurRadius: 7,
                         offset: Offset(0, 0), // changes position of shadow
