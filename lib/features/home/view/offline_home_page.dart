@@ -52,20 +52,28 @@ class _OfflineHomePageState extends State<OfflineHomePage> {
                       BlocBuilder<UserDataBloc, UserDataState>(
                         builder: (context, state) {
                           if (state.isDemoUser) {
-                            return BarcodeWidget(
-                              barcode: Barcode.code128(),
-                              data: "Tutaj bedzie Twoj kod",
-                              // Content
-                              width: width * 0.7,
-                              height: 130,
+                            return Container(
+                              color: Colors.white,
+                              padding: const EdgeInsets.all(12),
+                              child: BarcodeWidget(
+                                barcode: Barcode.code128(),
+                                data: "Tutaj będzie Twój kod",
+                                width: width * 0.7,
+                                height: 130,
+                                style: const TextStyle(color: Colors.black),
+                              ),
                             );
                           } else {
-                            return BarcodeWidget(
-                              barcode: Barcode.code128(),
-                              data: state.hash,
-                              // Content
-                              width: width * 0.7,
-                              height: 130,
+                            return Container(
+                              color: Colors.white,
+                              padding: const EdgeInsets.all(12),
+                              child: BarcodeWidget(
+                                barcode: Barcode.code128(),
+                                data: state.hash,
+                                width: width * 0.7,
+                                height: 130,
+                                style: const TextStyle(color: Colors.black),
+                              ),
                             );
                           }
                         },
