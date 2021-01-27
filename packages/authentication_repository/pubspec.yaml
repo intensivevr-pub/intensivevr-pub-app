@@ -14,3 +14,5 @@ dependencies:
   equatable: ^1.2.5
   jwt_decoder: ^1.0.3
 
+dev_dependencies:
+  lint: ^1.5.1
