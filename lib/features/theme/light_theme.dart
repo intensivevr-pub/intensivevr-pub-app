@@ -12,6 +12,6 @@ ThemeData lightTheme = ThemeData(
         color: Colors.black87
     ),
     appBarTheme: const AppBarTheme(
-      color:  Colors.white38,
+      color:  Colors.white,
     ));
 //TODO change colors
