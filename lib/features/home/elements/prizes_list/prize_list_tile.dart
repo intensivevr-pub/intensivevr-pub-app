@@ -117,17 +117,24 @@ class _PrizeListTileState extends State<PrizeListTile> {
                     : active
                         ? PrizeListTile.activeColorBackground
                         : PrizeListTile.inactiveColorBackground,
-                borderRadius: const BorderRadius.vertical(top: Radius.circular(32.0)),
+                borderRadius:
+                    const BorderRadius.vertical(top: Radius.circular(32.0)),
               ),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
-                  Text(widget.prize.name),
+                  Text(
+                    widget.prize.name,
+                    style: TextStyle(color: loaded ? textColor : Colors.black),
+                  ),
                   Image(
                     image: NetworkImage(widget.prize.picture),
                     height: 230,
                   ),
-                  Text("koszt: ${widget.prize.cost} punktów"),
+                  Text(
+                    "koszt: ${widget.prize.cost} punktów",
+                    style: TextStyle(color: loaded ? textColor : Colors.black),
+                  ),
                   BlocConsumer<PrizeBloc, PrizeState>(
                     listener: (context, state) {
                       if (state is PrizeCollected) {
@@ -141,6 +148,7 @@ class _PrizeListTileState extends State<PrizeListTile> {
                         builder: (context, state) {
                           if (!state.isDemoUser) {
                             return RaisedButton(
+                              color: Colors.white,
                               onPressed: () =>
                                   prizeBloc.add(CollectPrizeButtonPressed()),
                               child: state is InitialPrizeState
@@ -171,10 +179,11 @@ class _PrizeListTileState extends State<PrizeListTile> {
                               decoration: BoxDecoration(
                                   borderRadius: BorderRadius.circular(30),
                                   color: Colors.green),
-                              child: const Center(
+                              child: Center(
                                 child: Text(
                                   "Tutaj będziesz mógł odebrać nagrodę",
-                                  style: TextStyle(color: Colors.black),
+                                  style: TextStyle(
+                                      color: loaded ? textColor : Colors.black),
                                 ),
                               ),
                             );
@@ -184,9 +193,17 @@ class _PrizeListTileState extends State<PrizeListTile> {
                     },
                   ),
                   if (widget.prize.isLimited)
-                    Text("Nagroda dostępna do: ${formatDate(widget.prize.deadline)}")
+                    Text(
+                      "Nagroda dostępna do: ${formatDate(widget.prize.deadline)}",
+                      style:
+                          TextStyle(color: loaded ? textColor : Colors.black),
+                    )
                   else
-                    const Text("Nagroda dostępna zawsze"),
+                    Text(
+                      "Nagroda dostępna zawsze",
+                      style:
+                          TextStyle(color: loaded ? textColor : Colors.black),
+                    ),
                 ],
               ));
         });
