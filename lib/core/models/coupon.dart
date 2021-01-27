@@ -15,11 +15,11 @@ class Coupon {
     this.code,
   });
 
-  Coupon.fromJson(var json)
-      : id = json['id'],
-        prize = Prize.fromJson(json['prize']),
+  Coupon.fromJson(Map<String,dynamic> json)
+      : id = int.tryParse(json['id'].toString()),
+        prize = Prize.fromJson(json['prize'] as Map<String,dynamic>),
         deadline = json['coupon_deadline'] != null
-            ? DateTime.parse(json['coupon_deadline'])
+            ? DateTime.parse(json['coupon_deadline'].toString())
             : null,
-        code = json['coupon_code'];
+        code = json['coupon_code'].toString();
 }

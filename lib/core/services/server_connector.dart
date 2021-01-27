@@ -5,7 +5,7 @@ import 'package:intensivevr_pub/const.dart';
 import 'package:intensivevr_pub/features/authentication/authentication.dart';
 import 'package:jwt_decoder/jwt_decoder.dart';
 
-enum requestType { GET, POST, PUT }
+enum requestType { get, post, put }
 
 class ServerConnectionException implements Exception {}
 
@@ -26,32 +26,33 @@ class ServerConnector {
     return token;
   }
 
-  static Future makeRequest(
+  static Future<http.Response> makeRequest(
       String url, AuthenticationBloc authBloc, requestType type) async {
-    String token = await _handleAuthorization(authBloc);
-    var uri;
+    final String token = await _handleAuthorization(authBloc);
+    Uri uri;
     if (kUseHTTPS) {
       uri = Uri.https(kServerUrl, url);
     } else {
       uri = Uri.http(kServerUrl, url);
     }
-    Map<String, String> headers = {
+    final Map<String, String> headers = {
       'Content-Type': 'application/json',
       'Authorization': 'Bearer $token'
     };
-    var request;
+    Future<http.Response> Function(dynamic url, {Map<String, String> headers})
+        request;
     switch (type) {
-      case requestType.GET:
+      case requestType.get:
         request = http.get;
         break;
-      case requestType.POST:
+      case requestType.post:
         request = http.post;
         break;
-      case requestType.PUT:
+      case requestType.put:
         request = http.put;
         break;
     }
-    var response = await request(uri, headers: headers);
+    final http.Response response = await request(uri, headers: headers);
     if (response.statusCode == 200) {
       return response;
     } else if (response.statusCode == 401) {
@@ -61,35 +62,35 @@ class ServerConnector {
       print(json.decode(response.body));
       throw ServerConnectionException();
     }
+    return null;
   }
 
-  static makeRequestWithoutToken(String apiUrl,requestType type) async{
-    var uri;
+  static Future<http.Response> makeRequestWithoutToken(String url, requestType type) async {
+    Uri uri;
     if (kUseHTTPS) {
-      uri = Uri.https(kServerUrl, apiUrl);
+      uri = Uri.https(kServerUrl, url);
     } else {
-      uri = Uri.http(kServerUrl, apiUrl);
+      uri = Uri.http(kServerUrl, url);
     }
-    Map<String, String> headers = {
+    final Map<String, String> headers = {
       'Content-Type': 'application/json',
     };
-    var request;
+    Future<http.Response> Function(dynamic url, {Map<String, String> headers})
+        request;
     switch (type) {
-      case requestType.GET:
+      case requestType.get:
         request = http.get;
         break;
-      case requestType.POST:
+      case requestType.post:
         request = http.post;
         break;
-      case requestType.PUT:
+      case requestType.put:
         request = http.put;
         break;
     }
-    var response = await request(uri, headers: headers);
+    final http.Response response = await request(uri, headers: headers);
     if (response.statusCode == 200) {
       return response;
-    } else if (response.statusCode == 401) {
-      throw ServerConnectionException();
     } else {
       print("ERROR code: ${response.statusCode}");
       print(json.decode(response.body));

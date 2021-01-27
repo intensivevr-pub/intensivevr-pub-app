@@ -30,20 +30,20 @@ class Discount {
     this.product,
   });
 
-  Discount.fromJson(var json)
-      : id = json['id'],
-        name = json['discount_name'],
+  Discount.fromJson(Map<String,dynamic> json)
+      : id = int.tryParse(json['id'].toString()),
+        name = json['discount_name'].toString(),
         type = DiscountType.values.firstWhere(
-            (e) => e.toString() == 'DiscountType.' + json['discount_type']),
-        dateStart = json['discount_from'] != null ? DateTime.parse(json['discount_from']) : null,
-        dateEnd = json['discount_deadline'] != null ? DateTime.parse(json['discount_deadline']) : null,
-        value = json['discount_value'],
+            (e) => e.toString() == 'DiscountType.${json['discount_type']}'),
+        dateStart = json['discount_from'] != null ? DateTime.parse(json['discount_from'].toString()) : null,
+        dateEnd = json['discount_deadline'] != null ? DateTime.parse(json['discount_deadline'].toString()) : null,
+        value = double.tryParse(json['discount_value'].toString()),
         category = json['discount_category'] != null
-            ? Category.fromJson(json['discount_category'])
+            ? Category.fromJson(json['discount_category'] as Map<String,dynamic>)
             : null,
         product = json['discount_product'] != null
-            ? Product.fromJson(json['discount_product'])
+            ? Product.fromJson(json['discount_product'] as Map<String,dynamic>)
             : null,
-        thumbnail = ImageManager.getCompressedImageUrl(json['discount_picture']),
-        picture = ImageManager.getImageUrl(json['discount_picture']);
+        thumbnail = ImageManager.getCompressedImageUrl(json['discount_picture'].toString()),
+        picture = ImageManager.getImageUrl(json['discount_picture'].toString());
 }

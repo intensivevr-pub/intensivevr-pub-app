@@ -29,22 +29,24 @@ class Prize {
     this.product,
   });
 
-  Prize.fromJson(var json)
-      : id = json['id'],
-        name = json['prize_name'],
+  Prize.fromJson(Map<String,dynamic> json)
+      : id = int.tryParse(json['id'].toString()),
+        name = json['prize_name'].toString(),
         type = PrizeType.values.firstWhere(
-            (e) => e.toString() == 'PrizeType.' + json['prize_type']),
+            (e) => e.toString() == 'PrizeType.${json['prize_type']}'),
         percentage = json['prize_percentage'] != null
-            ? json['prize_percentage'].toDouble()
+            ? double.tryParse(json['prize_percentage'].toString())
             : null,
-        isLimited = json['isLimited'],
-        cost = json['prize_cost'],
+        isLimited =
+            bool.fromEnvironment(json['isLimited'].toString().toLowerCase()),
+        cost = int.tryParse(json['prize_cost'].toString()),
         deadline = json['prize_deadline'] != null
-            ? DateTime.parse(json['prize_deadline'])
+            ? DateTime.parse(json['prize_deadline'].toString())
             : null,
         product = json['prize_product'] != null
-            ? Product.fromJson(json['prize_product'])
+            ? Product.fromJson(json['prize_product'] as Map<String,dynamic>)
             : null,
-        thumbnail = ImageManager.getCompressedImageUrl(json['prize_picture']),
-        picture = ImageManager.getImageUrl(json['prize_picture']);
+        thumbnail = ImageManager.getCompressedImageUrl(
+            json['prize_picture'].toString()),
+        picture = ImageManager.getImageUrl(json['prize_picture'].toString());
 }

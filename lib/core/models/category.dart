@@ -4,7 +4,7 @@ class Category {
   final int id;
   final String name;
   final CategoryType type;
-  final picture;
+  final String picture;
 
   Category({
     this.name,
@@ -13,9 +13,10 @@ class Category {
     this.id,
   });
 
-  Category.fromJson(var json)
-      : name = json['category_name'],
-        type = json['ctype'],
-        picture = json['picture'],
-        id = json['id'];
+  Category.fromJson(Map<String,dynamic> json)
+      : name = json['category_name'].toString(),
+        type = CategoryType.values
+            .firstWhere((e) => e.toString() == 'CategoryType.${json['ctype']}'),
+        picture = json['picture'].toString(),
+        id = int.tryParse(json['id'].toString());
 }

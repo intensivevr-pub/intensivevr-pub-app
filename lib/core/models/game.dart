@@ -21,13 +21,14 @@ class Game {
     this.category,
   });
 
-  Game.fromJson(var json)
-      : id = json['id'],
-        name = json['game_name'],
+  Game.fromJson(Map<String,dynamic> json)
+      : id = int.tryParse(json['id'].toString()),
+        name = json['game_name'].toString(),
         type = GameType.values
-            .firstWhere((e) => e.toString() == 'GameType.' + json['g_type']),
-        description = json['description'],
-        thumbnails = ImageManager.getCompressedImageUrlList(json['pics'] as List),
-        pictures = ImageManager.getImageUrlList(json['pics'] as List),
-        category = json['game_category'];
+            .firstWhere((e) => e.toString() == 'GameType.${json['g_type']}'),
+        description = json['description'].toString(),
+        thumbnails = ImageManager.getCompressedImageUrlList(
+            json['pics'] as List<dynamic>),
+        pictures = ImageManager.getImageUrlList(json['pics'] as List<dynamic>),
+        category = json['game_category'].toString();
 }
