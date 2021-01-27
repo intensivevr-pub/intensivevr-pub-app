@@ -13,20 +13,17 @@ class UserRepository {
     @required String email,
     @required String password,
   }) async {
-    var uri;
-    if(kUseHTTPS){
+    Uri uri;
+    if (kUseHTTPS) {
       uri = Uri.https(kServerUrl, "/auth/jwt/create/");
-    }else {
+    } else {
       uri = Uri.http(kServerUrl, "/auth/jwt/create/");
     }
-    var body = json.encode({
+    final body = json.encode({
       'email': email,
       'password': password,
     });
-
-    print('Body: $body');
-    print("LOGUJE");
-    var response = await http.post(
+    final http.Response response = await http.post(
       uri,
       headers: {
         'Content-Type': 'application/json',
@@ -34,15 +31,12 @@ class UserRepository {
       body: body,
     );
     if (response.statusCode != 200) {
-      print("Error");
-      print(response.body);
       return null;
     }
-    print("RESPONS");
-    var data = json.decode(response.body);
-    var refresh = data['refresh'];
-    var access = data['access'];
-    print(access);
+    final Map<String, dynamic> data =
+        json.decode(response.body) as Map<String, dynamic>;
+    final String refresh = data['refresh'].toString();
+    final String access = data['access'].toString();
     return Tuple2(refresh, access);
   }
 
@@ -51,19 +45,18 @@ class UserRepository {
     @required String password,
     @required String username,
   }) async {
-    var uri;
-    if(kUseHTTPS){
+    Uri uri;
+    if (kUseHTTPS) {
       uri = Uri.https(kServerUrl, "/auth/users/");
-    }else{
+    } else {
       uri = Uri.http(kServerUrl, "/auth/users/");
     }
-    var body = json.encode({
+    final body = json.encode({
       'email': email,
       'password': password,
       'nick': username,
     });
-    print("Rejestruje się z mailem: $email nazwą $username i hasłem $password");
-    var response = await http.post(
+    final http.Response response = await http.post(
       uri,
       headers: {
         'Content-Type': 'application/json',
@@ -71,30 +64,30 @@ class UserRepository {
       body: body,
     );
     if (response.statusCode != 201) {
-      print("Błąd rejestracji: ${response.body}");
-      var reason = json.decode(utf8.decode(response.bodyBytes));
-      if(reason['email']!=null){
-        if(reason['email']=="Istnieje już użytkownik z tą wartością pola adres email."){
+      final Map<String, dynamic> reason =
+          json.decode(utf8.decode(response.bodyBytes)) as Map<String, dynamic>;
+      if (reason['email'] != null) {
+        if (reason['email'] ==
+            "Istnieje już użytkownik z tą wartością pola adres email.") {
           return Right(EmailAlreadyExistsError());
-        }else{
+        } else {
           return Right(EmailIncorrectError());
         }
-      }else if(reason['nick']!=null){
-        if(reason['nick']=="Istnieje już użytkownik z tą wartością pola nazwa."){
+      } else if (reason['nick'] != null) {
+        if (reason['nick'] ==
+            "Istnieje już użytkownik z tą wartością pola nazwa.") {
           return Right(UsernameTakenError());
-        }else{
+        } else {
           return Right(UsernameIncorrectError());
         }
       }
-      print(reason);
       return Right(UnknownError());
     }
-    print("Rejestracja udana");
-    return Left(true);
+    return const Left(true);
   }
 
   static Future<void> deleteToken() async {
-    final storage = new FlutterSecureStorage();
+    const storage = FlutterSecureStorage();
     await storage.delete(key: "refresh");
     await storage.delete(key: "auth_key");
     return;
@@ -102,14 +95,14 @@ class UserRepository {
 
   static Future<void> persistTokenAndRefresh(
       Tuple2<String, String> data) async {
-    final storage = new FlutterSecureStorage();
+    const storage = FlutterSecureStorage();
     await storage.write(key: "refresh", value: data.value1);
     await storage.write(key: "auth_key", value: data.value2);
     return;
   }
 
   Future<void> persistToken(String token) async {
-    final storage = new FlutterSecureStorage();
+    const storage = FlutterSecureStorage();
     await storage.write(key: "auth_key", value: token);
     return;
   }
@@ -120,20 +113,19 @@ class UserRepository {
 
   static Future<String> refreshToken() async {
     try {
-      final storage = new FlutterSecureStorage();
-      var refresh = await storage.read(key: "refresh");
+      const storage = FlutterSecureStorage();
+      final String refresh = await storage.read(key: "refresh");
       if (refresh != null) {
-        var uri;
-        if(kUseHTTPS){
+        Uri uri;
+        if (kUseHTTPS) {
           uri = Uri.https(kServerUrl, "/auth/jwt/refresh/");
-
-        }else {
+        } else {
           uri = Uri.http(kServerUrl, "/auth/jwt/refresh/");
         }
-        var body = json.encode({
+        final body = json.encode({
           'refresh': refresh,
         });
-        var response = await http.post(
+        final http.Response response = await http.post(
           uri,
           headers: {
             'Content-Type': 'application/json',
@@ -143,8 +135,9 @@ class UserRepository {
         if (response.statusCode != 200) {
           return null;
         }
-        var data = json.decode(response.body);
-        String auth = data["access"];
+        final Map<String, dynamic> data =
+            json.decode(response.body) as Map<String, dynamic>;
+        final String auth = data["access"].toString();
         await storage.write(key: "auth_key", value: auth);
         return auth;
       } else {
@@ -156,28 +149,28 @@ class UserRepository {
   }
 
   static Future<String> getToken() async {
-    return await FlutterSecureStorage().read(key: "auth_key");
+    return const FlutterSecureStorage().read(key: "auth_key");
   }
 
   static Future<String> getTokenAndVerify() async {
-    final storage = new FlutterSecureStorage();
-    var auth = await storage.read(key: "auth_key");
+    const storage = FlutterSecureStorage();
+    final String auth = await storage.read(key: "auth_key");
     try {
       if (auth != null) {
         if (!isTokenExpired(auth)) {
         } else {
           return refreshToken();
         }
-        var uri;
-        if(kUseHTTPS){
+        Uri uri;
+        if (kUseHTTPS) {
           uri = Uri.https(kServerUrl, "/auth/jwt/verify/");
-        }else {
+        } else {
           uri = Uri.http(kServerUrl, "/auth/jwt/verify/");
         }
-        var body = json.encode({
+        final body = json.encode({
           'token': auth,
         });
-        var response = await http.post(
+        final http.Response response = await http.post(
           uri,
           headers: {
             'Content-Type': 'application/json',

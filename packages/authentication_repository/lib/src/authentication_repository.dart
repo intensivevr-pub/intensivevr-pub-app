@@ -16,13 +16,14 @@ class AuthenticationRepository {
   User user;
 
   Stream<AuthenticationStatus> get status async* {
-    String key = await UserRepository.getTokenAndVerify();
+    final String key = await UserRepository.getTokenAndVerify();
 
     if (key != null) {
       user = User(key);
       yield AuthenticationStatus.authenticated;
-    } else
+    } else {
       yield AuthenticationStatus.unauthenticated;
+    }
     yield* _controller.stream;
   }
 
@@ -32,7 +33,7 @@ class AuthenticationRepository {
   }) async {
     assert(email != null);
     assert(password != null);
-    Tuple2<String, String> result =
+    final Tuple2<String, String> result =
         await UserRepository.login(email: email, password: password);
     if (result != null) {
       UserRepository.persistTokenAndRefresh(result);
@@ -51,7 +52,7 @@ class AuthenticationRepository {
     assert(username != null);
     assert(password != null);
     assert(email != null);
-    return await UserRepository.register(
+    return UserRepository.register(
         email: email, password: password, username: username);
   }
 
@@ -67,7 +68,7 @@ class AuthenticationRepository {
   }
 
   Future<String> refreshToken() async {
-    String auth = await UserRepository.refreshToken();
+    final String auth = await UserRepository.refreshToken();
     if (auth != null) {
       user = User(auth);
       _controller.add(AuthenticationStatus.authenticated);
