@@ -36,7 +36,7 @@ class _GameListPageState extends State<GameListPage> {
         child: Scaffold(
           appBar: AppBar(
             iconTheme: Theme.of(context).iconTheme,
-            title: Text("Wybierz grę"),
+            title: Text("Wybierz grę", style: TextStyle(color: Theme.of(context).primaryColor),),
           ),
             body: loaded
                 ? listOfGames.length != 0
