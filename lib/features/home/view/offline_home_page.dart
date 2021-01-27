@@ -7,6 +7,8 @@ import 'package:intensivevr_pub/features/network_connection/bloc/network_connect
 import 'package:intensivevr_pub/features/user_data/bloc/bloc.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 
+import 'drawer/home_menu.dart';
+
 class OfflineHomePage extends StatefulWidget {
   @override
   _OfflineHomePageState createState() => _OfflineHomePageState();
@@ -26,69 +28,102 @@ class _OfflineHomePageState extends State<OfflineHomePage> {
     return Container(
       color: kPurpleGradientColor,
       child: SafeArea(
-        child: BlocListener<HomeScreenBloc, HomeScreenState>(
+        child: BlocConsumer<HomeScreenBloc, HomeScreenState>(
           listener: (context, state) {
             if (!state.refreshing) {
               _refreshController.refreshCompleted();
             }
           },
-          child: Scaffold(
-            //TODO poprawić design
-            body: BlocConsumer<NetworkConnectionBloc, NetworkConnectionState>(
-                listener: (context, state) {
-              if (state.status == NetworkStatus.connected) {
-                onRefresh(isOnline: true);
-              }
-            }, builder: (context, state) {
-              return SmartRefresher(
-                controller: _refreshController,
-                onRefresh: () => onRefresh(
-                    isOnline: state.status == NetworkStatus.connected),
-                child: Center(
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
-                    children: [
-                      const Text("Nie masz połączenia z internetem"),
-                      BlocBuilder<UserDataBloc, UserDataState>(
-                        builder: (context, state) {
-                          if (state.isDemoUser) {
-                            return Container(
-                              color: Colors.white,
-                              padding: const EdgeInsets.all(12),
-                              child: BarcodeWidget(
-                                barcode: Barcode.code128(),
-                                data: "Tutaj bedzie Twoj kod",
-                                width: width * 0.7,
-                                height: 130,
-                                style: const TextStyle(color: Colors.black),
-                              ),
-                            );
-                          } else {
-                            return Container(
-                              color: Colors.white,
-                              padding: const EdgeInsets.all(12),
-                              child: BarcodeWidget(
-                                barcode: Barcode.code128(),
-                                data: state.hash,
-                                width: width * 0.7,
-                                height: 130,
-                                style: const TextStyle(color: Colors.black),
-                              ),
-                            );
-                          }
-                        },
-                      ),
-                      RaisedButton(
-                        onPressed: () => onRefresh(
-                            isOnline: state.status == NetworkStatus.connected),
-                        child: const Text("Odśwież"),
-                      )
-                    ],
+          builder: (context, HomeScreenState homeState) {
+            return Scaffold(
+              drawer: HomeMenu(),
+              appBar: AppBar(
+                backgroundColor: Theme.of(context).backgroundColor,
+                elevation: 0,
+                iconTheme: Theme.of(context).iconTheme,
+              ),
+              body: BlocConsumer<NetworkConnectionBloc, NetworkConnectionState>(
+                  listener: (context, state) {
+                if (state.status == NetworkStatus.connected) {
+                  onRefresh(isOnline: true);
+                }
+              }, builder: (context, state) {
+                return SmartRefresher(
+                  controller: _refreshController,
+                  onRefresh: () => onRefresh(
+                      isOnline: state.status == NetworkStatus.connected),
+                  child: Center(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      children: [
+                        Column(
+                          children: const [
+                            Text(
+                              "Nie masz połączenia z internetem",
+                              style: TextStyle(fontSize: 20),
+                            ),
+                            Text(
+                              "Wciąż możesz jednak skanować swój kod przy kasie",
+                              style: TextStyle(fontSize: 20),
+                            ),
+                          ],
+                        ),
+                        BlocBuilder<UserDataBloc, UserDataState>(
+                          builder: (context, state) {
+                            if (state.isDemoUser) {
+                              return Container(
+                                color: Colors.white,
+                                padding: const EdgeInsets.all(12),
+                                child: BarcodeWidget(
+                                  barcode: Barcode.code128(),
+                                  data: "Tutaj bedzie Twoj kod",
+                                  width: width * 0.7,
+                                  height: 130,
+                                  style: const TextStyle(color: Colors.black),
+                                ),
+                              );
+                            } else {
+                              return Container(
+                                color: Colors.white,
+                                padding: const EdgeInsets.all(12),
+                                child: BarcodeWidget(
+                                  barcode: Barcode.code128(),
+                                  data: state.hash,
+                                  width: width * 0.7,
+                                  height: 130,
+                                  style: const TextStyle(color: Colors.black),
+                                ),
+                              );
+                            }
+                          },
+                        ),
+                        RaisedButton(
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(30),
+                              side:  const BorderSide()),
+                          onPressed: () => onRefresh(
+                              isOnline:
+                                  state.status == NetworkStatus.connected),
+                          child: SizedBox(
+                            width: 170,
+                            height: 50,
+                            child: Center(
+                              child: !homeState.refreshing
+                                  ? const Text(
+                                      "Odśwież",
+                                      style: TextStyle(fontSize: 24),
+                                    )
+                                  : const CircularProgressIndicator(),
+                            ),
+                          ),
+                        )
+                      ],
+                    ),
                   ),
-                ),
-              );
-            }),
-          ),
+                );
+              }),
+            );
+          },
         ),
       ),
     );
