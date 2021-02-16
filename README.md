@@ -1,3 +1,3 @@
-## Mobile app for IntensiveVR PUB  
+## Mobile app for VR PUB  
 
 Made using flutter and bloc
