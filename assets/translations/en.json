@@ -1,0 +1,45 @@
+{
+  "choose_reward": "Choose reward ",
+  "error": "Error",
+  "cost_number": "Cost: {cost} points",
+  "demo_reward": "Here you will be able to collect your reward",
+  "reward_available_from": "Reward available from {date}",
+  "reward_available_always": "Reward available always",
+  "category": "Category: {name}",
+  "point": {
+    "zero": "No points",
+    "one": "{} point",
+    "many": "{} points",
+    "other": "{} points"
+  },
+  "you_have_exactly": "You have exactly:",
+  "demo_points": "Here you will see your number of points",
+  "log_in": "Sign in",
+  "register": "Sign up",
+  "demo_mode": "Demo mode",
+  "welcome_message": "Welcome to IntensiveVR PUB",
+  "leaderboard": {
+    "one": "Leaderboard",
+    "many": "Leaderboards",
+    "other": "Leaderboards"
+  },
+  "offer": "Pub menu (products)",
+  "logout": "Logout",
+  "change_mode": "Change mode (light/dark): ",
+  "hello_stranger": "Hello stranger",
+  "hello": "Hello {name}",
+  "no_connection_1": "You have no internet connection",
+  "no_connection_2": "but you can still scan your code at the cash register",
+  "demo_barcode": "Here you will see your barcode",
+  "refresh": "Refresh",
+  "terms_of_use": "By registering you are agreeing to terms of use",
+  "birth_date": "Birth date",
+  "password": "Password",
+  "confirm_password": "Confirm password",
+  "username": "Username",
+  "form_errors": {
+    "passwords_do_not_match": "Passwords don't match",
+    "username_can_not_be_empty": "Username can't be empty"
+
+  }
+}

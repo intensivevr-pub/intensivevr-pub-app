@@ -1,4 +1,5 @@
 import 'package:authentication_repository/authentication_repository.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intensivevr_pub/features/authentication/authentication.dart';
@@ -48,6 +49,9 @@ class _AppViewState extends State<AppView> {
       return BlocBuilder<NetworkConnectionBloc, NetworkConnectionState>(
           builder: (context, networkState) {
         return MaterialApp(
+          localizationsDelegates: context.localizationDelegates,
+          supportedLocales: context.supportedLocales,
+          locale: context.locale,
           navigatorKey: _navigatorKey,
           themeMode: themeState.themeMode,
           theme: lightTheme,

@@ -1,4 +1,5 @@
 import 'package:authentication_repository/authentication_repository.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intensivevr_pub/app.dart';
@@ -28,16 +29,22 @@ class SimpleBlocDelegate extends BlocObserver {
 void main() {
   Bloc.observer = SimpleBlocDelegate();
   runApp(
-    MultiBlocProvider(
-      providers: [
-        BlocProvider<ThemeBloc>(
-          create: (BuildContext context) =>
-              ThemeBloc()..add(ThemeLoadStarted()),
-        ),
-        BlocProvider<NetworkConnectionBloc>(
-            create: (BuildContext context) => NetworkConnectionBloc()),
-      ],
-      child: App(authenticationRepository: AuthenticationRepository()),
+    EasyLocalization(
+      supportedLocales: const [Locale('en'), Locale('pl')],
+      path: 'assets/translations',
+      useOnlyLangCode: true,
+      fallbackLocale: const Locale('pl'),
+      child: MultiBlocProvider(
+        providers: [
+          BlocProvider<ThemeBloc>(
+            create: (BuildContext context) =>
+                ThemeBloc()..add(ThemeLoadStarted()),
+          ),
+          BlocProvider<NetworkConnectionBloc>(
+              create: (BuildContext context) => NetworkConnectionBloc()),
+        ],
+        child: App(authenticationRepository: AuthenticationRepository()),
+      ),
     ),
   );
 }

@@ -5,6 +5,7 @@ import 'package:intensivevr_pub/features/login/bloc/login_bloc.dart';
 import 'package:intensivevr_pub/widgets/widgets.dart';
 
 import '../../../widgets/textfields/credential_input.dart';
+import 'package:easy_localization/easy_localization.dart';
 
 class LoginForm extends StatelessWidget {
   @override
@@ -15,7 +16,7 @@ class LoginForm extends StatelessWidget {
           ScaffoldMessenger.of(context)
             ..hideCurrentSnackBar()
             ..showSnackBar(
-              const SnackBar(content: Text('Authentication Failure')),
+              const SnackBar(content: Text('Authentication Failure')), //TODO obsłużyć błędy logowania
             );
         }
       },
@@ -62,7 +63,7 @@ class _PasswordInput extends StatelessWidget {
       buildWhen: (previous, current) => previous.password != current.password,
       builder: (context, state) {
         return CredentialInput(
-          labelText: "Hasło",
+          labelText: 'password'.tr(),
           obscure: true,
           errorText:
               state.password.invalid ? state.password.getErrorMessage() : null,
@@ -94,9 +95,9 @@ class _LoginButton extends StatelessWidget {
                 borderRadius: const BorderRadius.all(Radius.circular(15)),
                 color: const Color.fromRGBO(255, 255, 255, 0),
                 splashColor: Colors.purple,
-                text: const Text(
-                  "Zaloguj się",
-                  style: TextStyle(
+                text:  Text(
+                  'log_in'.tr(),
+                  style: const TextStyle(
                       color: Colors.black, fontWeight: FontWeight.w600),
                 ));
       },

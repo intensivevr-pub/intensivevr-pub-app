@@ -1,4 +1,5 @@
 import 'package:barcode_widget/barcode_widget.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intensivevr_pub/color_consts.dart';
@@ -57,14 +58,14 @@ class _OfflineHomePageState extends State<OfflineHomePage> {
                       mainAxisAlignment: MainAxisAlignment.spaceAround,
                       children: [
                         Column(
-                          children: const [
+                          children: [
                             Text(
-                              "Nie masz połączenia z internetem",
-                              style: TextStyle(fontSize: 20),
+                              'no_connection_1'.tr(),
+                              style: const TextStyle(fontSize: 20),
                             ),
                             Text(
-                              "Wciąż możesz jednak skanować swój kod przy kasie",
-                              style: TextStyle(fontSize: 20),
+                              'no_connection_2'.tr(),
+                              style: const TextStyle(fontSize: 20),
                             ),
                           ],
                         ),
@@ -76,7 +77,7 @@ class _OfflineHomePageState extends State<OfflineHomePage> {
                                 padding: const EdgeInsets.all(12),
                                 child: BarcodeWidget(
                                   barcode: Barcode.code128(),
-                                  data: "Tutaj bedzie Twoj kod",
+                                  data: 'demo_barcode'.tr(),
                                   width: width * 0.7,
                                   height: 130,
                                   style: const TextStyle(color: Colors.black),
@@ -100,7 +101,7 @@ class _OfflineHomePageState extends State<OfflineHomePage> {
                         RaisedButton(
                           shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(30),
-                              side:  const BorderSide()),
+                              side: const BorderSide()),
                           onPressed: () => onRefresh(
                               isOnline:
                                   state.status == NetworkStatus.connected),
@@ -109,9 +110,9 @@ class _OfflineHomePageState extends State<OfflineHomePage> {
                             height: 50,
                             child: Center(
                               child: !homeState.refreshing
-                                  ? const Text(
-                                      "Odśwież",
-                                      style: TextStyle(fontSize: 24),
+                                  ? Text(
+                                      'refresh'.tr(),
+                                      style: const TextStyle(fontSize: 24),
                                     )
                                   : const CircularProgressIndicator(),
                             ),

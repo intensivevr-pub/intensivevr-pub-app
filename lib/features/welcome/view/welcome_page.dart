@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:gradient_text/gradient_text.dart';
@@ -23,7 +24,7 @@ class WelcomePage extends StatelessWidget {
               child: Padding(
                 padding: const EdgeInsets.all(16.0),
                 child: GradientText(
-                  "Witamy w IntensiveVRPub!",
+                  'welcome_message'.tr(),
                   style: const TextStyle(
                     fontSize: 32,
                     fontWeight: FontWeight.bold,
@@ -49,12 +50,13 @@ class WelcomePage extends StatelessWidget {
                           },
                           border: Border.all(),
                           padding: const EdgeInsets.all(16),
-                          borderRadius: const BorderRadius.all(Radius.circular(10)),
+                          borderRadius:
+                              const BorderRadius.all(Radius.circular(10)),
                           color: const Color.fromRGBO(255, 255, 255, 0),
                           splashColor: Colors.purple,
-                          text: const Text(
-                            "Zaloguj się",
-                            style: TextStyle(color: Colors.black),
+                          text: Text(
+                            'log_in'.tr(),
+                            style: const TextStyle(color: Colors.black),
                           )),
                     ),
                     Padding(
@@ -64,26 +66,29 @@ class WelcomePage extends StatelessWidget {
                             Navigator.push(context, RegisterPage.route());
                           },
                           padding: const EdgeInsets.all(16),
-                          borderRadius: const BorderRadius.all(Radius.circular(10)),
+                          borderRadius:
+                              const BorderRadius.all(Radius.circular(10)),
                           color: Colors.blue,
                           splashColor: Colors.purple,
-                          text: const Text(
-                            "Utwórz konto",
-                            style: TextStyle(color: Colors.white),
+                          text: Text(
+                            'register'.tr(),
+                            style: const TextStyle(color: Colors.white),
                           )),
-                    ),Padding(
+                    ),
+                    Padding(
                       padding: const EdgeInsets.fromLTRB(16, 8, 16, 24),
                       child: WelcomeButton(
                           onPress: () {
                             Navigator.push(context, HomePage.route(demo: true));
                           },
                           padding: const EdgeInsets.all(16),
-                          borderRadius: const BorderRadius.all(Radius.circular(10)),
+                          borderRadius:
+                              const BorderRadius.all(Radius.circular(10)),
                           color: Colors.blue,
                           splashColor: Colors.purple,
-                          text: const Text(
-                            "Tryb demo",
-                            style: TextStyle(color: Colors.white),
+                          text: Text(
+                            'demo_mode'.tr(),
+                            style: const TextStyle(color: Colors.white),
                           )),
                     )
                   ]),

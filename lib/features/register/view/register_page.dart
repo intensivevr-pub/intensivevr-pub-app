@@ -53,7 +53,7 @@ class _RegisterPageState extends State<RegisterPage> {
       },
       builder: (BuildContext context, state) {
         return Scaffold(
-            resizeToAvoidBottomPadding: true,
+            resizeToAvoidBottomInset: true,
             backgroundColor: Colors.white,
             body: SafeArea(
               child: Column(

@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intensivevr_pub/core/models/models.dart';
@@ -44,6 +45,43 @@ class _GenericPanelState extends State<GenericPanel> {
     }
   }
 
+  String getErrorMessage(PanelType type) {
+    switch (type) {
+      case PanelType.prize:
+        return 'lists.list_load_error'.tr(namedArgs: {'name': 'prizes'.tr()});
+        break;
+      case PanelType.event:
+        return 'lists.list_load_error'.tr(namedArgs: {'name': 'events'.tr()});
+        break;
+      case PanelType.game:
+        return 'lists.list_load_error'.tr(namedArgs: {'name': 'games'.tr()});
+        break;
+      case PanelType.discounts:
+        return 'lists.list_load_error'
+            .tr(namedArgs: {'name': 'discounts'.tr()});
+        break;
+    }
+    return "Unknown type of data missing";
+  }
+
+  String getEmptyListMessage(PanelType type) {
+    switch (type) {
+      case PanelType.prize:
+        return 'lists.empty_list'.tr(namedArgs: {'name': 'prizes'.tr()});
+        break;
+      case PanelType.event:
+        return 'lists.empty_list'.tr(namedArgs: {'name': 'events'.tr()});
+        break;
+      case PanelType.game:
+        return 'lists.empty_list'.tr(namedArgs: {'name': 'games'.tr()});
+        break;
+      case PanelType.discounts:
+        return 'lists.empty_list'.tr(namedArgs: {'name': 'discounts'.tr()});
+        break;
+    }
+    return "No data of unknown type";
+  }
+
   @override
   Widget build(BuildContext context) {
     return BlocListener<HomeScreenBloc, HomeScreenState>(
@@ -86,14 +124,14 @@ class _GenericPanelState extends State<GenericPanel> {
                       );
                     }
                     if (state is ListError) {
-                      return const Center(
-                        child: Text("Nie można wczytać czegoś"),
+                      return Center(
+                        child: Text(getErrorMessage(widget.type)),
                       );
                     }
                     if (state is ListLoaded) {
                       if (state.items.isEmpty) {
-                        return const Center(
-                          child: Text('Brak czegoś'),
+                        return Center(
+                          child: Text(getEmptyListMessage(widget.type)),
                         );
                       }
                       return ListView.builder(

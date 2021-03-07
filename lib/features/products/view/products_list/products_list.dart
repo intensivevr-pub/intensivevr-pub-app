@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intensivevr_pub/core/models/models.dart';
@@ -38,14 +39,16 @@ class _ProductsListState extends State<ProductsList> {
           );
         }
         if (state is ListError) {
-          return const Center(
-            child: Text("Nie można wczytać czegoś"),
+          return Center(
+            child: Text('lists.list_load_error'
+                .tr(namedArgs: {'name': 'lists.products'.tr()})),
           );
         }
         if (state is ListLoaded) {
           if (state.items.isEmpty) {
-            return const Center(
-              child: Text('Brak czegoś'),
+            return Center(
+              child: Text('lists.empty_list'
+                  .tr(namedArgs: {'name': 'lists.products'.tr()})),
             );
           }
           return ListView.builder(

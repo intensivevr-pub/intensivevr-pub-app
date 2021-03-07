@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intensivevr_pub/core/models/prize.dart';
@@ -132,7 +133,8 @@ class _PrizeListTileState extends State<PrizeListTile> {
                     height: 230,
                   ),
                   Text(
-                    "koszt: ${widget.prize.cost} punktów",
+                    'cost_number'
+                        .tr(namedArgs: {'cost': widget.prize.cost.toString()}),
                     style: TextStyle(color: loaded ? textColor : Colors.black),
                   ),
                   BlocConsumer<PrizeBloc, PrizeState>(
@@ -152,23 +154,24 @@ class _PrizeListTileState extends State<PrizeListTile> {
                               onPressed: () =>
                                   prizeBloc.add(CollectPrizeButtonPressed()),
                               child: state is InitialPrizeState
-                                  ? const Text(
-                                      "Wybierz nagrodę",
-                                      style: TextStyle(color: Colors.black),
+                                  ? Text(
+                                      'choose_reward'.tr(),
+                                      style:
+                                          const TextStyle(color: Colors.black),
                                     )
                                   : state is LoadingPrizeRealization
                                       ? const Center(
                                           child: CircularProgressIndicator(),
                                         )
                                       : state is PrizeCollectionError
-                                          ? const Text(
-                                              "Error",
-                                              style: TextStyle(
+                                          ? Text(
+                                              'error'.tr(),
+                                              style: const TextStyle(
                                                   color: Colors.black),
                                             )
-                                          : const Text(
-                                              "Wybierz nagrodę",
-                                              style: TextStyle(
+                                          : Text(
+                                              'choose_reward'.tr(),
+                                              style: const TextStyle(
                                                   color: Colors.black),
                                             ),
                             );
@@ -181,7 +184,7 @@ class _PrizeListTileState extends State<PrizeListTile> {
                                   color: Colors.green),
                               child: Center(
                                 child: Text(
-                                  "Tutaj będziesz mógł odebrać nagrodę",
+                                  'demo_reward'.tr(),
                                   style: TextStyle(
                                       color: loaded ? textColor : Colors.black),
                                 ),
@@ -194,13 +197,15 @@ class _PrizeListTileState extends State<PrizeListTile> {
                   ),
                   if (widget.prize.isLimited)
                     Text(
-                      "Nagroda dostępna do: ${formatDate(widget.prize.deadline)}",
+                      'reward_available_from'.tr(
+                        namedArgs: {'date': formatDate(widget.prize.deadline)},
+                      ),
                       style:
                           TextStyle(color: loaded ? textColor : Colors.black),
                     )
                   else
                     Text(
-                      "Nagroda dostępna zawsze",
+                      'reward_available_always'.tr(),
                       style:
                           TextStyle(color: loaded ? textColor : Colors.black),
                     ),

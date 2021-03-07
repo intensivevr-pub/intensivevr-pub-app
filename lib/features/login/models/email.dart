@@ -1,4 +1,5 @@
 import 'package:formz/formz.dart';
+import 'package:easy_localization/easy_localization.dart';
 
 enum EmailValidationError { empty, bad }
 
@@ -19,11 +20,10 @@ class Email extends FormzInput<String, EmailValidationError> {
   String getErrorMessage() {
     switch (error) {
       case EmailValidationError.empty:
-        return "Email nie może być pusty";
+        return 'form_errors.email_empty'.tr();
         break;
       case EmailValidationError.bad:
-        return "To nie jest poprawny email";
-        break;
+        return 'form_errors.email_incorrect'.tr();
     }
     return null;
   }

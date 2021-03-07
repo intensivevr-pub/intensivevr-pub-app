@@ -1,5 +1,6 @@
 import 'dart:ui';
 
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -10,14 +11,16 @@ class PointsPanel extends StatelessWidget {
   const PointsPanel({Key key, this.points, this.demo = false})
       : super(key: key);
 
-  String determineForm() {
-    if (points == 1) {
-      return "1 punkt";
+  String determineForm(BuildContext context) {
+    if (points < 10) {
+      return 'point'.plural(points,
+          format: NumberFormat.compact(locale: context.locale.toString()));
+    } else if (points % 10 > 1 && points % 10 < 5) {
+      return 'point'.plural(points,
+          format: NumberFormat.compact(locale: context.locale.toString()));
     }
-    if (points % 10 > 1 && points % 10 < 5) {
-      return "$points punkty";
-    }
-    return "$points punktów";
+    return 'point'.plural(points,
+        format: NumberFormat.compact(locale: context.locale.toString()));
   }
 
   @override
@@ -36,15 +39,15 @@ class PointsPanel extends StatelessWidget {
           ? Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                const Text(
-                  "Masz dokładnie:",
-                  style: TextStyle(
+                Text(
+                  'you_have_exactly'.tr(),
+                  style: const TextStyle(
                     color: Colors.white,
                     fontSize: 14,
                   ),
                 ),
                 Text(
-                  determineForm(),
+                  determineForm(context),
                   style: const TextStyle(
                     color: Colors.white,
                     fontSize: 32,
@@ -54,10 +57,10 @@ class PointsPanel extends StatelessWidget {
             )
           : Column(
               mainAxisAlignment: MainAxisAlignment.center,
-              children: const [
+              children: [
                 Text(
-                  "Tutaj będziesz widzieć liczbę punktów",
-                  style: TextStyle(
+                  'demo_points'.tr(),
+                  style: const TextStyle(
                     color: Colors.white,
                     fontSize: 20,
                   ),

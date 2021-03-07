@@ -1,4 +1,5 @@
 import 'package:formz/formz.dart';
+import 'package:easy_localization/easy_localization.dart';
 
 enum EmailValidationError { empty, bad, duplicate }
 
@@ -29,13 +30,13 @@ class Email extends FormzInput<String, EmailValidationError> {
   String getErrorMessage() {
     switch (error) {
       case EmailValidationError.empty:
-        return "Email nie może być pusty";
+        return 'form_errors.email_empty'.tr();
         break;
       case EmailValidationError.bad:
-        return "To nie jest poprawny email";
+        return 'form_errors.email_incorrect'.tr();
         break;
       case EmailValidationError.duplicate:
-        return "Ten email już jest w systemie";
+        return 'form_errors.duplicate_email'.tr();
         break;
     }
     return null;

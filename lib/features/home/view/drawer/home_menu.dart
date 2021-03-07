@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -16,21 +17,21 @@ class HomeMenu extends StatelessWidget {
         children: [
           UserInfo(),
           ListTile(
-            title: const Text("Zmień tryb: "),
+            title: Text('change_mode'.tr()),
             trailing: ThemeSwitcher(),
           ),
           HomeMenuOption(
-              title: "Tablice wyników",
+              title: 'leaderboard'.plural(2),
               onPress: () {
                 Navigator.push(context, GameListPage.route());
               }),
           HomeMenuOption(
-              title: "Oferta Baru (produkty)",
+              title: 'offer'.tr(),
               onPress: () {
                 Navigator.push(context, ProductsPage.route());
               }),
           HomeMenuOption(
-            title: "Logout",
+            title: 'logout'.tr(),
             onPress: () {
               BlocProvider.of<AuthenticationBloc>(context)
                   .add(AuthenticationLogoutRequested());

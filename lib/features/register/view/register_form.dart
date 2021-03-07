@@ -1,4 +1,5 @@
 import 'package:authentication_repository/authentication_repository.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -17,22 +18,23 @@ class RegisterForm extends StatelessWidget {
             if (state.error.runtimeType == EmailAlreadyExistsError) {
               ScaffoldMessenger.of(context)
                 ..hideCurrentSnackBar()
-                ..showSnackBar(const SnackBar(
-                    content: Text("Konto z tym adresem email już istnieje")));
+                ..showSnackBar(SnackBar(
+                    content: Text('form_errors.duplicate_email'.tr())));
             } else if (state.error.runtimeType == UsernameTakenError) {
               ScaffoldMessenger.of(context)
                 ..hideCurrentSnackBar()
-                ..showSnackBar(const SnackBar(content: Text("Nick zajęty")));
+                ..showSnackBar(SnackBar(
+                    content: Text("form_error.duplicate_username".tr())));
             } else if (state.error.runtimeType == EmailIncorrectError) {
               ScaffoldMessenger.of(context)
                 ..hideCurrentSnackBar()
-                ..showSnackBar(const SnackBar(
-                    content: Text("Nieznany błąd związany z emailem")));
+                ..showSnackBar(
+                    SnackBar(content: Text('unknown_email_error'.tr())));
             }
           } else {
             ScaffoldMessenger.of(context)
               ..hideCurrentSnackBar()
-              ..showSnackBar(const SnackBar(content: Text("Nieznany błąd")));
+              ..showSnackBar(SnackBar(content: Text('unknown_error'.tr())));
           }
         }
       },
@@ -126,9 +128,10 @@ class _LoginInput extends StatelessWidget {
         return Padding(
           padding: const EdgeInsets.symmetric(vertical: 10.0),
           child: CredentialInput(
-            labelText: "Nick",
-            errorText:
-                state.username.invalid ? 'Nick nie może być pusty' : null,
+            labelText: 'username'.tr(),
+            errorText: state.username.invalid
+                ? 'form_errors.username_can_not_be_empty'
+                : null,
             onChanged: (String username) => context
                 .read<RegisterBloc>()
                 .add(RegisterUsernameChanged(username)),
@@ -149,7 +152,7 @@ class _PasswordInput extends StatelessWidget {
         return Padding(
           padding: const EdgeInsets.symmetric(vertical: 10.0),
           child: CredentialInput(
-            labelText: "Hasło",
+            labelText: 'password'.tr(),
             obscure: true,
             errorText: state.password.invalid
                 ? state.password.getErrorMessage()
@@ -175,10 +178,10 @@ class _ConfirmPasswordInput extends StatelessWidget {
         return Padding(
           padding: const EdgeInsets.symmetric(vertical: 10.0),
           child: CredentialInput(
-            labelText: "Potwierdź hasło",
+            labelText: 'confirm_password'.tr(),
             obscure: true,
             errorText: state.passwordConfirmation.invalid
-                ? "Hasła nie są takie same"
+                ? 'form_errors.passwords_do_not_match'.tr()
                 : null,
             onChanged: (String passwordConfirmation) => context
                 .read<RegisterBloc>()
@@ -198,9 +201,9 @@ class _DateOfBirth extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        const Padding(
-          padding: EdgeInsets.symmetric(vertical: 8.0),
-          child: Text("Data urodzenia:"),
+        Padding(
+          padding: const EdgeInsets.symmetric(vertical: 8.0),
+          child: Text('birth_date'.tr()),
         ),
         Padding(
           padding: const EdgeInsets.symmetric(vertical: 8.0),
@@ -220,10 +223,10 @@ class _DateOfBirth extends StatelessWidget {
 class _TermsOfUse extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return const Padding(
-      padding: EdgeInsets.symmetric(vertical: 30.0),
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 30.0),
       child: Text(
-        "Rejestrując się wyrażasz zgodę na warunki zawarte w regulaminie.",
+        'terms_of_use'.tr(),
         textAlign: TextAlign.center,
       ),
     );
@@ -251,9 +254,9 @@ class _RegisterButton extends StatelessWidget {
                 borderRadius: const BorderRadius.all(Radius.circular(10)),
                 color: const Color.fromRGBO(255, 255, 255, 0),
                 splashColor: Colors.purple,
-                text: const Text(
-                  "Zarejestruj się",
-                  style: TextStyle(color: Colors.black),
+                text: Text(
+                  'register'.tr(),
+                  style: const TextStyle(color: Colors.black),
                 ));
       },
     );

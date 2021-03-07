@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:intensivevr_pub/core/models/discount.dart';
@@ -139,9 +140,10 @@ class _DiscountListTileState extends State<DiscountListTile> {
       case DiscountType.pp:
         return widget.discount.product.description;
       case DiscountType.cp:
-        return "Kategoria: ${widget.discount.category.name}";
+        return 'category'
+            .tr(namedArgs: {'name': widget.discount.category.name});
       default:
-        return "Oj, tego nie wiem";
+        return 'error'.tr();
     }
   }
 

@@ -53,7 +53,7 @@ class _OnlineHomePageState extends State<OnlineHomePage> {
           child: BlocBuilder<UserDataBloc, UserDataState>(
               builder: (context, userState) {
             return BackdropScaffold(
-              floatingActionButton: userState.isDemoUser
+              floatingActionButton: userState.isDemoUser != null && userState.isDemoUser
                   ? InkWell(
                       onTap: () {},
                       child: Container(

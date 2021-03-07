@@ -1,4 +1,5 @@
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:intensivevr_pub/color_consts.dart';
@@ -67,15 +68,15 @@ class GamePage extends StatelessWidget {
                         },
                         child: Container(
                           decoration: BoxDecoration(
-                              border:
-                                  const Border.fromBorderSide(BorderSide(width: 0.6)),
+                              border: const Border.fromBorderSide(
+                                  BorderSide(width: 0.6)),
                               borderRadius: BorderRadius.circular(45)),
                           width: 200,
                           height: 60,
-                          child: const Center(
+                          child: Center(
                               child: Text(
-                            "Tablica wyników",
-                            style: TextStyle(color: Colors.white),
+                            'leaderboard'.plural(1),
+                            style: const TextStyle(color: Colors.white),
                           )),
                         ),
                       ),
@@ -101,13 +102,13 @@ class GamePage extends StatelessWidget {
   String formatType() {
     switch (game.type) {
       case GameType.vr:
-        return "Gra VR";
+        return 'game.game'.tr(namedArgs: {'type': 'game.vr'.tr()});
       case GameType.console:
-        return "Gra konsolowa";
+        return 'game.game'.tr(namedArgs: {'type': 'game.console'.tr()});
       case GameType.board:
-        return "Gra planszowa";
+        return 'game.game'.tr(namedArgs: {'type': 'game.board'.tr()});
       default:
-        return "Nie wiadomo co tak na prawdę";
+        return 'game.undefined'.tr();
     }
   }
 }

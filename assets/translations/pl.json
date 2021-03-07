@@ -1,0 +1,76 @@
+{
+  "choose_reward": "Wybierz nagrodę: ",
+  "error": "Błąd",
+  "cost_number": "koszt: {cost} punktów",
+  "demo_reward": "Tutaj będziesz mógł odebrać nagrodę",
+  "reward_available_from": "Nagroda dostępna od {date}",
+  "reward_available_always": "Nagroda dostępna zawsze",
+  "category": "Kategoria: {name}",
+  "point": {
+    "zero": "Brak punktów",
+    "one": "{} punkt",
+    "many": "{} punkty",
+    "other": "{} punkty"
+  },
+  "you_have_exactly": "Masz dokładnie:",
+  "demo_points": "Tutaj będziesz widział liczbę punktów",
+  "log_in": "Zaloguj się",
+  "register": "Zarejestruj się",
+  "demo_mode": "Tryb demo",
+  "welcome_message": "Witamy w IntensiveVR PUB!",
+  "leaderboard": {
+    "one": "Tablica wyników",
+    "many": "Tablice wyników",
+    "other": "Tablica wyników"
+  },
+  "offer": "Oferta Baru (produkty)",
+  "logout": "Wyloguj się",
+  "change_mode": "Zmień tryb: ",
+  "hello_stranger": "Witaj nieznajomy",
+  "hello": "Witaj {name}",
+  "no_connection_1": "Nie masz połączenia z internetem",
+  "no_connection_2": "Wciąż możesz jednak skanować swój kod przy kasie",
+  "demo_barcode": "Tutaj bedzie Twoj kod",
+  "refresh": "Odśwież",
+  "terms_of_use": "Rejestrując się wyrażasz zgodę na warunki zawarte w regulaminie.",
+  "birth_date": "Data urodzenia",
+  "password": "Hasło",
+  "confirm_password": "Potwierdź hasło",
+  "username": "Nazwa użytkownika",
+  "lists": {
+    "list_load_error": "Nie można wczytać {name}",
+    "empty_list": "Brak {name}",
+    "products": "produktów",
+    "discounts": "promocji",
+    "games": "gier",
+    "prizes": "nagród",
+    "events": "wydarzeń"
+  },
+  "products": "produkty",
+  "discounts": "promocje",
+  "events" : "wydarzenia",
+  "games" : "gry",
+  "prizes" : "nagrody",
+  "current_discounts" : "Aktualne promocje",
+  "available_games" : "Dostępne gry",
+  "oncoming_events" : "Nadchodzące wydarzenia",
+  "exchange_points" : "Wymieniaj punkty",
+  
+  "form_errors": {
+    "passwords_do_not_match": "Hasła nie są takie same",
+    "username_can_not_be_empty": "Nazwa użytkownika nie może być pusta",
+    "duplicate_email": "Konto z tym adresem email już istnieje",
+    "email_empty": "Email nie może być pusty",
+    "email_incorrect": "To nie jest poprawny email",
+    "duplicate_username": "Konto z tą nazwą użytkownika już istnieje",
+    "unknown_email_error": "Nieznany błąd związany z mailem",
+    "unknown_error": "Nieznany błąd"
+  },
+  "game": {
+    "game" : "Gra {type}",
+    "vr" : "VR",
+    "console" : "Konsolowa",
+    "board" : "planszowa",
+    "undefined": "Inne"
+  }
+}
